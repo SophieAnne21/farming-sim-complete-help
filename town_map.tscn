@@ -16787,31 +16787,10 @@ tile_map_data = PackedByteArray("AAAOABUAAwAEAAMAAAAPABIAAwAFAAAAAAAPABMAAwAFAAE
 tile_set = SubResource("TileSet_8jvin")
 collision_enabled = false
 
-[node name="fade" parent="." instance=ExtResource("58_01loj")]
-
-[node name="toFarm" type="Area2D" parent="."]
-position = Vector2(1230, 303)
-scale = Vector2(1, 15.0544)
-collision_layer = 64
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="toFarm"]
-light_mask = 64
-visibility_layer = 2
-position = Vector2(0, 0.0664259)
-shape = SubResource("RectangleShape2D_uiu36")
-
-[node name="Mayor\'s House" type="Label" parent="."]
-offset_left = 406.0
-offset_top = 47.0
-offset_right = 509.0
-offset_bottom = 70.0
-text = "Mayor House"
-
 [node name="Farmer" parent="." groups=["player"] instance=ExtResource("3_uiu36")]
 position = Vector2(1084, 295)
-collision_layer = 2
-collision_mask = 64
+collision_layer = 3
+collision_mask = 109
 
 [node name="Name_Label" type="Label" parent="Farmer"]
 offset_left = -24.0
@@ -16861,6 +16840,27 @@ offset_right = 1064.0
 offset_bottom = 93.0
 theme_override_fonts/font = ExtResource("74_orkqv")
 theme_override_font_sizes/font_size = 30
+
+[node name="fade" parent="." instance=ExtResource("58_01loj")]
+
+[node name="toFarm" type="Area2D" parent="."]
+position = Vector2(1230, 303)
+scale = Vector2(1, 15.0544)
+collision_layer = 65
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="toFarm"]
+light_mask = 65
+visibility_layer = 3
+position = Vector2(0, 0.0664259)
+shape = SubResource("RectangleShape2D_uiu36")
+
+[node name="Mayor\'s House" type="Label" parent="."]
+offset_left = 406.0
+offset_top = 47.0
+offset_right = 509.0
+offset_bottom = 70.0
+text = "Mayor House"
 
 [node name="SpawnPoints" type="Node" parent="." groups=["SpawnMarker"]]
 

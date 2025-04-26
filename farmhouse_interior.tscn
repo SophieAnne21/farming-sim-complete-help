@@ -52976,7 +52976,7 @@ tile_set = SubResource("TileSet_ip4hs")
 tile_map_data = PackedByteArray("AAD3/wAAAwAYAAcAAAD3/wEAAwAYAAgAAAD4/wAAAwAZAAcAAAD4/wEAAwAZAAgAAAA=")
 tile_set = SubResource("TileSet_6j23i")
 
-[node name="Farmer" parent="." instance=ExtResource("7_btb1v")]
+[node name="Farmer" parent="." groups=["Player"] instance=ExtResource("7_btb1v")]
 position = Vector2(-124, 74)
 
 [node name="back_wall" type="TileMapLayer" parent="."]

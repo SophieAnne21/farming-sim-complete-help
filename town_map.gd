@@ -13,7 +13,6 @@ enum Season { SPRING, SUMMER, FALL, WINTER }
 @onready var player             : CharacterBody2D = $Farmer
 @onready var overlay            : ColorRect       = $Farmer/CanvasLayer2/DayNightOverlay
 @onready var clock_label        : Label           = $Farmer/CanvasLayer2/ClockLabel
-
 @onready var spawn_from_farmhouse_marker: Marker2D = $SpawnPoints/SpawnFromFarmhouse
 
 # ─── DESTINATIONS ─────────────────────────────────────────────────────────────
@@ -22,15 +21,15 @@ var destinations := {
 }
 
 # ─── CLOCK & CALENDAR ─────────────────────────────────────────────────────────
-var time_passed        : float = 0.0
-var time_of_day        : float = 0.0
+var time_passed         : float = 0.0
+var time_of_day         : float = 0.0
 var display_in_game_time: float = 0.0
 
-var current_season            = Season.SPRING
+var current_season      = Season.SPRING
 var current_season_name : String = "Spring"
-var day               : int   = 1
-var month             : int   = 1
-var days_in_month          = [28,28,28,28,28,28,28,28,28,28,28,28]
+var day                 : int    = 1
+var month               : int    = 1
+var days_in_month       = [28,28,28,28,28,28,28,28,28,28,28,28]
 
 # ─── READY ─────────────────────────────────────────────────────────────────────
 func _ready() -> void:
@@ -48,7 +47,6 @@ func _process(delta: float) -> void:
 
 	update_day_night_overlay()
 
-	# Advance the visible clock based on time
 	display_in_game_time += (Global.CYCLE_HOURS / Global.SECONDS_PER_DAY) * delta
 
 	update_clock()
@@ -66,10 +64,8 @@ func update_clock() -> void:
 	var hour = int(display_in_game_time) % 24
 	var minutes_float = (display_in_game_time - int(display_in_game_time)) * 60.0
 
-	# Snap to 5-minute steps
 	var minute = int(minutes_float / Global.MINUTE_STEP) * Global.MINUTE_STEP
 
-	# AM/PM formatting
 	var am_pm = "AM"
 	if hour >= 12:
 		am_pm = "PM"
@@ -86,13 +82,14 @@ func change_season() -> void:
 	summer_layer.visible = false
 	fall_layer.visible   = false
 	winter_layer.visible = false
+
 	match current_season:
 		Season.SPRING:
 			current_season_name = "Spring"; spring_layer.visible = true
 		Season.SUMMER:
 			current_season_name = "Summer"; summer_layer.visible = true
 		Season.FALL:
-			current_season_name = "Fall";   fall_layer.visible   = true
+			current_season_name = "Fall"; fall_layer.visible = true
 		Season.WINTER:
 			current_season_name = "Winter"; winter_layer.visible = true
 
@@ -149,12 +146,20 @@ func _position_player_at_spawn() -> void:
 	Global.spawn_from = ""
 
 # ─── TRANSITIONS ──────────────────────────────────────────────────────────────
-func _on_to_farm_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Player"):
-		Global.player_position = player.position
+func transition_with_fade(scene_path: String) -> void:
+	var player = get_tree().get_first_node_in_group("Player")
+	if player != null:
+		Global.player_position = player.global_position
+	else:
+		printerr("❌ Player not found during transition!")
+
+	fade.play("fade_to_black")
+	await fade.animation_finished
+	get_tree().change_scene_to_file(scene_path)
+
+# ─── AREA2D TRIGGER ────────────────────────────────────────────────────────────
+func _on_to_farm_body_entered(_body: Node2D) -> void:
+	if _body.is_in_group("Player"):
 		Global.spawn_from = "fromFarmhouse"
-		Global.last_scene = destinations["toFarm"]
-		Global.save_game()
-		fade.play("fade_to_black")
-		await fade.animation_finished
-		get_tree().change_scene_to_file(Global.last_scene)
+		await transition_with_fade(destinations["toFarm"])
+		print("🌀 Player entered toFarm!")
