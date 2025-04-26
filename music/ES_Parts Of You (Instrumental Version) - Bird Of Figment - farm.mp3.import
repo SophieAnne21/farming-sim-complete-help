@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://188tbmp8ds6o"
+path="res://.godot/imported/ES_Parts Of You (Instrumental Version) - Bird Of Figment - farm.mp3-f6e568cd06c783b059ed36b68382d842.mp3str"
+
+[deps]
+
+source_file="res://music/ES_Parts Of You (Instrumental Version) - Bird Of Figment - farm.mp3"
+dest_files=["res://.godot/imported/ES_Parts Of You (Instrumental Version) - Bird Of Figment - farm.mp3-f6e568cd06c783b059ed36b68382d842.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

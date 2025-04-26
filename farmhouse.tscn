@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ysx0jt56w1rq"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ad45o"]
+graph_offset = Vector2(-243.892, 16.9246)
+
+[node name="Node2D" type="CharacterBody2D"]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeBlendTree_ad45o")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

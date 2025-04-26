@@ -1,0 +1,551 @@
+[gd_scene load_steps=18 format=3 uid="uid://c0ege4rvsjara"]
+
+[ext_resource type="Script" uid="uid://41el1mrjj7nq" path="res://skin.gd" id="1_ctova"]
+[ext_resource type="Script" uid="uid://rwl0m52pf64m" path="res://character_creator.gd" id="1_qnd3a"]
+[ext_resource type="Texture2D" uid="uid://ch11jofc07ash" path="res://Cute_Fantasy/Player/characters/char1.png" id="2_qnd3a"]
+[ext_resource type="Script" uid="uid://clhystsktqjec" path="res://eyes.gd" id="3_fjkrx"]
+[ext_resource type="Script" uid="uid://cv41jov6iq486" path="res://hair.gd" id="4_mges2"]
+[ext_resource type="Texture2D" uid="uid://bjw7l7r4cwtwb" path="res://Cute_Fantasy/Player/greyscale/eyes/blush_grey.png" id="5_hecbg"]
+[ext_resource type="Script" uid="uid://boyliyctd6lyg" path="res://full_body.gd" id="6_ek4y3"]
+[ext_resource type="Script" uid="uid://ctq4rgp6g645p" path="res://accessories.gd" id="6_ks6yg"]
+[ext_resource type="Texture2D" uid="uid://c2ejy73l1v7kn" path="res://Cute_Fantasy/Player/clothes/basic.png" id="8_ek4y3"]
+[ext_resource type="Texture2D" uid="uid://bvch7pn21h4xm" path="res://Cute_Fantasy/Player/hair/bob .png" id="8_hecbg"]
+[ext_resource type="Script" uid="uid://c4gbucfknnpwn" path="res://shirt.gd" id="8_k60vm"]
+[ext_resource type="Texture2D" uid="uid://2v4u4oj7lnl4" path="res://Cute_Fantasy/Player/clothes/pants.png" id="9_k60vm"]
+[ext_resource type="Script" uid="uid://djv8qclvprrrf" path="res://pants.gd" id="10_ke6tr"]
+[ext_resource type="Script" uid="uid://ld3lt5ytcrrj" path="res://shoes.gd" id="12_k60vm"]
+[ext_resource type="Texture2D" uid="uid://br20gy2onycuy" path="res://Cute_Fantasy/Player/clothes/shoes.png" id="13_2tp00"]
+[ext_resource type="FontFile" uid="uid://bhyljqfljmhh" path="res://Fonts/Magnificent.ttf" id="14_ke6tr"]
+[ext_resource type="Texture2D" uid="uid://c6e13dy3v7jcv" path="res://Cute_Fantasy/Player/acc/earring_emerald_silver.png" id="16_hecbg"]
+
+[node name="Character Creator" type="Node2D"]
+script = ExtResource("1_qnd3a")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.670588, 0.380392, 0.380392, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Skeleton" type="Node2D" parent="."]
+position = Vector2(570, 83)
+scale = Vector2(5, 5)
+
+[node name="Skin" type="Node2D" parent="Skeleton"]
+script = ExtResource("1_ctova")
+
+[node name="SkinSprite" type="Sprite2D" parent="Skeleton/Skin"]
+texture = ExtResource("2_qnd3a")
+hframes = 8
+vframes = 49
+
+[node name="Eyes" type="Node2D" parent="Skeleton"]
+script = ExtResource("3_fjkrx")
+
+[node name="EyesSprite" type="Sprite2D" parent="Skeleton/Eyes"]
+position = Vector2(-3.33786e-06, -5.36442e-07)
+texture = ExtResource("5_hecbg")
+hframes = 40
+vframes = 42
+
+[node name="Full Body" type="Node2D" parent="Skeleton"]
+script = ExtResource("6_ek4y3")
+
+[node name="FBSprite" type="Sprite2D" parent="Skeleton/Full Body"]
+
+[node name="Shirt" type="Node2D" parent="Skeleton"]
+script = ExtResource("8_k60vm")
+
+[node name="ShirtSprite" type="Sprite2D" parent="Skeleton/Shirt"]
+texture = ExtResource("8_ek4y3")
+hframes = 80
+vframes = 49
+
+[node name="Pants" type="Node2D" parent="Skeleton"]
+script = ExtResource("10_ke6tr")
+
+[node name="PantsSprite" type="Sprite2D" parent="Skeleton/Pants"]
+texture = ExtResource("9_k60vm")
+hframes = 80
+vframes = 49
+
+[node name="Shoes" type="Node2D" parent="Skeleton"]
+script = ExtResource("12_k60vm")
+
+[node name="ShoesSprite" type="Sprite2D" parent="Skeleton/Shoes"]
+texture = ExtResource("13_2tp00")
+hframes = 80
+vframes = 49
+
+[node name="Hair" type="Node2D" parent="Skeleton"]
+script = ExtResource("4_mges2")
+
+[node name="HairSprite" type="Sprite2D" parent="Skeleton/Hair"]
+position = Vector2(-9.53674e-07, -0.2)
+texture = ExtResource("8_hecbg")
+hframes = 112
+vframes = 49
+
+[node name="Accessories" type="Node2D" parent="Skeleton"]
+position = Vector2(0, -0.199999)
+script = ExtResource("6_ks6yg")
+
+[node name="AccessoriesSprite" type="Sprite2D" parent="Skeleton/Accessories"]
+texture = ExtResource("16_hecbg")
+hframes = 8
+vframes = 49
+
+[node name="CreatorScreen" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CreatorScreen"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.502604
+anchor_bottom = 1.0
+offset_left = -561.0
+offset_top = -465.0
+offset_right = 559.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.185387, 0.522428, 0.618113, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Details" type="ColorRect" parent="CreatorScreen/ColorRect"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 932.0
+offset_bottom = 60.0
+color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
+
+[node name="TextEdit" type="TextEdit" parent="CreatorScreen/ColorRect/Details"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.6
+anchor_right = 1.1974
+anchor_bottom = 0.34
+offset_top = 30.0
+offset_bottom = 38.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+placeholder_text = "Enter Name"
+metadata/_edit_use_anchors_ = true
+
+[node name="Skin" type="ColorRect" parent="CreatorScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -63.0
+offset_right = 40.0
+offset_bottom = -23.0
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CreatorScreen/ColorRect/Skin"]
+custom_minimum_size = Vector2(144, 42)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 42.0
+offset_top = -7.0
+offset_right = 186.0
+offset_bottom = 35.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Skin Color"
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorButton" type="Button" parent="CreatorScreen/ColorRect/Skin"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 130.0
+offset_top = -40.0
+offset_right = 330.0
+offset_bottom = 10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Working"
+metadata/_edit_use_anchors_ = true
+
+[node name="Hair" type="ColorRect" parent="CreatorScreen/ColorRect"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 217.0
+offset_right = 370.0
+offset_bottom = 327.0
+color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CreatorScreen/ColorRect/Hair"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 16.0
+offset_right = 189.0
+offset_bottom = 58.0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Hair"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="CreatorScreen/ColorRect/Hair"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_top = -42.0
+offset_right = 163.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Hair color"
+metadata/_edit_use_anchors_ = true
+
+[node name="CollectionButton" type="Button" parent="CreatorScreen/ColorRect/Hair"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 50.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 25
+text = "Working"
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorButton" type="Button" parent="CreatorScreen/ColorRect/Hair"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+text = "Working"
+metadata/_edit_use_anchors_ = true
+
+[node name="Shirt" type="ColorRect" parent="CreatorScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -181.5
+offset_top = 80.0
+offset_right = 168.5
+offset_bottom = 190.0
+grow_horizontal = 2
+color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CreatorScreen/ColorRect/Shirt"]
+layout_mode = 0
+offset_left = 35.0
+offset_right = 179.0
+offset_bottom = 42.0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Shirt"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="CreatorScreen/ColorRect/Shirt"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_top = -42.0
+offset_right = 161.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Shirt color"
+metadata/_edit_use_anchors_ = true
+
+[node name="CollectionButton" type="Button" parent="CreatorScreen/ColorRect/Shirt"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 50.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 25
+text = "Working"
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorButton" type="Button" parent="CreatorScreen/ColorRect/Shirt"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+text = "Working"
+metadata/_edit_use_anchors_ = true
+
+[node name="Pants" type="ColorRect" parent="CreatorScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -181.5
+offset_top = -215.0
+offset_right = 168.5
+offset_bottom = -105.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CreatorScreen/ColorRect/Pants"]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 12.0
+offset_right = 179.0
+offset_bottom = 54.0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Pants"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="CreatorScreen/ColorRect/Pants"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -42.0
+offset_right = 159.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Pants color"
+metadata/_edit_use_anchors_ = true
+
+[node name="CollectionButton" type="Button" parent="CreatorScreen/ColorRect/Pants"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 50.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 25
+text = "Working"
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorButton" type="Button" parent="CreatorScreen/ColorRect/Pants"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+text = "Working"
+metadata/_edit_use_anchors_ = true
+
+[node name="Shoes" type="ColorRect" parent="CreatorScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -367.0
+offset_top = -103.0
+offset_right = -17.0
+offset_bottom = 7.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
+
+[node name="Shoes" type="Label" parent="CreatorScreen/ColorRect/Shoes"]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 16.0
+offset_right = 179.0
+offset_bottom = 58.0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Shoes"
+metadata/_edit_use_anchors_ = true
+
+[node name="CollectionButton" type="Button" parent="CreatorScreen/ColorRect/Shoes"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 50.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 25
+text = "Acting odd"
+metadata/_edit_use_anchors_ = true
+
+[node name="Accessories" type="ColorRect" parent="CreatorScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -367.0
+offset_top = -38.0
+offset_right = -17.0
+offset_bottom = 72.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CreatorScreen/ColorRect/Accessories"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 15.0
+offset_right = 166.0
+offset_bottom = 57.0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Accessory"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="CreatorScreen/ColorRect/Accessories"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_top = -33.0
+offset_right = 163.0
+offset_bottom = 9.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Item Color"
+metadata/_edit_use_anchors_ = true
+
+[node name="CollectionButton" type="Button" parent="CreatorScreen/ColorRect/Accessories"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 50.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Working"
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorButton" type="Button" parent="CreatorScreen/ColorRect/Accessories"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+text = "Working"
+metadata/_edit_use_anchors_ = true
+
+[node name="Eyes" type="ColorRect" parent="CreatorScreen/ColorRect"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 87.0
+offset_right = 88.0
+offset_bottom = 127.0
+color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CreatorScreen/ColorRect/Eyes"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.3
+anchor_top = 0.425
+anchor_right = 1.325
+anchor_bottom = 0.5
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "BrowColor"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="CreatorScreen/ColorRect/Eyes"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.025
+anchor_top = -0.025
+anchor_right = -0.025
+anchor_bottom = -0.025
+offset_left = 123.0
+offset_right = 323.0
+offset_bottom = 50.0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Working"
+metadata/_edit_use_anchors_ = true
+
+[node name="ConfirmButton" type="Button" parent="CreatorScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -43.0
+offset_right = -0.000244141
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Confirm"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="text_changed" from="CreatorScreen/ColorRect/Details/TextEdit" to="." method="_on_text_edit_text_changed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/Skin/ColorButton" to="Skeleton/Skin" method="_on_color_button_pressed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/Hair/CollectionButton" to="Skeleton/Hair" method="_on_collection_button_pressed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/Hair/ColorButton" to="Skeleton/Hair" method="_on_color_button_pressed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/Shirt/CollectionButton" to="Skeleton/Shirt" method="_on_collection_button_pressed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/Shirt/ColorButton" to="Skeleton/Shirt" method="_on_color_button_pressed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/Pants/CollectionButton" to="Skeleton/Pants" method="_on_collection_button_pressed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/Pants/ColorButton" to="Skeleton/Pants" method="_on_color_button_pressed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/Shoes/CollectionButton" to="Skeleton/Shoes" method="_on_collection_button_pressed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/Accessories/CollectionButton" to="Skeleton/Accessories" method="_on_collection_button_pressed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/Accessories/ColorButton" to="Skeleton/Accessories" method="_on_color_button_pressed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/Eyes/Button" to="Skeleton/Eyes" method="_on_button_pressed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/ConfirmButton" to="." method="_on_confirm_button_pressed"]
