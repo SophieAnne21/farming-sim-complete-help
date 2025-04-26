@@ -21,10 +21,6 @@ var destinations := {
 }
 
 # ─── CLOCK & CALENDAR ─────────────────────────────────────────────────────────
-var time_passed         : float = 0.0
-var time_of_day         : float = 0.0
-var display_in_game_time: float = 0.0
-
 var current_season      = Season.SPRING
 var current_season_name : String = "Spring"
 var day                 : int    = 1
@@ -36,33 +32,32 @@ func _ready() -> void:
 	change_season()
 	call_deferred("_position_player_at_spawn")
 	update_date_label()
-	display_in_game_time = Global.START_HOUR
 	update_clock()
 	fade.play("fade_to_normal")
 
 # ─── PROCESS ───────────────────────────────────────────────────────────────────
 func _process(delta: float) -> void:
-	time_passed += delta
-	time_of_day = time_passed / Global.SECONDS_PER_DAY
+	Global.global_time_passed += delta
+	Global.global_time_of_day = Global.global_time_passed / Global.SECONDS_PER_DAY
 
 	update_day_night_overlay()
 
-	display_in_game_time += (Global.CYCLE_HOURS / Global.SECONDS_PER_DAY) * delta
+	Global.global_display_in_game_time += (Global.CYCLE_HOURS / Global.SECONDS_PER_DAY) * delta
 
 	update_clock()
 
 	# Reset day at 2:00 AM
-	var real_in_game = Global.START_HOUR + time_of_day * Global.CYCLE_HOURS
+	var real_in_game = Global.START_HOUR + Global.global_time_of_day * Global.CYCLE_HOURS
 	if real_in_game >= 26.0:
-		time_passed = 0.0
-		time_of_day = 0.0
-		display_in_game_time = Global.START_HOUR
+		Global.global_time_passed = 0.0
+		Global.global_time_of_day = 0.0
+		Global.global_display_in_game_time = Global.START_HOUR
 		next_day()
 
 # ─── CLOCK DISPLAY ─────────────────────────────────────────────────────────────
 func update_clock() -> void:
-	var hour = int(display_in_game_time) % 24
-	var minutes_float = (display_in_game_time - int(display_in_game_time)) * 60.0
+	var hour = int(Global.global_display_in_game_time) % 24
+	var minutes_float = (Global.global_display_in_game_time - int(Global.global_display_in_game_time)) * 60.0
 
 	var minute = int(minutes_float / Global.MINUTE_STEP) * Global.MINUTE_STEP
 
@@ -107,7 +102,7 @@ func next_day() -> void:
 
 # ─── DAY/NIGHT OVERLAY ─────────────────────────────────────────────────────────
 func update_day_night_overlay() -> void:
-	var clock_hour = time_of_day * 24.0 + 6
+	var clock_hour = Global.global_time_of_day * 24.0 + 6
 	if clock_hour >= 24:
 		clock_hour -= 24
 
@@ -131,6 +126,7 @@ func update_day_night_overlay() -> void:
 
 	overlay.color = overlay_color
 
+
 # ─── SPAWN HANDLING ────────────────────────────────────────────────────────────
 func _position_player_at_spawn() -> void:
 	print("🔍 spawn_from =", Global.spawn_from)
@@ -147,7 +143,6 @@ func _position_player_at_spawn() -> void:
 
 # ─── TRANSITIONS ──────────────────────────────────────────────────────────────
 func transition_with_fade(scene_path: String) -> void:
-	var player = get_tree().get_first_node_in_group("Player")
 	if player != null:
 		Global.player_position = player.global_position
 	else:
@@ -155,11 +150,13 @@ func transition_with_fade(scene_path: String) -> void:
 
 	fade.play("fade_to_black")
 	await fade.animation_finished
-	get_tree().change_scene_to_file(scene_path)
 
 # ─── AREA2D TRIGGER ────────────────────────────────────────────────────────────
 func _on_to_farm_body_entered(_body: Node2D) -> void:
 	if _body.is_in_group("Player"):
 		Global.spawn_from = "fromFarmhouse"
 		await transition_with_fade(destinations["toFarm"])
+		get_tree().change_scene_to_file("res://farm.tscn")
+
 		print("🌀 Player entered toFarm!")
+		

@@ -52938,7 +52938,7 @@ sources/2 = SubResource("TileSetAtlasSource_l1rgq")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k1gce"]
 size = Vector2(20, 29)
 
-[node name="Node2D" type="Node2D" groups=["SpawnMarker"]]
+[node name="Node2D" type="Node2D"]
 position = Vector2(101, -84)
 script = ExtResource("1_6i1lr")
 

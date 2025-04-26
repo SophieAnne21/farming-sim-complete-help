@@ -5,6 +5,10 @@ const CYCLE_HOURS: float = 20.0 # 6AM to 2AM
 const MINUTE_STEP: int = 5 # Snap to every 5 minutes
 const SECONDS_PER_DAY: float = 7200.0 # Full 20-hour day = 7200 real-world seconds
 
+var global_time_passed: float = 0.0
+var global_time_of_day: float = 0.0
+var global_display_in_game_time: float = 6.0  # (or whatever START_HOUR is)
+
 var time_of_day: float = 0.0
 var seconds_per_day: float = 720.0 # or whatever you want
 var time_passed: float = 0.0

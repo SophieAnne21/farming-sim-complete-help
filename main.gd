@@ -19,6 +19,7 @@ extends Node2D
 # ─── SPAWN MARKERS ─────────────────────────────────────────────────────────────
 @onready var spawn_from_town_marker : Marker2D = $SpawnPoints/SpawnFromTown
 @onready var new_game_marker        : Marker2D = $SpawnPoints/NewSpawn
+@onready var spawn_from_Farmhouse_marker : Marker2D = $SpawnPoints/SpawnFromFarmhouse
 
 # ─── INPUT ACTIONS ────────────────────────────────────────────────────────────
 const TOGGLE_MENU : String = "toggle_menu"
@@ -36,7 +37,8 @@ var time_of_day     : float = 0.0
 var current_destination: String = ""
 var destinations := {
 	"toTown":      "res://town_map.tscn",
-	"toFarmhouse": "res://farmhouse_interior.tscn"
+	"toFarmhouse": "res://farmhouse_interior.tscn",
+	"toFarm" : "res://farm.tscn" 
 }
 
 # ─── READY ─────────────────────────────────────────────────────────────────────
@@ -175,7 +177,16 @@ func _position_player_at_spawn() -> void:
 		Global.spawn_from = ""
 		print("✔️ RETURN from Town at:", target)
 		return
-
+		
+	if Global.spawn_from == "fromFarm":
+			var target = spawn_from_Farmhouse_marker.global_position
+			body.global_position = target
+			Global.player_position = target
+			save_game()
+			Global.save_game()
+			Global.spawn_from = ""
+			print("✔️ RETURN from Farmhouse at:", target)
+			return
 	body.global_position = Global.player_position
 	print("↩️ Loaded saved player position:", Global.player_position)
 	Global.spawn_from = ""

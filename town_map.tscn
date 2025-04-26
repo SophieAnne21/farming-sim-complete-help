@@ -16506,7 +16506,7 @@ sources/13 = SubResource("TileSetAtlasSource_lqrm8")
 sources/14 = SubResource("TileSetAtlasSource_xurte")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uiu36"]
-size = Vector2(28, 4.31767)
+size = Vector2(56, 13.0859)
 
 [node name="town" type="Node2D"]
 script = ExtResource("1_8saws")
@@ -16787,7 +16787,7 @@ tile_map_data = PackedByteArray("AAAOABUAAwAEAAMAAAAPABIAAwAFAAAAAAAPABMAAwAFAAE
 tile_set = SubResource("TileSet_8jvin")
 collision_enabled = false
 
-[node name="Farmer" parent="." groups=["player"] instance=ExtResource("3_uiu36")]
+[node name="Farmer" parent="." groups=["Player"] instance=ExtResource("3_uiu36")]
 position = Vector2(1084, 295)
 collision_layer = 3
 collision_mask = 109
@@ -16846,13 +16846,11 @@ theme_override_font_sizes/font_size = 30
 [node name="toFarm" type="Area2D" parent="."]
 position = Vector2(1230, 303)
 scale = Vector2(1, 15.0544)
-collision_layer = 65
+collision_layer = 64
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="toFarm"]
-light_mask = 65
-visibility_layer = 3
-position = Vector2(0, 0.0664259)
+position = Vector2(-14, 0.896748)
 shape = SubResource("RectangleShape2D_uiu36")
 
 [node name="Mayor\'s House" type="Label" parent="."]
