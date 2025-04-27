@@ -6,15 +6,13 @@ extends Node2D
 @onready var toFarmhouse          = $toFarmhouse
 @onready var enterPromptFarmhouse = $CanvasLayer/EnterPromptFarmhouse
 @onready var music                = $Music
-@onready var pause_menu           = $Farmer/Pause
 @onready var body                 = $Farmer
-@onready var overlay              = $Farmer/DayNightOverlay
-@onready var inventory            = $Farmer/UI
+@onready var overlay              = $CanvasLayer2/DayNightOverlay
+@onready var inventory            = $CanvasLayer2/UI
 
 # ─── CLOCK REFERENCES ──────────────────────────────────────────────────────────
-@onready var clock_label : Label = $Farmer/ClockContainer/ClockLabel
-@onready var clock_bg    : ColorRect = $Farmer/ClockContainer/ColorRect
-@onready var date_label  : Label = $Farmer/ClockContainer/DateLabel# if you have a date
+@onready var clock_label : Label = $CanvasLayer2/ClockContainer/ClockLabel
+@onready var clock_bg    : ColorRect = $CanvasLayer2/ClockContainer/ColorRect
 
 # ─── SPAWN MARKERS ─────────────────────────────────────────────────────────────
 @onready var spawn_from_town_marker : Marker2D = $SpawnPoints/SpawnFromTown
@@ -32,6 +30,10 @@ const CYCLE_HOURS  : float = 20.0
 var seconds_per_day : float = 7200.0
 var time_passed     : float = 0.0
 var time_of_day     : float = 0.0
+
+var day: int = 1
+var month: int = 1
+var days_in_month := [28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28]
 
 # ─── SCENE DESTINATIONS ────────────────────────────────────────────────────────
 var current_destination: String = ""
@@ -51,36 +53,40 @@ func _ready() -> void:
 	await get_tree().process_frame
 	call_deferred("_position_player_at_spawn")
 
-	# No about_to_quit connect needed — handled by _notification()
-
 	fade.play("fade_to_normal")
 	fade.get_parent().get_node("ColorRect").color.a = 255
-	pause_menu.visible = false
-	inventory.visible  = false
+	inventory.visible = false
 
 	load_game()
 
 	await get_tree().process_frame
 	call_deferred("_position_player_at_spawn")
 
+	update_date_label()  # 🛠 ADD THIS LINE HERE!
+
+
 # ─── PROCESS ───────────────────────────────────────────────────────────────────
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed(TOGGLE_MENU):
-		pause_menu.visible = not pause_menu.visible
-	if Input.is_action_just_pressed(TOGGLE_INV):
-		inventory.visible = not inventory.visible
-	if pause_menu.visible or inventory.visible:
-		return
-
-	time_passed += delta
-	time_of_day = fposmod(time_passed / seconds_per_day, 1.0)
-
-	if time_passed >= seconds_per_day:
-		force_end_of_day()
+	Global.global_time_passed += delta
+	Global.global_display_in_game_time += (Global.CYCLE_HOURS / Global.SECONDS_PER_DAY) * delta
 
 	update_day_night_overlay()
 	update_clock()
 
+	# 🔥 Day rollover if past 2:00 AM
+	if Global.global_display_in_game_time >= 26.0:
+		Global.global_display_in_game_time = 6.0
+		day += 1
+		if day > days_in_month[month - 1]:
+			day = 1
+			month += 1
+			if month > 12:
+				month = 1
+		change_season()
+		update_date_label()
+		print("🗓 New day started! It's now day", day, "of month", month)
+
+	
 	if Input.is_action_just_pressed("exit"):
 		_save_and_exit()
 
@@ -178,15 +184,6 @@ func _position_player_at_spawn() -> void:
 		print("✔️ RETURN from Town at:", target)
 		return
 		
-	if Global.spawn_from == "fromFarm":
-			var target = spawn_from_Farmhouse_marker.global_position
-			body.global_position = target
-			Global.player_position = target
-			save_game()
-			Global.save_game()
-			Global.spawn_from = ""
-			print("✔️ RETURN from Farmhouse at:", target)
-			return
 	body.global_position = Global.player_position
 	print("↩️ Loaded saved player position:", Global.player_position)
 	Global.spawn_from = ""
@@ -195,34 +192,50 @@ func _position_player_at_spawn() -> void:
 func update_day_night_overlay() -> void:
 	if overlay == null:
 		return
-	var brightness = sin(time_of_day * PI)
-	var alpha = clamp(1.0 - brightness, 0.2, 0.6)
-	var color = Color(0, 0, 0, alpha)
-	if time_of_day < 0.2 or time_of_day > 0.8:
-		color = Color(0.1, 0.07, 0.04, alpha)
-	elif time_of_day > 0.4 and time_of_day < 0.6:
-		color = Color(0, 0, 0, 0.15)
-	elif time_of_day >= 0.6 and time_of_day <= 0.8:
-		color.b += 0.2
-	overlay.color = color
+	
+	var clock_hour = Global.global_display_in_game_time
+	if clock_hour >= 24.0:
+		clock_hour -= 24.0
+	
+	var overlay_color: Color
+	
+	# Dawn (6 AM - 8 AM)
+	if clock_hour >= 6 and clock_hour < 8:
+		var t = (clock_hour - 6) / 2.0
+		overlay_color = Color(0.05, 0.05, 0.1, 0.5).lerp(Color(0, 0, 0, 0.1), t)
+	# Day (8 AM - 18 PM)
+	elif clock_hour >= 8 and clock_hour < 18:
+		overlay_color = Color(0, 0, 0, 0.1)
+	# Dusk (6 PM - 8 PM)
+	elif clock_hour >= 18 and clock_hour < 20:
+		var t = (clock_hour - 18) / 2.0
+		overlay_color = Color(0, 0, 0, 0.1).lerp(Color(0.05, 0.05, 0.1, 0.4), t)
+	# Night (8 PM - 6 AM)
+	else:
+		if clock_hour >= 20:
+			var t = (clock_hour - 20) / 10.0
+		else:
+			var t = (clock_hour - 20) / 10.0 if clock_hour >= 20 else (clock_hour + 4) / 10.0
+			overlay_color = Color(0.05, 0.05, 0.1, 0.4).lerp(Color(0, 0, 0, 0.7), t)
+
+	overlay.color = overlay_color
+
 
 func update_clock() -> void:
-	var in_game = Global.START_HOUR + Global.time_of_day * Global.CYCLE_HOURS
-	var hour    = int(in_game) % 24
-	var raw_min = (in_game - int(in_game)) * 60.0
-	var minute  = int(raw_min / Global.MINUTE_STEP) * Global.MINUTE_STEP
-	clock_label.text = str(hour).pad_zeros(2) + ":" + str(minute).pad_zeros(2)
+	var hour = int(Global.global_display_in_game_time) % 24
+	var minutes_float = (Global.global_display_in_game_time - int(Global.global_display_in_game_time)) * 60.0
 
-	# === Now add the color swap
-	if hour >= 6 and hour < 18:
-	# Daytime
-		clock_label.add_theme_color_override("font_color", Color(0,0,0)) # Black text
-		date_label.add_theme_color_override("font_color", Color(0,0,0))
-	else:
-		# Nighttime
-		clock_label.add_theme_color_override("font_color", Color(1,1,1)) # White text
-		date_label.add_theme_color_override("font_color", Color(1,1,1))
+	var minute = int(minutes_float / Global.MINUTE_STEP) * Global.MINUTE_STEP
 
+	var am_pm = "am"
+	if hour >= 12:
+		am_pm = "pm"
+	if hour > 12:
+		hour -= 12
+	if hour == 0:
+		hour = 12
+
+	clock_label.text = str(hour).pad_zeros(2) + ":" + str(minute).pad_zeros(2) + " " + am_pm
 
 func force_end_of_day() -> void:
 	print("🌙 Day ended. Resetting clock.")
@@ -243,3 +256,12 @@ func load_game() -> void:
 	else:
 		print("⚠️ No saved clock data found.")
 		Global.spawn_from = "newGame"
+		
+func change_season() -> void:
+	# You can add your seasonal layer visibility logic here later
+	print("🌱 Season changed (placeholder)!")
+
+func update_date_label() -> void:
+	# Update the UI label for the current date
+	if has_node("CanvasLayer2/ClockContainer/DateLabel"):
+		$CanvasLayer2/ClockContainer/DateLabel.text = "%s %d" % [Global.current_season_name, day]

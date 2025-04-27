@@ -17,7 +17,6 @@ func _ready():
 			player.global_position = spawn_from_farm_marker.global_position
 
 	# clear it so next time we don’t re-teleport
-	Global.spawn_from = ""
 
 func _on_to_farm_body_entered(_body: Node2D) -> void:
 	if _body.is_in_group("Player"):

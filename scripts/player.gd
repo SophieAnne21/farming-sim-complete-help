@@ -1,9 +1,6 @@
 extends CharacterBody2D
 
 # UI control nodes (popups)
-var inventory_panel: Control
-var pause_menu     : CanvasLayer
-
 # Visual nodes
 @onready var visual_node      : Node2D          = $Skeleton
 @onready var body_sprite      : Sprite2D        = $Skeleton/body
@@ -15,6 +12,7 @@ var pause_menu     : CanvasLayer
 @onready var accessories      : Sprite2D        = $Skeleton/accessories
 @onready var name_label       : Label           = $Name_Label
 @onready var animated_sprite  : AnimationPlayer = $AnimationPlayer
+@onready var inventory_panel : Control = $"../CanvasLayer2/UI"
 
 @export var speed              : float   = 100.0
 @export var bridge_tilemap     : TileMap
@@ -29,18 +27,11 @@ func _ready():
 	var root = get_tree().get_current_scene()
 
 	# Inventory panel lookup
-	inventory_panel = root.get_node_or_null("$UI")
+	inventory_panel = root.get_node_or_null("CanvasLayer/UI")
 	if inventory_panel == null:
-		inventory_panel = root.get_node_or_null("UI")
+		inventory_panel = root.get_node_or_null("CanvasLayer/UI")
 	if inventory_panel == null:
 		push_warning("[Player] Inventory panel not found; skipping checks.")
-
-	# Pause menu lookup
-	pause_menu = root.get_node_or_null("PauseMenu")
-	if pause_menu == null:
-		pause_menu = root.get_node_or_null("PauseMenu")
-	if pause_menu == null:
-		push_warning("[Player] Pause menu not found; skipping checks.")
 
 	# Wait one frame so all other _ready() calls finish
 	await get_tree().process_frame
@@ -60,23 +51,29 @@ func _ready():
 	if spawn_point != null and is_instance_valid(spawn_point):
 		var target = spawn_point.global_position
 		global_position = target
-		Global.player_position = target      # ← persist it!
-		Global.save_game()                   # ← write it out
+		Global.player_position = target
+		Global.save_game()
 		print("🌀 Spawned at marker:", spawn_point.name)
 	else:
 		global_position = Global.player_position
 		print("📍 Loaded saved player position:", global_position)
 
-
-	# Clear for next time
-	Global.spawn_from = ""
+	# 🚨 RIGHT HERE after positioning the player:
+	player_clamp_to_camera_limits()
 
 	initialize_player()
 	print("✅ Player final position:", global_position)
-	print("✅ Global player_position after ready:", Global.player_position)
 
-func _physics_process(_delta: float) -> void:
-	if inventory_panel != null and pause_menu != null and (inventory_panel.visible or pause_menu.visible):
+func player_clamp_to_camera_limits() -> void:
+	global_position.x = clamp(global_position.x, Global.camera_limit_left + 16, Global.camera_limit_right - 16)
+	global_position.y = clamp(global_position.y, Global.camera_limit_top + 16, Global.camera_limit_bottom - 16)
+
+	Global.player_position = global_position  # Update saved position after clamping
+	print("📍 Player clamped to:", global_position)
+
+
+func _physics_process(delta: float) -> void:
+	if inventory_panel != null and (inventory_panel.visible):
 		velocity = Vector2.ZERO
 	else:
 		var input_dir = Vector2(
@@ -100,7 +97,6 @@ func _physics_process(_delta: float) -> void:
 		else:
 			velocity = Vector2.ZERO
 			_play_idle_animation()
-
 	move_and_slide()
 
 func _update_run_animation(input_dir: Vector2) -> void:
@@ -130,6 +126,10 @@ func _play_idle_animation() -> void:
 			visual_node.scale.x = 1
 
 func initialize_player() -> void:
+	body_sprite.visible = true
+	body_sprite.modulate.a = 1.0
+	body_sprite.scale = Vector2(1, 1)
+	
 	body_sprite.texture  = Global.skin_collection.get(Global.selected_skin, Global.skin_collection["white"])
 	hair.texture         = Global.hair_collection.get(Global.selected_hair, Global.hair_collection["buzzcut"])
 	eyes.texture         = Global.face_collection.get(Global.selected_eyes, Global.face_collection["eyes"])

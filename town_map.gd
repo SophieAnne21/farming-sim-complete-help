@@ -4,20 +4,26 @@ enum Season { SPRING, SUMMER, FALL, WINTER }
 
 # ─── NODE REFERENCES ──────────────────────────────────────────────────────────
 @onready var fade               : AnimationPlayer = $fade/AnimationPlayer
-@onready var spring_layer       : TileMapLayer    = $SpringLayer
-@onready var summer_layer       : TileMapLayer    = $SummerLayer
-@onready var fall_layer         : TileMapLayer    = $FallLayer
-@onready var winter_layer       : TileMapLayer    = $WinterLayer
-@onready var current_date_label : Label           = $Farmer/CanvasLayer2/CurrentDateLabel
+@onready var spring_layer       : TileMapLayer    = $SeasonLayers/SpringLayer
+@onready var summer_layer       : TileMapLayer    = $SeasonLayers/SummerLayer
+@onready var fall_layer         : TileMapLayer    = $SeasonLayers/FallLayer
+@onready var winter_layer       : TileMapLayer    = $SeasonLayers/WinterLayer
+@onready var current_date_label : Label           = $CanvasLayer2/CurrentDateLabel
 @onready var toFarm             : Area2D          = $toFarm
 @onready var player             : CharacterBody2D = $Farmer
-@onready var overlay            : ColorRect       = $Farmer/CanvasLayer2/DayNightOverlay
-@onready var clock_label        : Label           = $Farmer/CanvasLayer2/ClockLabel
+@onready var overlay            : ColorRect       = $CanvasLayer2/DayNightOverlay
+@onready var clock_label        : Label           = $CanvasLayer2/ClockLabel
 @onready var spawn_from_farmhouse_marker: Marker2D = $SpawnPoints/SpawnFromFarmhouse
+@onready var inventory : Control = $CanvasLayer2/UI
+@onready var pause_menu : CanvasLayer = $CanvasLayer2/Pause
+
+const TOGGLE_MENU : String = "toggle_menu"
+const TOGGLE_INV  : String = "toggle_inventory"
 
 # ─── DESTINATIONS ─────────────────────────────────────────────────────────────
 var destinations := {
 	"toFarm": "res://farm.tscn"
+	
 }
 
 # ─── CLOCK & CALENDAR ─────────────────────────────────────────────────────────
@@ -29,6 +35,7 @@ var days_in_month       = [28,28,28,28,28,28,28,28,28,28,28,28]
 
 # ─── READY ─────────────────────────────────────────────────────────────────────
 func _ready() -> void:
+	
 	change_season()
 	call_deferred("_position_player_at_spawn")
 	update_date_label()
@@ -37,6 +44,13 @@ func _ready() -> void:
 
 # ─── PROCESS ───────────────────────────────────────────────────────────────────
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed(TOGGLE_MENU):
+		pause_menu.visible = not pause_menu.visible
+	if Input.is_action_just_pressed(TOGGLE_INV):
+		inventory.visible = not inventory.visible
+	if pause_menu.visible or inventory.visible:
+		return
+	
 	Global.global_time_passed += delta
 	Global.global_time_of_day = Global.global_time_passed / Global.SECONDS_PER_DAY
 
@@ -135,14 +149,23 @@ func _position_player_at_spawn() -> void:
 		var target = spawn_from_farmhouse_marker.global_position
 		player.global_position = target
 		Global.player_position = target
-		Global.spawn_from = ""
 		Global.save_game()
-		return
+	else:
+		player.global_position = Global.player_position
 
-	Global.spawn_from = ""
+	# 🛡️ Clamp using Global camera limits
+	player.global_position.x = clamp(player.global_position.x, Global.camera_limit_left, Global.camera_limit_right)
+	player.global_position.y = clamp(player.global_position.y, Global.camera_limit_top, Global.camera_limit_bottom)
+
+	# 🛡️ Update Global player position after clamping
+	Global.player_position = player.global_position
+
+	print("📍 Player final clamped position:", player.global_position)
+	print("✅ Global player_position after clamping:", Global.player_position)
+
 
 # ─── TRANSITIONS ──────────────────────────────────────────────────────────────
-func transition_with_fade(scene_path: String) -> void:
+func transition_with_fade(_scene_path: String) -> void:
 	if player != null:
 		Global.player_position = player.global_position
 	else:
@@ -160,3 +183,10 @@ func _on_to_farm_body_entered(_body: Node2D) -> void:
 
 		print("🌀 Player entered toFarm!")
 		
+# ─── SAVE GAME ────────────────────────────────────────────────────────────
+func save_game() -> void:
+	var config = ConfigFile.new()
+	config.set_value("clock", "Global.global_time_passed", Global.global_time_passed)
+	config.set_value("clock", "Global.global_display_in_game_time", Global.global_display_in_game_time)
+	config.save("user://save.cfg")
+	Global.save_game()

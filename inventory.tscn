@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cxa2xxfdtdfp2"]
+[gd_scene load_steps=34 format=3 uid="uid://cxa2xxfdtdfp2"]
 
 [ext_resource type="Script" uid="uid://bgosmyperx07e" path="res://inventory.gd" id="1_ivhg3"]
 [ext_resource type="Texture2D" uid="uid://bkje7nwkxgyyo" path="res://Cute_Fantasy/Inventory/Content/Background/0.png" id="1_ivl67"]
@@ -28,7 +28,8 @@
 [ext_resource type="Texture2D" uid="uid://b8lu8ayudmhbm" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/10.png" id="25_2me17"]
 [ext_resource type="Texture2D" uid="uid://ca1y4gvhwxt6i" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/11.png" id="26_ejkxj"]
 [ext_resource type="Texture2D" uid="uid://3gng8smuouo0" path="res://Cute_Fantasy/Inventory/Content/Pixel Map Base/3.png" id="27_4d41x"]
-[ext_resource type="FontFile" uid="uid://bhyljqfljmhh" path="res://Fonts/Magnificent.ttf" id="28_ivhg3"]
+[ext_resource type="PackedScene" uid="uid://rcd1nxk0uqph" path="res://character_portrait.tscn" id="28_xp0ck"]
+[ext_resource type="FontFile" uid="uid://bducwj56iwht" path="res://Fonts/Cute_Font.ttf" id="29_ivhg3"]
 [ext_resource type="Texture2D" uid="uid://dctvc356wdp52" path="res://Cute_Fantasy/Inventory/Content/Side Tabs/4.png" id="29_xp0ck"]
 [ext_resource type="Texture2D" uid="uid://crqlvftli8qxa" path="res://Cute_Fantasy/Inventory/Content/Icons/8.png" id="30_4lgwj"]
 
@@ -127,59 +128,88 @@ offset_bottom = 25.0
 scale = Vector2(0.256997, 0.256997)
 script = ExtResource("1_ivhg3")
 
+[node name="TextureRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -54.4753
+offset_top = -81.713
+offset_right = 103.564
+offset_bottom = 66.1288
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(28.2849, 17.0749)
+color = Color(0, 0, 0, 1)
+
 [node name="0" type="Sprite2D" parent="."]
-position = Vector2(579.773, 307.397)
-scale = Vector2(1.92623, 1.34506)
+position = Vector2(1972.3, 1136.91)
+scale = Vector2(6.12861, 4.27952)
 texture = ExtResource("1_ivl67")
 
 [node name="1" type="Sprite2D" parent="."]
-position = Vector2(846.583, 325.431)
-scale = Vector2(1.8147, 1.851)
+position = Vector2(2855.58, 1133.02)
+scale = Vector2(5.77376, 5.88925)
 texture = ExtResource("2_oee3c")
 
 [node name="1" type="Sprite2D" parent="1"]
-position = Vector2(-300.5, -6.67572e-06)
+position = Vector2(-302.303, 0.241298)
 scale = Vector2(0.996, 0.999769)
 texture = ExtResource("2_oee3c")
 
 [node name="PageTurn" type="AnimatedSprite2D" parent="."]
-position = Vector2(767.831, 321.956)
-scale = Vector2(1.7412, 1.87356)
+position = Vector2(2602.65, 1191.39)
+scale = Vector2(5.53991, 5.96103)
 sprite_frames = SubResource("SpriteFrames_6oiia")
 animation = &"PreviousPage"
 
-[node name="3" type="Sprite2D" parent="."]
-position = Vector2(162.136, 179.508)
-scale = Vector2(0.444103, 0.490428)
+[node name="CharacterPortrait" parent="." instance=ExtResource("28_xp0ck")]
+position = Vector2(712.071, 684.833)
+scale = Vector2(17.8206, 17.8206)
+
+[node name="Portrait" type="Sprite2D" parent="."]
+position = Vector2(696.017, 767.26)
+scale = Vector2(1.41299, 1.56038)
 texture = ExtResource("27_4d41x")
 
 [node name="BoxContainer" type="BoxContainer" parent="."]
 layout_mode = 0
-offset_left = 430.819
-offset_top = 496.832
-offset_right = 545.819
-offset_bottom = 580.832
+offset_left = 1241.26
+offset_top = 1603.13
+offset_right = 1434.26
+offset_bottom = 1699.13
+scale = Vector2(3.18166, 3.18166)
 alignment = 1
 vertical = true
 
 [node name="SaveButton" type="Button" parent="BoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("28_ivhg3")
+theme_override_fonts/font = ExtResource("29_ivhg3")
+theme_override_font_sizes/font_size = 41
 text = "Save Game"
 icon = ExtResource("29_xp0ck")
 
 [node name="ExitButton" type="Button" parent="BoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("28_ivhg3")
+theme_override_fonts/font = ExtResource("29_ivhg3")
+theme_override_font_sizes/font_size = 41
 text = "Quit Game"
 icon = ExtResource("30_4lgwj")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 288.371
-offset_top = 108.863
-offset_right = 328.371
-offset_bottom = 148.863
+offset_left = 1680.89
+offset_top = 938.381
+offset_right = 1720.89
+offset_bottom = 978.381
+scale = Vector2(3.18166, 3.18166)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="pressed" from="BoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="BoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

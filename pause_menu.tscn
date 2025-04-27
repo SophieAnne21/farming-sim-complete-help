@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cj5l81ybmj24o"]
+[gd_scene load_steps=5 format=3 uid="uid://cj5l81ybmj24o"]
 
 [ext_resource type="Script" uid="uid://d17ihdv37kaed" path="res://pause_menu.gd" id="1_nwcfo"]
 [ext_resource type="Script" uid="uid://d3wq7a7rxvc01" path="res://save_button.gd" id="2_05uyy"]
-[ext_resource type="FontFile" uid="uid://bhyljqfljmhh" path="res://Fonts/Magnificent.ttf" id="2_p81d2"]
+[ext_resource type="FontFile" uid="uid://dkvvtfd76ul2k" path="res://Fonts/Caballito.otf" id="2_p81d2"]
+[ext_resource type="FontFile" uid="uid://bducwj56iwht" path="res://Fonts/Cute_Font.ttf" id="3_2nc7s"]
 
 [node name="PauseMenuUI" type="CanvasLayer"]
 script = ExtResource("1_nwcfo")
@@ -35,31 +36,59 @@ grow_vertical = 2
 scale = Vector2(11.88, 6.84)
 color = Color(0.670588, 0.380392, 0.380392, 1)
 
+[node name="Label" type="Label" parent="Control/ColorRect"]
+layout_mode = 0
+offset_left = 13.5522
+offset_top = 8.04093
+offset_right = 437.552
+offset_bottom = 245.041
+scale = Vector2(0.16835, 0.16835)
+theme_override_fonts/font = ExtResource("2_p81d2")
+theme_override_font_sizes/font_size = 226
+text = "Paused!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="SaveButton" type="Button" parent="Control/ColorRect"]
 layout_direction = 3
 layout_mode = 2
-offset_left = 13.6801
-offset_top = 32.3099
-offset_right = 59.6801
-offset_bottom = 88.3099
-scale = Vector2(0.374293, 0.374293)
-theme_override_fonts/font = ExtResource("2_p81d2")
-theme_override_font_sizes/font_size = 20
+offset_left = -81.4646
+offset_top = 51.0234
+offset_right = 78.5354
+offset_bottom = 151.023
+scale = Vector2(0.162172, 0.162172)
+theme_override_fonts/font = ExtResource("3_2nc7s")
+theme_override_font_sizes/font_size = 85
 text = "Save"
 flat = true
 script = ExtResource("2_05uyy")
 
 [node name="ExitButton" type="Button" parent="Control/ColorRect"]
 layout_mode = 2
-offset_left = 41.2458
-offset_top = 55.117
-offset_right = 80.2463
-offset_bottom = 112.117
-scale = Vector2(0.393939, 0.393939)
-theme_override_fonts/font = ExtResource("2_p81d2")
-theme_override_font_sizes/font_size = 20
+offset_left = 55.2189
+offset_top = 51.3158
+offset_right = 187.219
+offset_bottom = 151.316
+scale = Vector2(0.158249, 0.158249)
+theme_override_fonts/font = ExtResource("3_2nc7s")
+theme_override_font_sizes/font_size = 100
 text = "Exit"
 flat = true
 
+[node name="Resume" type="Button" parent="Control/ColorRect"]
+layout_direction = 3
+layout_mode = 2
+offset_left = -44.9663
+offset_top = 68.7134
+offset_right = 70.0337
+offset_bottom = 140.713
+scale = Vector2(0.374293, 0.374293)
+theme_override_fonts/font = ExtResource("3_2nc7s")
+theme_override_font_sizes/font_size = 35
+text = "Resume"
+flat = true
+script = ExtResource("2_05uyy")
+
 [connection signal="pressed" from="Control/ColorRect/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Control/ColorRect/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Control/ColorRect/Resume" to="." method="_on_resume_pressed"]

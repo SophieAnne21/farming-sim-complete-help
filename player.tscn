@@ -751,6 +751,13 @@ texture = ExtResource("8_dw050")
 hframes = 80
 vframes = 49
 
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+limit_left = -1020
+limit_top = -1200
+limit_right = 1200
+limit_bottom = 1020
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
@@ -764,14 +771,10 @@ horizontal_alignment = 1
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource("11_urp6f")]
 
-[node name="Pause" parent="." instance=ExtResource("11_ivps1")]
+[node name="Pause" parent="CanvasLayer" instance=ExtResource("11_ivps1")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_ivps1")
 }
 autoplay = "idle_front"
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(27, -14)
-zoom = Vector2(3, 3)
