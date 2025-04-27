@@ -1,4 +1,4 @@
-[gd_scene load_steps=165 format=4 uid="uid://dr2ulqp61qomt"]
+[gd_scene load_steps=168 format=4 uid="uid://dr2ulqp61qomt"]
 
 [ext_resource type="Script" uid="uid://c5m7cd8riev16" path="res://town_map.gd" id="1_8saws"]
 [ext_resource type="Texture2D" uid="uid://djlit4x3k4cbo" path="res://Cute_Fantasy/Town Tileset/tiles/tiles.png" id="1_d14nx"]
@@ -73,9 +73,10 @@
 [ext_resource type="Texture2D" uid="uid://btjhaiq1h7vo1" path="res://Cute_Fantasy/Outdoor decoration/Fountain.png" id="55_2fwls"]
 [ext_resource type="Texture2D" uid="uid://caaas3mseegt5" path="res://Cute_Fantasy/Outdoor decoration/Hay_Bales.png" id="56_4x8ku"]
 [ext_resource type="PackedScene" uid="uid://bsj4qeqmw6knp" path="res://fade.tscn" id="58_01loj"]
-[ext_resource type="FontFile" uid="uid://bhyljqfljmhh" path="res://Fonts/Magnificent.ttf" id="74_orkqv"]
 [ext_resource type="PackedScene" uid="uid://cj5l81ybmj24o" path="res://pause_menu.tscn" id="74_vngdp"]
 [ext_resource type="PackedScene" uid="uid://cxa2xxfdtdfp2" path="res://inventory.tscn" id="75_vpshx"]
+[ext_resource type="FontFile" uid="uid://bducwj56iwht" path="res://Fonts/Cute_Font.ttf" id="76_rvypu"]
+[ext_resource type="Script" uid="uid://darunk6igwyxq" path="res://town_camera.gd" id="76_vpshx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x1oy5"]
 texture = ExtResource("1_d14nx")
@@ -16505,6 +16506,15 @@ sources/12 = SubResource("TileSetAtlasSource_litco")
 sources/13 = SubResource("TileSetAtlasSource_lqrm8")
 sources/14 = SubResource("TileSetAtlasSource_xurte")
 
+[sub_resource type="LabelSettings" id="LabelSettings_vpshx"]
+font = ExtResource("76_rvypu")
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_rvypu"]
+font = ExtResource("76_rvypu")
+outline_size = 2
+shadow_size = 0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uiu36"]
 size = Vector2(56, 13.0859)
 
@@ -16812,29 +16822,43 @@ offset_right = 4.0
 offset_bottom = 9.0
 scale = Vector2(0.296997, 0.287738)
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
-offset_left = 987.0
-offset_top = 15.0
-offset_right = 1027.0
-offset_bottom = 55.0
-scale = Vector2(3.78559, 2.45073)
+[node name="ClockContainer" type="Control" parent="CanvasLayer2"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1030.0
+offset_top = 12.0
+offset_right = 1070.0
+offset_bottom = 52.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2/ClockContainer"]
+layout_mode = 0
+offset_left = -63.0
+offset_top = -3.0
+offset_right = -23.0
+offset_bottom = 37.0
+scale = Vector2(4.49272, 2.25073)
 color = Color(0.235294, 0.235294, 0.235294, 0.54902)
 
-[node name="CurrentDateLabel" type="Label" parent="CanvasLayer2"]
-offset_left = 1011.0
-offset_top = 31.0
-offset_right = 1079.0
-offset_bottom = 62.0
-theme_override_fonts/font = ExtResource("74_orkqv")
-theme_override_font_sizes/font_size = 30
+[node name="DateLabel" type="Label" parent="CanvasLayer2/ClockContainer"]
+layout_mode = 0
+offset_left = -37.0
+offset_top = 6.0
+offset_right = 3.0
+offset_bottom = 48.0
+scale = Vector2(1.28, 1)
+theme_override_fonts/font = ExtResource("76_rvypu")
+theme_override_font_sizes/font_size = 50
+label_settings = SubResource("LabelSettings_vpshx")
+horizontal_alignment = 1
 
-[node name="ClockLabel" type="Label" parent="CanvasLayer2"]
-offset_left = 1011.0
-offset_top = 73.0
-offset_right = 1051.0
-offset_bottom = 104.0
-theme_override_fonts/font = ExtResource("74_orkqv")
-theme_override_font_sizes/font_size = 30
+[node name="ClockLabel" type="Label" parent="CanvasLayer2/ClockContainer"]
+layout_mode = 0
+offset_left = -48.0
+offset_top = 44.0
+offset_right = -8.0
+offset_bottom = 90.0
+theme_override_fonts/font = ExtResource("76_rvypu")
+theme_override_font_sizes/font_size = 50
 
 [node name="Farmer" parent="." groups=["Player"] instance=ExtResource("3_uiu36")]
 position = Vector2(1084, 295)
@@ -16843,10 +16867,21 @@ collision_mask = 109
 speed = 75.0
 
 [node name="Name_Label" type="Label" parent="Farmer"]
-offset_left = -24.0
+offset_left = -60.0
 offset_top = -36.0
-offset_right = 16.0
-offset_bottom = -13.0
+offset_right = -20.0
+offset_bottom = -8.0
+theme_override_fonts/font = ExtResource("76_rvypu")
+theme_override_font_sizes/font_size = 30
+label_settings = SubResource("LabelSettings_rvypu")
+
+[node name="TownCamera" type="Camera2D" parent="Farmer"]
+zoom = Vector2(3, 3)
+limit_left = -550
+limit_top = -575
+limit_right = 1215
+limit_bottom = 880
+script = ExtResource("76_vpshx")
 
 [node name="fade" parent="." instance=ExtResource("58_01loj")]
 

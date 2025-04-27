@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://d2hgba3bqgk2h"]
+[gd_scene load_steps=26 format=3 uid="uid://d2hgba3bqgk2h"]
 
 [ext_resource type="Script" uid="uid://cawqq007cpuxi" path="res://scripts/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://ch11jofc07ash" path="res://Cute_Fantasy/Player/characters/char1.png" id="2_onrkg"]
@@ -10,8 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://br20gy2onycuy" path="res://Cute_Fantasy/Player/clothes/shoes.png" id="7_b26j0"]
 [ext_resource type="Texture2D" uid="uid://bevq0r4axa8lq" path="res://Cute_Fantasy/Player/acc/glasses.png" id="8_dw050"]
 [ext_resource type="FontFile" uid="uid://bhyljqfljmhh" path="res://Fonts/Magnificent.ttf" id="9_b26j0"]
-[ext_resource type="PackedScene" uid="uid://cj5l81ybmj24o" path="res://pause_menu.tscn" id="11_ivps1"]
-[ext_resource type="PackedScene" uid="uid://cxa2xxfdtdfp2" path="res://inventory.tscn" id="11_urp6f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
 size = Vector2(8, 4)
@@ -751,13 +749,6 @@ texture = ExtResource("8_dw050")
 hframes = 80
 vframes = 49
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
-limit_left = -1020
-limit_top = -1200
-limit_right = 1200
-limit_bottom = 1020
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
@@ -768,10 +759,6 @@ offset_bottom = -12.0
 theme_override_fonts/font = ExtResource("9_b26j0")
 theme_override_font_sizes/font_size = 9
 horizontal_alignment = 1
-
-[node name="UI" parent="CanvasLayer" instance=ExtResource("11_urp6f")]
-
-[node name="Pause" parent="CanvasLayer" instance=ExtResource("11_ivps1")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

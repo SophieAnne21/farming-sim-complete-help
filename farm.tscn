@@ -44,10 +44,10 @@
 [ext_resource type="Texture2D" uid="uid://b2dh53xm2h38x" path="res://Cute_Fantasy/Tiles/Water/Water_Stone_Tile_2.png" id="23_wxhy1"]
 [ext_resource type="Texture2D" uid="uid://dcs3rppvxmqns" path="res://Cute_Fantasy/Tiles/Water/Water_Stone_Tile_2_Anim.png" id="24_53c5j"]
 [ext_resource type="PackedScene" uid="uid://bsj4qeqmw6knp" path="res://fade.tscn" id="45_few84"]
-[ext_resource type="Script" uid="uid://cw74ob2hjhv5" path="res://camera_2d.gd" id="47_4rxkw"]
 [ext_resource type="AudioStream" uid="uid://188tbmp8ds6o" path="res://music/ES_Parts Of You (Instrumental Version) - Bird Of Figment - farm.mp3" id="47_ywx61"]
 [ext_resource type="Texture2D" uid="uid://hgsrhxanjx5f" path="res://Cute_Fantasy/Tiles/Bridge/Bridge_Wood.png" id="48_0lfyi"]
 [ext_resource type="FontFile" uid="uid://bducwj56iwht" path="res://Fonts/Cute_Font.ttf" id="48_ceqi4"]
+[ext_resource type="Script" uid="uid://c5tl60sgyw88c" path="res://farm_camera.gd" id="49_0lfyi"]
 [ext_resource type="PackedScene" uid="uid://cxa2xxfdtdfp2" path="res://inventory.tscn" id="49_4rxkw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_edibg"]
@@ -2058,7 +2058,7 @@ collision_layer = 64
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="toTown"]
-position = Vector2(-217.5, 1)
+position = Vector2(-45, 1)
 shape = SubResource("RectangleShape2D_03hsc")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
@@ -2070,7 +2070,6 @@ parameters/looping = true
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
 [node name="UI" parent="CanvasLayer2" instance=ExtResource("49_4rxkw")]
-visible = false
 offset_left = -564.0
 offset_top = 250.0
 offset_right = -564.0
@@ -2140,25 +2139,25 @@ offset_left = -21.0
 offset_top = -41.0
 offset_right = 19.0
 offset_bottom = -18.0
+scale = Vector2(0.72, 0.72)
 theme_override_fonts/font = ExtResource("48_ceqi4")
 theme_override_font_sizes/font_size = 30
 label_settings = SubResource("LabelSettings_4rxkw")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Camera" type="Camera2D" parent="Farmer"]
+[node name="FarmCamera" type="Camera2D" parent="Farmer"]
 zoom = Vector2(3, 3)
-limit_left = -1235
-limit_top = -400
-limit_right = 1175
+limit_left = -1050
+limit_top = -883
+limit_right = 1178
 limit_bottom = 845
-limit_smoothed = true
-script = ExtResource("47_4rxkw")
+script = ExtResource("49_0lfyi")
 
 [node name="SpawnPoints" type="Node" parent="." groups=["SpawnMarker"]]
 
 [node name="SpawnFromTown" type="Marker2D" parent="SpawnPoints" groups=["SpawnMarker"]]
-position = Vector2(-1194, 197)
+position = Vector2(-950, 197)
 
 [node name="SpawnFromFarmhouse" type="Marker2D" parent="SpawnPoints" groups=["SpawnMarker"]]
 position = Vector2(-4, 8)

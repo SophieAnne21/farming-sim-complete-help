@@ -8,11 +8,11 @@ enum Season { SPRING, SUMMER, FALL, WINTER }
 @onready var summer_layer       : TileMapLayer    = $SeasonLayers/SummerLayer
 @onready var fall_layer         : TileMapLayer    = $SeasonLayers/FallLayer
 @onready var winter_layer       : TileMapLayer    = $SeasonLayers/WinterLayer
-@onready var current_date_label : Label           = $CanvasLayer2/CurrentDateLabel
+@onready var current_date_label : Label           = $CanvasLayer2/ClockContainer/DateLabel
 @onready var toFarm             : Area2D          = $toFarm
 @onready var player             : CharacterBody2D = $Farmer
 @onready var overlay            : ColorRect       = $CanvasLayer2/DayNightOverlay
-@onready var clock_label        : Label           = $CanvasLayer2/ClockLabel
+@onready var clock_label        : Label           = $CanvasLayer2/ClockContainer/ClockLabel
 @onready var spawn_from_farmhouse_marker: Marker2D = $SpawnPoints/SpawnFromFarmhouse
 @onready var inventory : Control = $CanvasLayer2/UI
 @onready var pause_menu : CanvasLayer = $CanvasLayer2/Pause
@@ -35,9 +35,13 @@ var days_in_month       = [28,28,28,28,28,28,28,28,28,28,28,28]
 
 # ─── READY ─────────────────────────────────────────────────────────────────────
 func _ready() -> void:
+	Global.load_game()
+
+	await get_tree().process_frame
+	await get_tree().process_frame  # (🔥 We double-wait to let Global settle)
 	
-	change_season()
 	call_deferred("_position_player_at_spawn")
+	change_season()
 	update_date_label()
 	update_clock()
 	fade.play("fade_to_normal")
@@ -103,7 +107,7 @@ func change_season() -> void:
 			current_season_name = "Winter"; winter_layer.visible = true
 
 func update_date_label() -> void:
-	current_date_label.text = "%s (%d)" % [current_season_name, day]
+	current_date_label.text = "%s %d" % [current_season_name, day]
 
 func next_day() -> void:
 	day += 1
@@ -116,27 +120,33 @@ func next_day() -> void:
 
 # ─── DAY/NIGHT OVERLAY ─────────────────────────────────────────────────────────
 func update_day_night_overlay() -> void:
-	var clock_hour = Global.global_time_of_day * 24.0 + 6
-	if clock_hour >= 24:
-		clock_hour -= 24
-
+	if overlay == null:
+		return
+	
+	var clock_hour = Global.global_display_in_game_time
+	if clock_hour >= 24.0:
+		clock_hour -= 24.0
+	
 	var overlay_color: Color
-
+	
+	# Dawn (6 AM - 8 AM)
 	if clock_hour >= 6 and clock_hour < 8:
 		var t = (clock_hour - 6) / 2.0
-		overlay_color = Color(0.1, 0.07, 0.04, 0.4).lerp(Color(0, 0, 0, 0.1), t)
+		overlay_color = Color(0.05, 0.05, 0.1, 0.5).lerp(Color(0, 0, 0, 0.1), t)
+	# Day (8 AM - 18 PM)
 	elif clock_hour >= 8 and clock_hour < 18:
 		overlay_color = Color(0, 0, 0, 0.1)
+	# Dusk (6 PM - 8 PM)
 	elif clock_hour >= 18 and clock_hour < 20:
 		var t = (clock_hour - 18) / 2.0
-		overlay_color = Color(0, 0, 0, 0.1).lerp(Color(0.05, 0.05, 0.1, 0.3), t)
+		overlay_color = Color(0, 0, 0, 0.1).lerp(Color(0.05, 0.05, 0.1, 0.4), t)
+	# Night (8 PM - 6 AM)
 	else:
 		if clock_hour >= 20:
 			var t = (clock_hour - 20) / 10.0
-			overlay_color = Color(0.05, 0.05, 0.1, 0.3).lerp(Color(0, 0, 0, 0.6), t)
 		else:
-			var t = (clock_hour + 4) / 10.0
-			overlay_color = Color(0.05, 0.05, 0.1, 0.3).lerp(Color(0, 0, 0, 0.6), t)
+			var t = (clock_hour - 20) / 10.0 if clock_hour >= 20 else (clock_hour + 4) / 10.0
+			overlay_color = Color(0.05, 0.05, 0.1, 0.4).lerp(Color(0, 0, 0, 0.7), t)
 
 	overlay.color = overlay_color
 
@@ -152,10 +162,6 @@ func _position_player_at_spawn() -> void:
 		Global.save_game()
 	else:
 		player.global_position = Global.player_position
-
-	# 🛡️ Clamp using Global camera limits
-	player.global_position.x = clamp(player.global_position.x, Global.camera_limit_left, Global.camera_limit_right)
-	player.global_position.y = clamp(player.global_position.y, Global.camera_limit_top, Global.camera_limit_bottom)
 
 	# 🛡️ Update Global player position after clamping
 	Global.player_position = player.global_position
@@ -177,7 +183,7 @@ func transition_with_fade(_scene_path: String) -> void:
 # ─── AREA2D TRIGGER ────────────────────────────────────────────────────────────
 func _on_to_farm_body_entered(_body: Node2D) -> void:
 	if _body.is_in_group("Player"):
-		Global.spawn_from = "fromFarmhouse"
+		Global.spawn_from = "fromTown"
 		await transition_with_fade(destinations["toFarm"])
 		get_tree().change_scene_to_file("res://farm.tscn")
 
@@ -189,4 +195,9 @@ func save_game() -> void:
 	config.set_value("clock", "Global.global_time_passed", Global.global_time_passed)
 	config.set_value("clock", "Global.global_display_in_game_time", Global.global_display_in_game_time)
 	config.save("user://save.cfg")
+	var player = get_tree().get_first_node_in_group("Player")
+	if player:
+		Global.player_position = player.global_position
+	else:
+		print("❌ No player found to update position!")
 	Global.save_game()

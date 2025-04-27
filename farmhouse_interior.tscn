@@ -1,4 +1,4 @@
-[gd_scene load_steps=119 format=4 uid="uid://bdhrl444fyuf6"]
+[gd_scene load_steps=118 format=4 uid="uid://bdhrl444fyuf6"]
 
 [ext_resource type="Script" uid="uid://b4ucdcey0v725" path="res://farmhouse_interior.gd" id="1_6i1lr"]
 [ext_resource type="Texture2D" uid="uid://c7cujwxvgfltw" path="res://Cute_Fantasy/House/Buildings/Houses_Interiors/Brick_Wall_Fillers.png" id="1_as8e3"]
@@ -33,7 +33,6 @@
 [ext_resource type="Texture2D" uid="uid://d0acqk1473xqp" path="res://Cute_Fantasy/House/Objects/furniture/wallshelves_shadow.png" id="27_0i1w4"]
 [ext_resource type="Texture2D" uid="uid://c45lnmtjheem6" path="res://Cute_Fantasy/House/Objects/furniture/bathroom.png" id="29_87e0i"]
 [ext_resource type="Texture2D" uid="uid://fmk77verfu4o" path="res://Cute_Fantasy/House/Objects/furniture/bathroom_shadow.png" id="30_ip4hs"]
-[ext_resource type="Script" uid="uid://cw74ob2hjhv5" path="res://camera_2d.gd" id="32_s3eio"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a6qs2"]
 texture = ExtResource("1_as8e3")
@@ -52983,11 +52982,6 @@ position = Vector2(-124, 74)
 [node name="back_wall" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAD2/wYAAAABAAAAAAD2/wcAAAABAAEAAAD3/wYAAgAAAAEAAAD3/wcAAAACAAEAAAD4/wYAAAADAAAAAAD4/wcAAAADAAEAAAD5/wYAAAABAAAAAAD5/wcAAAABAAEAAAD6/wYAAAACAAAAAAD6/wcAAAACAAEAAAD7/wYAAAADAAAAAAD7/wcAAAADAAEAAAD8/wYAAAAAAAAAAAD8/wcAAAAAAAEAAAD9/wYAAAABAAAAAAD9/wcAAAABAAEAAAD+/wYAAAACAAAAAAD+/wcAAAACAAEAAAD//wYAAAADAAAAAAD//wcAAAADAAEAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAEAAAABAAYAAAABAAAAAAABAAcAAAABAAEAAAACAAYAAAAAAAAAAAACAAcAAAAAAAEAAAADAAYAAAABAAAAAAADAAcAAAABAAEAAAAEAAYAAAACAAAAAAAEAAcAAAACAAEAAAD3/wUAAgAAAAAAAAD1/wYAAAAAAAAAAAD1/wcAAAAAAAEAAAAFAAYAAAADAAAAAAAFAAcAAAADAAEAAAA=")
 tile_set = SubResource("TileSet_o2lhs")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-40, 21)
-zoom = Vector2(3.5, 3.5)
-script = ExtResource("32_s3eio")
 
 [node name="ToFarm" type="Area2D" parent="."]
 script = ExtResource("10_8yrok")

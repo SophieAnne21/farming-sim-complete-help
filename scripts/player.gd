@@ -12,7 +12,6 @@ extends CharacterBody2D
 @onready var accessories      : Sprite2D        = $Skeleton/accessories
 @onready var name_label       : Label           = $Name_Label
 @onready var animated_sprite  : AnimationPlayer = $AnimationPlayer
-@onready var inventory_panel : Control = $"../CanvasLayer2/UI"
 
 @export var speed              : float   = 100.0
 @export var bridge_tilemap     : TileMap
@@ -22,16 +21,12 @@ var direction: String = "down"
 
 func _ready():
 	print("✅ Player.gd ready. Global position before:", Global.player_position)
-	print("✅ Player.gd ready. Scene:", get_tree().current_scene)
 
+	# Set player to loaded saved position
+	global_position = Global.player_position
+	print("✅ Player final position after loading:", global_position)
 	var root = get_tree().get_current_scene()
 
-	# Inventory panel lookup
-	inventory_panel = root.get_node_or_null("CanvasLayer/UI")
-	if inventory_panel == null:
-		inventory_panel = root.get_node_or_null("CanvasLayer/UI")
-	if inventory_panel == null:
-		push_warning("[Player] Inventory panel not found; skipping checks.")
 
 	# Wait one frame so all other _ready() calls finish
 	await get_tree().process_frame
@@ -58,22 +53,12 @@ func _ready():
 		global_position = Global.player_position
 		print("📍 Loaded saved player position:", global_position)
 
-	# 🚨 RIGHT HERE after positioning the player:
-	player_clamp_to_camera_limits()
-
 	initialize_player()
 	print("✅ Player final position:", global_position)
 
-func player_clamp_to_camera_limits() -> void:
-	global_position.x = clamp(global_position.x, Global.camera_limit_left + 16, Global.camera_limit_right - 16)
-	global_position.y = clamp(global_position.y, Global.camera_limit_top + 16, Global.camera_limit_bottom - 16)
-
-	Global.player_position = global_position  # Update saved position after clamping
-	print("📍 Player clamped to:", global_position)
-
 
 func _physics_process(delta: float) -> void:
-	if inventory_panel != null and (inventory_panel.visible):
+	if Global.is_game_paused():
 		velocity = Vector2.ZERO
 	else:
 		var input_dir = Vector2(
@@ -84,19 +69,15 @@ func _physics_process(delta: float) -> void:
 			input_dir = input_dir.normalized()
 			velocity = input_dir * speed
 			_update_run_animation(input_dir)
+
 			if abs(input_dir.x) > abs(input_dir.y):
-				if input_dir.x > 0:
-					direction = "right"
-				else:
-					direction = "left"
+				direction = "right" if input_dir.x > 0 else "left"
 			else:
-				if input_dir.y > 0:
-					direction = "down"
-				else:
-					direction = "up"
+				direction = "down" if input_dir.y > 0 else "up"
 		else:
 			velocity = Vector2.ZERO
 			_play_idle_animation()
+
 	move_and_slide()
 
 func _update_run_animation(input_dir: Vector2) -> void:

@@ -31,3 +31,11 @@ func _on_exit_button_pressed() -> void:
 func _on_resume_pressed() -> void:
 	hide()
 	print("↩️ Returning to game!")
+	
+func open_pause_menu():
+	visible = true
+	Global.is_pause_menu_open = true
+
+func close_pause_menu():
+	visible = false
+	Global.is_pause_menu_open = false

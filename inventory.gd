@@ -4,30 +4,32 @@ extends Control
 @onready var exit_button = $BoxContainer/ExitButton
 
 func _ready() -> void:
-	$CharacterPortrait.update_portrait_from_global()
 	hide()
+	$CharacterPortrait.update_portrait_from_global()
 
 func _on_save_button_pressed() -> void:
 	print("✅ Save button pressed!")
-	
-	# Find player and save position
+
 	var player = get_tree().get_first_node_in_group("Player")
 	if player:
+		print("🎯 Player found!")
+		print("📍 Actual live player position:", player.global_position)
 		Global.player_position = player.global_position
-		print("📍 Player position saved at:", Global.player_position)
 	else:
-		print("❌ Player not found in 'Player' group — not saved")
-	
-	# Save clock variables
-	Global.global_time_passed = Global.global_time_passed  # Already updating in _process()
-	Global.global_display_in_game_time = Global.global_display_in_game_time  # Same
-	
-	# Save everything
-	Global.save_game()
-	print("💾 Game saved successfully! Current clock time:", Global.global_display_in_game_time)
+		print("❌ No player found in 'Player' group!")
 
+	print("📂 Global.player_position BEFORE saving:", Global.player_position)
+	Global.save_game()
 
 
 func _on_exit_button_pressed() -> void:
 	print("👋 Exit button pressed!")
 	get_tree().quit()
+	
+func open_inventory():
+	visible = true
+	Global.is_inventory_open = true
+
+func close_inventory():
+	visible = false
+	Global.is_inventory_open = false

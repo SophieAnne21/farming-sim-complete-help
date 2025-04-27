@@ -10,6 +10,12 @@ var player: CharacterBody2D
 
 func _ready() -> void:
 	make_current()
+	
+	limit_left = Global.camera_limit_left
+	limit_right = Global.camera_limit_right
+	limit_top = Global.camera_limit_top
+	limit_bottom = Global.camera_limit_bottom
+	
 	var found_node = get_tree().get_first_node_in_group("Player")
 
 	if found_node is CharacterBody2D:

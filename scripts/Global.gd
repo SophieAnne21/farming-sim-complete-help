@@ -21,6 +21,9 @@ var camera_limit_right: float = 0.0
 var camera_limit_top: float = 0.0
 var camera_limit_bottom: float = 0.0
 
+var is_inventory_open: bool = false
+var is_pause_menu_open: bool = false
+
 
 var key = "SimpleSaveLoad"
 var player_position: Vector2 = Vector2(0, 0)
@@ -257,19 +260,16 @@ func set_defaults():
 	selected_acc_color = Color(1, 1, 1)
 
 # === SAVE GAME ===
+# === SAVE GAME ===
 func save_game() -> void:
 	if typeof(player_name) != TYPE_STRING:
 		print("🚨 Invalid player name during save! Got:", player_name)
 		player_name = "Check the Mirror"
 
 	var config = ConfigFile.new()
+
+	# --- Player Data ---
 	config.set_value("Player", "position", player_position)
-	config.set_value("State", "last_scene", last_scene)
-	config.set_value("Clock", "time_passed", time_passed)
-	config.set_value("Clock", "global_display_in_game_time", global_display_in_game_time)
-	
-	config.set_value("Player", "position", player_position)
-	config.set_value("State", "last_scene", last_scene)
 	config.set_value("Player", "name", player_name)
 	config.set_value("Player", "skin", selected_skin)
 	config.set_value("Player", "eyes", selected_eyes)
@@ -280,6 +280,7 @@ func save_game() -> void:
 	config.set_value("Player", "shoes", selected_shoes)
 	config.set_value("Player", "accessory", selected_acc)
 
+	# --- Player Colors ---
 	config.set_value("Colors", "skin", selected_skin_color.to_html())
 	config.set_value("Colors", "eyes", selected_eyes_color.to_html())
 	config.set_value("Colors", "hair", selected_hair_color.to_html())
@@ -288,17 +289,23 @@ func save_game() -> void:
 	config.set_value("Colors", "pants", selected_pants_color.to_html())
 	config.set_value("Colors", "shoes", selected_shoes_color.to_html())
 	config.set_value("Colors", "accessory", selected_acc_color.to_html())
-	
+
+	# --- Clock Data ---
 	config.set_value("Clock", "time_passed", time_passed)
 	config.set_value("Clock", "global_display_in_game_time", global_display_in_game_time)
 
+	# --- Game State ---
+	config.set_value("State", "last_scene", last_scene)
 
+	# --- Save to File ---
 	var result := config.save_encrypted_pass("user://settings.cfg", key)
 	if result == OK:
 		print("💾 Game saved successfully!")
 	else:
 		print("❌ Save failed with error code:", result)
 
+
+# === LOAD GAME ===
 # === LOAD GAME ===
 func load_game() -> bool:
 	var config = ConfigFile.new()
@@ -308,7 +315,7 @@ func load_game() -> bool:
 		print("📭 No save file found or failed to load.")
 		return false
 
-	# Load player position
+	# --- Player Data ---
 	if config.has_section_key("Player", "position"):
 		var saved_position = config.get_value("Player", "position", Vector2.ZERO)
 		if typeof(saved_position) == TYPE_VECTOR2:
@@ -317,15 +324,7 @@ func load_game() -> bool:
 		else:
 			print("❌ Loaded position was invalid:", saved_position)
 	else:
-		print("⚠️ No saved player position. Defaulting to (0,0)")
-
-	# Load clock data
-	time_passed = config.get_value("Clock", "time_passed", 0.0)
-	global_display_in_game_time = config.get_value("Clock", "global_display_in_game_time", 6.0)
-
-	last_scene = config.get_value("State", "last_scene", "res://farm.tscn")
-
-	print("📂 Loaded game state from save.")
+		print("⚠️ No saved player position found. Defaulting to (0,0)")
 
 	player_name = config.get_value("Player", "name", "Check the Mirror")
 	selected_skin = config.get_value("Player", "skin", "")
@@ -337,6 +336,7 @@ func load_game() -> bool:
 	selected_shoes = config.get_value("Player", "shoes", "")
 	selected_acc = config.get_value("Player", "accessory", "")
 
+	# --- Player Colors ---
 	selected_skin_color = Color(config.get_value("Colors", "skin", "#ffffff"))
 	selected_eyes_color = Color(config.get_value("Colors", "eyes", "#ffffff"))
 	selected_hair_color = Color(config.get_value("Colors", "hair", "#ffffff"))
@@ -346,14 +346,16 @@ func load_game() -> bool:
 	selected_shoes_color = Color(config.get_value("Colors", "shoes", "#ffffff"))
 	selected_acc_color = Color(config.get_value("Colors", "accessory", "#ffffff"))
 
-	print("📂 Loaded player name:", player_name)
+	# --- Clock Data ---
+	time_passed = config.get_value("Clock", "time_passed", 0.0)
+	global_display_in_game_time = config.get_value("Clock", "global_display_in_game_time", 6.0)
+
+	# --- Game State ---
+	last_scene = config.get_value("State", "last_scene", "res://farm.tscn")
+
+	print("📂 Loaded game state successfully.")
 	return true
-	
-	var loaded_position = config.get_value("Player", "position", Vector2.ZERO)
-	if typeof(loaded_position) == TYPE_VECTOR2:
-		player_position = loaded_position
-	else:
-		print("❌ Loaded position was invalid:", loaded_position)
+
 
 # === Apply Pastel Shader to a Sprite ===
 func apply_pastel_shader(sprite: Node, color: Color) -> void:
@@ -366,3 +368,6 @@ func apply_pastel_shader(sprite: Node, color: Color) -> void:
 	pastel_material.set_shader_parameter("tint_color", color)
 	sprite.material = pastel_material
 	
+	
+func is_game_paused() -> bool:
+	return is_inventory_open or is_pause_menu_open
