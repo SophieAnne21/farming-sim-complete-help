@@ -2065,7 +2065,6 @@ autoplay = true
 parameters/looping = true
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="UI" parent="CanvasLayer2" instance=ExtResource("49_4rxkw")]
 offset_left = 13.0

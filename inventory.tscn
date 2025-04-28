@@ -135,13 +135,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -54.4753
-offset_top = -81.713
-offset_right = 103.564
-offset_bottom = 66.1288
+offset_left = -622.575
+offset_top = -684.833
+offset_right = -464.536
+offset_bottom = -536.991
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(28.2849, 17.0749)
+scale = Vector2(35.4445, 24.5458)
 color = Color(0.716296, 0.716296, 0.716296, 0.337255)
 
 [node name="0" type="Sprite2D" parent="."]
@@ -218,6 +218,7 @@ scale = Vector2(3.18166, 3.18166)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
+visible = false
 
 [node name="Panel" type="Panel" parent="CanvasLayer"]
 offset_left = 607.999

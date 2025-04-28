@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cthjddu3x0ap1" path="res://inventory_slot.gd" id="1_4r0iv"]
 
 [node name="Button" type="Button"]
+visible = false
 offset_right = 8.0
 offset_bottom = 8.0
 script = ExtResource("1_4r0iv")
