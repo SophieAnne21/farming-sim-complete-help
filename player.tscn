@@ -1,6 +1,7 @@
 [gd_scene load_steps=26 format=3 uid="uid://d2hgba3bqgk2h"]
 
 [ext_resource type="Script" uid="uid://cawqq007cpuxi" path="res://scripts/player.gd" id="1_onrkg"]
+[ext_resource type="FontFile" uid="uid://bducwj56iwht" path="res://Fonts/Cute_Font.ttf" id="2_n7ghd"]
 [ext_resource type="Texture2D" uid="uid://ch11jofc07ash" path="res://Cute_Fantasy/Player/characters/char1.png" id="2_onrkg"]
 [ext_resource type="Texture2D" uid="uid://be8nfdoj2wsre" path="res://Cute_Fantasy/Player/hair/curly.png" id="3_hqtel"]
 [ext_resource type="Shader" uid="uid://dnkpjotasy8hr" path="res://scripts/item.gdshader" id="3_nvl01"]
@@ -9,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://2v4u4oj7lnl4" path="res://Cute_Fantasy/Player/clothes/pants.png" id="6_dw050"]
 [ext_resource type="Texture2D" uid="uid://br20gy2onycuy" path="res://Cute_Fantasy/Player/clothes/shoes.png" id="7_b26j0"]
 [ext_resource type="Texture2D" uid="uid://bevq0r4axa8lq" path="res://Cute_Fantasy/Player/acc/glasses.png" id="8_dw050"]
-[ext_resource type="FontFile" uid="uid://bhyljqfljmhh" path="res://Fonts/Magnificent.ttf" id="9_b26j0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
 size = Vector2(8, 4)
@@ -684,13 +684,15 @@ _data = {
 script = ExtResource("1_onrkg")
 
 [node name="NameLabel" type="Label" parent="."]
-offset_left = -35.0
-offset_top = -35.0
-offset_right = 32.0
-offset_bottom = -12.0
-theme_override_fonts/font = ExtResource("9_b26j0")
-theme_override_font_sizes/font_size = 9
+offset_left = -12.0
+offset_top = -17.0
+offset_right = 55.0
+offset_bottom = 6.0
+scale = Vector2(0.24, 0.24)
+theme_override_fonts/font = ExtResource("2_n7ghd")
+theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 texture_filter = 1

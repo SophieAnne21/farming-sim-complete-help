@@ -4,7 +4,7 @@ extends Node2D
 @onready var fade                 = $fade/AnimationPlayer
 @onready var toTown               = $toTown
 @onready var toFarmhouse          = $toFarmhouse
-@onready var enterPromptFarmhouse = $CanvasLayer/EnterPromptFarmhouse
+@onready var enterPromptFarmhouse = $EnterPrompt/EnterPromptFarmhouse
 @onready var music                = $Music
 @onready var body                 = $Farmer
 @onready var overlay              = $CanvasLayer2/DayNightOverlay
