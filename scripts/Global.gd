@@ -33,6 +33,7 @@ var spawn_from: String = ""
 
 var current_season_name: String = "Spring"
 
+
 func _ready():
 	print("✅ Global.gd ready. Scene tree is active.")
 	

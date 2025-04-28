@@ -3,19 +3,19 @@ extends Node2D
 enum Season { SPRING, SUMMER, FALL, WINTER }
 
 # ─── NODE REFERENCES ──────────────────────────────────────────────────────────
-@onready var fade               : AnimationPlayer = $fade/AnimationPlayer
-@onready var spring_layer       : TileMapLayer    = $SeasonLayers/SpringLayer
-@onready var summer_layer       : TileMapLayer    = $SeasonLayers/SummerLayer
-@onready var fall_layer         : TileMapLayer    = $SeasonLayers/FallLayer
-@onready var winter_layer       : TileMapLayer    = $SeasonLayers/WinterLayer
-@onready var current_date_label : Label           = $CanvasLayer2/ClockContainer/DateLabel
-@onready var toFarm             : Area2D          = $toFarm
-@onready var player             : CharacterBody2D = $Farmer
-@onready var overlay            : ColorRect       = $CanvasLayer2/DayNightOverlay
-@onready var clock_label        : Label           = $CanvasLayer2/ClockContainer/ClockLabel
+@onready var fade               : AnimationPlayer  = $fade/AnimationPlayer
+@onready var spring_layer       : TileMapLayer     = $SeasonLayers/SpringLayer
+@onready var summer_layer       : TileMapLayer     = $SeasonLayers/SummerLayer
+@onready var fall_layer         : TileMapLayer     = $SeasonLayers/FallLayer
+@onready var winter_layer       : TileMapLayer     = $SeasonLayers/WinterLayer
+@onready var current_date_label : Label            = $CanvasLayer2/ClockContainer/DateLabel
+@onready var toFarm             : Area2D           = $toFarm
+@onready var player             : CharacterBody2D  = $Farmer
+@onready var overlay            : ColorRect        = $CanvasLayer2/DayNightOverlay
+@onready var clock_label        : Label            = $CanvasLayer2/ClockContainer/ClockLabel
 @onready var spawn_from_farmhouse_marker: Marker2D = $SpawnPoints/SpawnFromFarmhouse
-@onready var inventory : Control = $CanvasLayer2/UI
-@onready var pause_menu : CanvasLayer = $CanvasLayer2/Pause
+@onready var inventory          : Control          = $CanvasLayer2/UI
+@onready var music               = $Music
 
 const TOGGLE_MENU : String = "toggle_menu"
 const TOGGLE_INV  : String = "toggle_inventory"
@@ -48,11 +48,9 @@ func _ready() -> void:
 
 # ─── PROCESS ───────────────────────────────────────────────────────────────────
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed(TOGGLE_MENU):
-		pause_menu.visible = not pause_menu.visible
 	if Input.is_action_just_pressed(TOGGLE_INV):
 		inventory.visible = not inventory.visible
-	if pause_menu.visible or inventory.visible:
+	if inventory.visible:
 		return
 	
 	Global.global_time_passed += delta
@@ -143,8 +141,6 @@ func update_day_night_overlay() -> void:
 	# Night (8 PM - 6 AM)
 	else:
 		if clock_hour >= 20:
-			var t = (clock_hour - 20) / 10.0
-		else:
 			var t = (clock_hour - 20) / 10.0 if clock_hour >= 20 else (clock_hour + 4) / 10.0
 			overlay_color = Color(0.05, 0.05, 0.1, 0.4).lerp(Color(0, 0, 0, 0.7), t)
 
@@ -195,7 +191,6 @@ func save_game() -> void:
 	config.set_value("clock", "Global.global_time_passed", Global.global_time_passed)
 	config.set_value("clock", "Global.global_display_in_game_time", Global.global_display_in_game_time)
 	config.save("user://save.cfg")
-	var player = get_tree().get_first_node_in_group("Player")
 	if player:
 		Global.player_position = player.global_position
 	else:

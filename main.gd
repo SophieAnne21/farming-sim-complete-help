@@ -55,7 +55,7 @@ func _ready() -> void:
 
 	fade.play("fade_to_normal")
 	fade.get_parent().get_node("ColorRect").color.a = 255
-	inventory.visible = false
+
 
 	load_game()
 
@@ -67,6 +67,11 @@ func _ready() -> void:
 
 # ─── PROCESS ───────────────────────────────────────────────────────────────────
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed(TOGGLE_INV):
+		inventory.visible = not inventory.visible
+	if inventory.visible:
+		return
+	
 	Global.global_time_passed += delta
 	Global.global_display_in_game_time += (Global.CYCLE_HOURS / Global.SECONDS_PER_DAY) * delta
 
@@ -120,19 +125,19 @@ func _save_before_quit() -> void:
 # ─── SCENE TRANSITION ──────────────────────────────────────────────────────────
 func transition_with_fade(scene_path: String) -> void:
 	var player = get_tree().get_first_node_in_group("Player")
-	if player != null:
+	if player:
 		Global.player_position = player.global_position
 	else:
 		printerr("❌ Player not found during transition!")
 
 	Global.last_scene = scene_path
-	save_game()
 	Global.save_game()
-
+	
 	await fade_out_music()
 	fade.play("fade_to_black")
 	await fade.animation_finished
 	get_tree().change_scene_to_file(scene_path)
+
 
 func fade_out_music() -> void:
 	if music == null or not music.playing:
@@ -183,10 +188,22 @@ func _position_player_at_spawn() -> void:
 		Global.spawn_from = ""
 		print("✔️ RETURN from Town at:", target)
 		return
+
+	if Global.spawn_from == "fromFarmhouse":
+		var target = spawn_from_Farmhouse_marker.global_position
+		body.global_position = target
+		Global.player_position = target
+		save_game()
+		Global.save_game()
+		Global.spawn_from = ""
+		print("✔️ RETURN from Farmhouse at:", target)
+		return
 		
+	# If no special spawn, use last saved player position
 	body.global_position = Global.player_position
 	print("↩️ Loaded saved player position:", Global.player_position)
 	Global.spawn_from = ""
+
 
 # ─── CLOCK HELPERS ─────────────────────────────────────────────────────────────
 func update_day_night_overlay() -> void:
@@ -213,8 +230,6 @@ func update_day_night_overlay() -> void:
 	# Night (8 PM - 6 AM)
 	else:
 		if clock_hour >= 20:
-			var t = (clock_hour - 20) / 10.0
-		else:
 			var t = (clock_hour - 20) / 10.0 if clock_hour >= 20 else (clock_hour + 4) / 10.0
 			overlay_color = Color(0.05, 0.05, 0.1, 0.4).lerp(Color(0, 0, 0, 0.7), t)
 
@@ -243,15 +258,25 @@ func force_end_of_day() -> void:
 	time_of_day = 0.0
 
 func save_game() -> void:
-	var cfg = ConfigFile.new()
-	cfg.set_value("GameState", "time_passed", time_passed)
-	if cfg.save_encrypted_pass("user://save.cfg", "SimpleSaveLoad") != OK:
-		printerr("❌ Failed to save clock")
+	var config = ConfigFile.new()
+	config.set_value("clock", "Global.global_time_passed", Global.global_time_passed)
+	config.set_value("clock", "Global.global_display_in_game_time", Global.global_display_in_game_time)
+
+	# Save the player position if available
+	var player = get_tree().get_first_node_in_group("Player")
+	if player:
+		Global.player_position = player.global_position
+	else:
+		print("❌ No player found to update position!")
+
+	# Save encrypted
+	config.save_encrypted_pass("user://save.cfg", "SimpleSaveLoad")  # <<< encrypted version now
+	
 
 func load_game() -> void:
 	var cfg = ConfigFile.new()
-	if cfg.load_encrypted_pass("user://save.cfg", "SimpleSaveLoad") == OK:
-		time_passed = cfg.get_value("GameState", "time_passed", time_passed)
+	if cfg.load_encrypted_pass("user://save.cfg", "SimpleSaveLoad") == OK:  # <<< encrypted load now
+		time_passed = cfg.get_value("clock", "Global.global_time_passed", time_passed)
 		time_of_day = fposmod(time_passed / seconds_per_day, 1.0)
 	else:
 		print("⚠️ No saved clock data found.")

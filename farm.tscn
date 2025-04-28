@@ -1,4 +1,4 @@
-[gd_scene load_steps=123 format=4 uid="uid://uc1oqvhlpdlu"]
+[gd_scene load_steps=122 format=4 uid="uid://uc1oqvhlpdlu"]
 
 [ext_resource type="Texture2D" uid="uid://dw3qulwnetcro" path="res://Cute_Fantasy/Tiles/FarmLand/FarmLand_Wet_Tile.png" id="1_bw225"]
 [ext_resource type="Script" uid="uid://bp1b8xcymqrrj" path="res://main.gd" id="1_tuxgk"]
@@ -1925,9 +1925,6 @@ size = Vector2(41, 66)
 font = ExtResource("48_ceqi4")
 font_size = 40
 
-[sub_resource type="LabelSettings" id="LabelSettings_4rxkw"]
-font = ExtResource("48_ceqi4")
-
 [node name="main" type="Node2D"]
 position = Vector2(-1240, 58)
 script = ExtResource("1_tuxgk")
@@ -2061,19 +2058,19 @@ collision_mask = 2
 position = Vector2(-45, 1)
 shape = SubResource("RectangleShape2D_03hsc")
 
-[node name="Music" type="AudioStreamPlayer" parent="."]
+[node name="Music" type="AudioStreamPlayer" parent="." groups=["Music"]]
 stream = ExtResource("47_ywx61")
-volume_db = -23.524
+volume_db = -25.0
 autoplay = true
 parameters/looping = true
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
 [node name="UI" parent="CanvasLayer2" instance=ExtResource("49_4rxkw")]
-offset_left = -564.0
-offset_top = 250.0
-offset_right = -564.0
-offset_bottom = 250.0
+offset_left = 13.0
+offset_top = 21.0
+offset_right = 13.0
+offset_bottom = 21.0
 
 [node name="DayNightOverlay" type="ColorRect" parent="CanvasLayer2"]
 anchors_preset = 15
@@ -2133,18 +2130,6 @@ position = Vector2(806, 283)
 collision_layer = 2
 collision_mask = 109
 speed = 75.0
-
-[node name="Name_Label" type="Label" parent="Farmer"]
-offset_left = -21.0
-offset_top = -41.0
-offset_right = 19.0
-offset_bottom = -18.0
-scale = Vector2(0.72, 0.72)
-theme_override_fonts/font = ExtResource("48_ceqi4")
-theme_override_font_sizes/font_size = 30
-label_settings = SubResource("LabelSettings_4rxkw")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="FarmCamera" type="Camera2D" parent="Farmer"]
 zoom = Vector2(3, 3)

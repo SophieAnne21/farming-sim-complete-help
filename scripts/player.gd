@@ -10,7 +10,7 @@ extends CharacterBody2D
 @onready var pants            : Sprite2D        = $Skeleton/pants
 @onready var shoes            : Sprite2D        = $Skeleton/shoes
 @onready var accessories      : Sprite2D        = $Skeleton/accessories
-@onready var name_label       : Label           = $Name_Label
+@onready var name_label       : Label           = $NameLabel
 @onready var animated_sprite  : AnimationPlayer = $AnimationPlayer
 
 @export var speed              : float   = 100.0
@@ -57,7 +57,7 @@ func _ready():
 	print("✅ Player final position:", global_position)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Global.is_game_paused():
 		velocity = Vector2.ZERO
 	else:

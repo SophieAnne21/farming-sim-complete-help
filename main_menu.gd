@@ -38,8 +38,9 @@ func _on_load_game_button_pressed():
 		print("⚠️ No save file found. Starting new game.")
 		get_tree().change_scene_to_file("res://character_creator.tscn")
 
-func _on_settings_button_pressed() -> void:
-	pass  # Hook up a future settings menu here
+func _on_settings_button_pressed():
+	var settings_menu = preload("res://SettingsMenu.tscn").instantiate()
+	add_child(settings_menu)
 
 func _on_quit_button_pressed() -> void:
 	get_tree().quit()

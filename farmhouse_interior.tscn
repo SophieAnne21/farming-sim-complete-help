@@ -52936,7 +52936,7 @@ sources/1 = SubResource("TileSetAtlasSource_vc2tc")
 sources/2 = SubResource("TileSetAtlasSource_l1rgq")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k1gce"]
-size = Vector2(20, 29)
+size = Vector2(20, 81)
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(101, -84)
@@ -52987,7 +52987,7 @@ tile_set = SubResource("TileSet_o2lhs")
 script = ExtResource("10_8yrok")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ToFarm"]
-position = Vector2(-136, 96.5)
+position = Vector2(-136, 122.5)
 shape = SubResource("RectangleShape2D_k1gce")
 
 [node name="fade" parent="." instance=ExtResource("11_k1gce")]
@@ -52995,7 +52995,15 @@ shape = SubResource("RectangleShape2D_k1gce")
 [node name="SpawnMarker" type="Node" parent="."]
 
 [node name="SpawnFromFarm" type="Marker2D" parent="SpawnMarker" groups=["SpawnMarker"]]
-position = Vector2(-20, -2)
+position = Vector2(-6, -9)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-64, 27)
+offset = Vector2(23.295, 0)
+zoom = Vector2(4, 3.9)
+limit_top = -136
+limit_bottom = 30
+limit_smoothed = true
 
 [connection signal="body_entered" from="ToFarm" to="." method="_on_to_farm_body_entered"]
 [connection signal="body_exited" from="ToFarm" to="." method="_on_to_farm_body_exited"]

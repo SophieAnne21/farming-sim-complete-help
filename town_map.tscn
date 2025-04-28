@@ -1,4 +1,4 @@
-[gd_scene load_steps=168 format=4 uid="uid://dr2ulqp61qomt"]
+[gd_scene load_steps=167 format=4 uid="uid://dr2ulqp61qomt"]
 
 [ext_resource type="Script" uid="uid://c5m7cd8riev16" path="res://town_map.gd" id="1_8saws"]
 [ext_resource type="Texture2D" uid="uid://djlit4x3k4cbo" path="res://Cute_Fantasy/Town Tileset/tiles/tiles.png" id="1_d14nx"]
@@ -73,7 +73,7 @@
 [ext_resource type="Texture2D" uid="uid://btjhaiq1h7vo1" path="res://Cute_Fantasy/Outdoor decoration/Fountain.png" id="55_2fwls"]
 [ext_resource type="Texture2D" uid="uid://caaas3mseegt5" path="res://Cute_Fantasy/Outdoor decoration/Hay_Bales.png" id="56_4x8ku"]
 [ext_resource type="PackedScene" uid="uid://bsj4qeqmw6knp" path="res://fade.tscn" id="58_01loj"]
-[ext_resource type="PackedScene" uid="uid://cj5l81ybmj24o" path="res://pause_menu.tscn" id="74_vngdp"]
+[ext_resource type="AudioStream" uid="uid://ddr0lqo1w7l7c" path="res://music/ES_Between Love and Hate (Instrumental Version) - Iso Indies - town.mp3" id="74_vpshx"]
 [ext_resource type="PackedScene" uid="uid://cxa2xxfdtdfp2" path="res://inventory.tscn" id="75_vpshx"]
 [ext_resource type="FontFile" uid="uid://bducwj56iwht" path="res://Fonts/Cute_Font.ttf" id="76_rvypu"]
 [ext_resource type="Script" uid="uid://darunk6igwyxq" path="res://town_camera.gd" id="76_vpshx"]
@@ -16510,11 +16510,6 @@ sources/14 = SubResource("TileSetAtlasSource_xurte")
 font = ExtResource("76_rvypu")
 font_size = 40
 
-[sub_resource type="LabelSettings" id="LabelSettings_rvypu"]
-font = ExtResource("76_rvypu")
-outline_size = 2
-shadow_size = 0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uiu36"]
 size = Vector2(56, 13.0859)
 
@@ -16801,8 +16796,6 @@ collision_enabled = false
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
-[node name="Pause" parent="CanvasLayer2" instance=ExtResource("74_vngdp")]
-
 [node name="DayNightOverlay" type="ColorRect" parent="CanvasLayer2"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -16816,6 +16809,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.0117647)
 
 [node name="UI" parent="CanvasLayer2" instance=ExtResource("75_vpshx")]
+visible = false
 offset_left = 4.0
 offset_top = 9.0
 offset_right = 4.0
@@ -16860,20 +16854,16 @@ offset_bottom = 90.0
 theme_override_fonts/font = ExtResource("76_rvypu")
 theme_override_font_sizes/font_size = 50
 
+[node name="Music" type="AudioStreamPlayer" parent="." groups=["Music"]]
+stream = ExtResource("74_vpshx")
+volume_db = -25.0
+autoplay = true
+
 [node name="Farmer" parent="." groups=["Player"] instance=ExtResource("3_uiu36")]
 position = Vector2(1084, 295)
 collision_layer = 3
 collision_mask = 109
 speed = 75.0
-
-[node name="Name_Label" type="Label" parent="Farmer"]
-offset_left = -60.0
-offset_top = -36.0
-offset_right = -20.0
-offset_bottom = -8.0
-theme_override_fonts/font = ExtResource("76_rvypu")
-theme_override_font_sizes/font_size = 30
-label_settings = SubResource("LabelSettings_rvypu")
 
 [node name="TownCamera" type="Camera2D" parent="Farmer"]
 zoom = Vector2(3, 3)

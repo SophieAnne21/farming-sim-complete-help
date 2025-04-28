@@ -165,9 +165,19 @@ scale = Vector2(5.53991, 5.96103)
 sprite_frames = SubResource("SpriteFrames_6oiia")
 animation = &"PreviousPage"
 
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_left = 408.565
+offset_top = 517.516
+offset_right = 448.565
+offset_bottom = 557.516
+scale = Vector2(14.6967, 12.362)
+color = Color(0.676415, 0.678936, 0.685826, 1)
+
 [node name="CharacterPortrait" parent="." instance=ExtResource("28_xp0ck")]
 position = Vector2(712.071, 684.833)
-scale = Vector2(17.8206, 17.8206)
+scale = Vector2(18.001, 18.001)
 
 [node name="Portrait" type="Sprite2D" parent="."]
 position = Vector2(696.017, 767.26)
@@ -205,11 +215,6 @@ offset_top = 938.381
 offset_right = 1720.89
 offset_bottom = 978.381
 scale = Vector2(3.18166, 3.18166)
-
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [connection signal="pressed" from="BoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="BoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
