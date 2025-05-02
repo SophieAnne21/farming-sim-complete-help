@@ -34,7 +34,7 @@ func _process(_delta):
 			Global.player_position = player.position
 
 		# flag the farm scene: on load it'll read SpawnFromFarm
-		Global.spawn_from = "fromFarm"
+		Global.spawn_from = "fromFarmhouse"
 		Global.last_scene  = "res://farm.tscn"
 		Global.save_game()
 

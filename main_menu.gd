@@ -18,14 +18,7 @@ func _on_new_game_button_pressed() -> void:
 	else:
 		printerr("❌ Couldn’t access user:// directory")
 				
-	Global.set_defaults()  # Reset defaults like name and colors
-	# Reset specific customization values (optional if already done in set_defaults)
-	Global.selected_skin = ""
-	Global.selected_hair = ""
-	Global.selected_shirt = ""
-	Global.selected_pants = ""
-	Global.selected_shoes = ""
-	Global.selected_acc = ""
+	Global.start_new_game()  # ✅ Fully resets game and sets spawn_from = "newGame"
 
 	get_tree().change_scene_to_file("res://character_creator.tscn")
 

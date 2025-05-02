@@ -372,3 +372,24 @@ func apply_pastel_shader(sprite: Node, color: Color) -> void:
 	
 func is_game_paused() -> bool:
 	return is_inventory_open or is_pause_menu_open
+
+func start_new_game():
+	print("🆕 Starting new game…")
+	
+	# Reset spawn point and player position
+	spawn_from = "newGame"
+	player_position = Vector2.ZERO
+
+	# Reset scene path
+	last_scene = "res://farm.tscn"
+
+	# Reset time and clock
+	global_time_passed = 0.0
+	global_time_of_day = 0.0
+	global_display_in_game_time = START_HOUR
+
+	# Reset customization and game defaults
+	set_defaults()
+
+	# Save the initial state
+	save_game()

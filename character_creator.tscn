@@ -2,21 +2,21 @@
 
 [ext_resource type="Script" uid="uid://41el1mrjj7nq" path="res://skin.gd" id="1_ctova"]
 [ext_resource type="Script" uid="uid://rwl0m52pf64m" path="res://character_creator.gd" id="1_qnd3a"]
-[ext_resource type="Texture2D" uid="uid://ch11jofc07ash" path="res://Cute_Fantasy/Player/characters/char1.png" id="2_qnd3a"]
 [ext_resource type="Script" uid="uid://clhystsktqjec" path="res://eyes.gd" id="3_fjkrx"]
+[ext_resource type="Texture2D" uid="uid://blsp3jwlvkh4v" path="res://Cute_Fantasy/Player/greyscale/character/greyscale .png" id="3_hecbg"]
 [ext_resource type="Script" uid="uid://cv41jov6iq486" path="res://hair.gd" id="4_mges2"]
-[ext_resource type="Texture2D" uid="uid://bjw7l7r4cwtwb" path="res://Cute_Fantasy/Player/greyscale/eyes/blush_grey.png" id="5_hecbg"]
+[ext_resource type="Texture2D" uid="uid://c42tvdcy12xuj" path="res://Cute_Fantasy/Player/greyscale/eyes/eyes_grey.png" id="5_uunpx"]
 [ext_resource type="Script" uid="uid://boyliyctd6lyg" path="res://full_body.gd" id="6_ek4y3"]
 [ext_resource type="Script" uid="uid://ctq4rgp6g645p" path="res://accessories.gd" id="6_ks6yg"]
-[ext_resource type="Texture2D" uid="uid://c2ejy73l1v7kn" path="res://Cute_Fantasy/Player/clothes/basic.png" id="8_ek4y3"]
-[ext_resource type="Texture2D" uid="uid://bvch7pn21h4xm" path="res://Cute_Fantasy/Player/hair/bob .png" id="8_hecbg"]
 [ext_resource type="Script" uid="uid://c4gbucfknnpwn" path="res://shirt.gd" id="8_k60vm"]
-[ext_resource type="Texture2D" uid="uid://2v4u4oj7lnl4" path="res://Cute_Fantasy/Player/clothes/pants.png" id="9_k60vm"]
+[ext_resource type="Texture2D" uid="uid://dr6ho2byxgyfs" path="res://Cute_Fantasy/Player/greyscale/clothes/clothes/basic_grey.png" id="8_v7bp3"]
+[ext_resource type="Texture2D" uid="uid://cfdl2kpkrm5e2" path="res://Cute_Fantasy/Player/greyscale/clothes/clothes/pants_grey.png" id="10_c2lyd"]
 [ext_resource type="Script" uid="uid://djv8qclvprrrf" path="res://pants.gd" id="10_ke6tr"]
+[ext_resource type="Texture2D" uid="uid://d3vjk2l6wvpia" path="res://Cute_Fantasy/Player/greyscale/clothes/clothes/shoes_grey.png" id="12_a4h6v"]
 [ext_resource type="Script" uid="uid://ld3lt5ytcrrj" path="res://shoes.gd" id="12_k60vm"]
-[ext_resource type="Texture2D" uid="uid://br20gy2onycuy" path="res://Cute_Fantasy/Player/clothes/shoes.png" id="13_2tp00"]
 [ext_resource type="FontFile" uid="uid://bhyljqfljmhh" path="res://Fonts/Magnificent.ttf" id="14_ke6tr"]
-[ext_resource type="Texture2D" uid="uid://c6e13dy3v7jcv" path="res://Cute_Fantasy/Player/acc/earring_emerald_silver.png" id="16_hecbg"]
+[ext_resource type="Texture2D" uid="uid://c3thyhhpbts8c" path="res://Cute_Fantasy/Player/greyscale/hair/bob_grey.png" id="14_tuh4x"]
+[ext_resource type="Texture2D" uid="uid://cno34fj80fi3b" path="res://Cute_Fantasy/Player/greyscale/acc/acc/earring_emerald_grey.png" id="16_bigg4"]
 
 [node name="Character Creator" type="Node2D"]
 script = ExtResource("1_qnd3a")
@@ -35,29 +35,70 @@ scale = Vector2(5, 5)
 script = ExtResource("1_ctova")
 
 [node name="SkinSprite" type="Sprite2D" parent="Skeleton/Skin"]
-texture = ExtResource("2_qnd3a")
+texture = ExtResource("3_hecbg")
 hframes = 8
 vframes = 49
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"layer_section": false,
+"output_section": false,
+"pending_changes": {
+"Farmer": "",
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": ""
+},
+"slice_section": false
+}
 
 [node name="Eyes" type="Node2D" parent="Skeleton"]
 script = ExtResource("3_fjkrx")
 
 [node name="EyesSprite" type="Sprite2D" parent="Skeleton/Eyes"]
+texture_filter = 1
 position = Vector2(-3.33786e-06, -5.36442e-07)
-texture = ExtResource("5_hecbg")
+texture = ExtResource("5_uunpx")
 hframes = 40
 vframes = 42
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": true,
+"layer_section": true,
+"output_section": true,
+"pending_changes": {
+"Farmer": "",
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": ""
+},
+"slice_section": true
+}
 
 [node name="Full Body" type="Node2D" parent="Skeleton"]
 script = ExtResource("6_ek4y3")
 
 [node name="FBSprite" type="Sprite2D" parent="Skeleton/Full Body"]
+texture_filter = 1
 
 [node name="Shirt" type="Node2D" parent="Skeleton"]
 script = ExtResource("8_k60vm")
 
 [node name="ShirtSprite" type="Sprite2D" parent="Skeleton/Shirt"]
-texture = ExtResource("8_ek4y3")
+texture_filter = 1
+texture = ExtResource("8_v7bp3")
 hframes = 80
 vframes = 49
 
@@ -65,7 +106,8 @@ vframes = 49
 script = ExtResource("10_ke6tr")
 
 [node name="PantsSprite" type="Sprite2D" parent="Skeleton/Pants"]
-texture = ExtResource("9_k60vm")
+texture_filter = 1
+texture = ExtResource("10_c2lyd")
 hframes = 80
 vframes = 49
 
@@ -73,7 +115,8 @@ vframes = 49
 script = ExtResource("12_k60vm")
 
 [node name="ShoesSprite" type="Sprite2D" parent="Skeleton/Shoes"]
-texture = ExtResource("13_2tp00")
+texture_filter = 1
+texture = ExtResource("12_a4h6v")
 hframes = 80
 vframes = 49
 
@@ -81,8 +124,9 @@ vframes = 49
 script = ExtResource("4_mges2")
 
 [node name="HairSprite" type="Sprite2D" parent="Skeleton/Hair"]
+texture_filter = 1
 position = Vector2(-9.53674e-07, -0.2)
-texture = ExtResource("8_hecbg")
+texture = ExtResource("14_tuh4x")
 hframes = 112
 vframes = 49
 
@@ -91,7 +135,8 @@ position = Vector2(0, -0.199999)
 script = ExtResource("6_ks6yg")
 
 [node name="AccessoriesSprite" type="Sprite2D" parent="Skeleton/Accessories"]
-texture = ExtResource("16_hecbg")
+texture_filter = 1
+texture = ExtResource("16_bigg4")
 hframes = 8
 vframes = 49
 
@@ -176,6 +221,44 @@ offset_right = 330.0
 offset_bottom = 10.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "Working"
+metadata/_edit_use_anchors_ = true
+
+[node name="Eyes" type="ColorRect" parent="CreatorScreen/ColorRect"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 87.0
+offset_right = 88.0
+offset_bottom = 127.0
+color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CreatorScreen/ColorRect/Eyes"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.3
+anchor_top = 0.425
+anchor_right = 1.325
+anchor_bottom = 0.5
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("14_ke6tr")
+theme_override_font_sizes/font_size = 25
+text = "BrowColor"
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorButton" type="Button" parent="CreatorScreen/ColorRect/Eyes"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.025
+anchor_top = -0.025
+anchor_right = -0.025
+anchor_bottom = -0.025
+offset_left = 123.0
+offset_right = 323.0
+offset_bottom = 50.0
 theme_override_fonts/font = ExtResource("14_ke6tr")
 theme_override_font_sizes/font_size = 25
 text = "Working"
@@ -483,44 +566,6 @@ theme_override_font_sizes/font_size = 25
 text = "Working"
 metadata/_edit_use_anchors_ = true
 
-[node name="Eyes" type="ColorRect" parent="CreatorScreen/ColorRect"]
-layout_mode = 0
-offset_left = 48.0
-offset_top = 87.0
-offset_right = 88.0
-offset_bottom = 127.0
-color = Color(1, 1, 1, 0)
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="CreatorScreen/ColorRect/Eyes"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.3
-anchor_top = 0.425
-anchor_right = 1.325
-anchor_bottom = 0.5
-offset_right = 40.0
-offset_bottom = 23.0
-theme_override_fonts/font = ExtResource("14_ke6tr")
-theme_override_font_sizes/font_size = 25
-text = "BrowColor"
-metadata/_edit_use_anchors_ = true
-
-[node name="Button" type="Button" parent="CreatorScreen/ColorRect/Eyes"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.025
-anchor_top = -0.025
-anchor_right = -0.025
-anchor_bottom = -0.025
-offset_left = 123.0
-offset_right = 323.0
-offset_bottom = 50.0
-theme_override_fonts/font = ExtResource("14_ke6tr")
-theme_override_font_sizes/font_size = 25
-text = "Working"
-metadata/_edit_use_anchors_ = true
-
 [node name="ConfirmButton" type="Button" parent="CreatorScreen/ColorRect"]
 layout_mode = 1
 anchors_preset = 12
@@ -538,6 +583,7 @@ metadata/_edit_use_anchors_ = true
 
 [connection signal="text_changed" from="CreatorScreen/ColorRect/Details/TextEdit" to="." method="_on_text_edit_text_changed"]
 [connection signal="pressed" from="CreatorScreen/ColorRect/Skin/ColorButton" to="Skeleton/Skin" method="_on_color_button_pressed"]
+[connection signal="pressed" from="CreatorScreen/ColorRect/Eyes/ColorButton" to="Skeleton/Eyes" method="_on_button_pressed"]
 [connection signal="pressed" from="CreatorScreen/ColorRect/Hair/CollectionButton" to="Skeleton/Hair" method="_on_collection_button_pressed"]
 [connection signal="pressed" from="CreatorScreen/ColorRect/Hair/ColorButton" to="Skeleton/Hair" method="_on_color_button_pressed"]
 [connection signal="pressed" from="CreatorScreen/ColorRect/Shirt/CollectionButton" to="Skeleton/Shirt" method="_on_collection_button_pressed"]
@@ -547,5 +593,4 @@ metadata/_edit_use_anchors_ = true
 [connection signal="pressed" from="CreatorScreen/ColorRect/Shoes/CollectionButton" to="Skeleton/Shoes" method="_on_collection_button_pressed"]
 [connection signal="pressed" from="CreatorScreen/ColorRect/Accessories/CollectionButton" to="Skeleton/Accessories" method="_on_collection_button_pressed"]
 [connection signal="pressed" from="CreatorScreen/ColorRect/Accessories/ColorButton" to="Skeleton/Accessories" method="_on_color_button_pressed"]
-[connection signal="pressed" from="CreatorScreen/ColorRect/Eyes/Button" to="Skeleton/Eyes" method="_on_button_pressed"]
 [connection signal="pressed" from="CreatorScreen/ColorRect/ConfirmButton" to="." method="_on_confirm_button_pressed"]

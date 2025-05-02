@@ -1,6 +1,6 @@
 extends Camera2D
 
-@onready var tilemap = $"../../SeasonLayers" # Change to your farm grass/dirt tilemap node
+@onready var tilemap = $"../../SpringLayer/grass" # Change to your farm grass/dirt tilemap node
 
 func _ready() -> void:
 	make_current()

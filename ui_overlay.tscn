@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://dy0eafdabbmem"]
+
+[ext_resource type="FontFile" uid="uid://bducwj56iwht" path="res://Fonts/Cute_Font.ttf" id="1_2qecn"]
+[ext_resource type="Script" uid="uid://b5y0t0y3m3ltp" path="res://ui_overlay.gd" id="1_f42by"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_f42by"]
+font = ExtResource("1_2qecn")
+font_size = 40
+
+[node name="UI_Overlay" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_f42by")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 967.0
+offset_top = 9.0
+offset_right = 1007.0
+offset_bottom = 49.0
+scale = Vector2(4.49272, 2.25073)
+color = Color(0.235294, 0.235294, 0.235294, 0.54902)
+metadata/_edit_use_anchors_ = true
+
+[node name="ClockLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 982.0
+offset_top = 56.0
+offset_right = 1022.0
+offset_bottom = 102.0
+theme_override_fonts/font = ExtResource("1_2qecn")
+theme_override_font_sizes/font_size = 50
+metadata/_edit_use_anchors_ = true
+
+[node name="DateLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 993.0
+offset_top = 18.0
+offset_right = 1033.0
+offset_bottom = 60.0
+scale = Vector2(1.28, 1)
+theme_override_fonts/font = ExtResource("1_2qecn")
+theme_override_font_sizes/font_size = 50
+label_settings = SubResource("LabelSettings_f42by")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true

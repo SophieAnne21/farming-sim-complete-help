@@ -8,7 +8,7 @@ enum Season { SPRING, SUMMER, FALL, WINTER }
 @onready var summer_layer = $SummerLayer
 @onready var fall_layer   = $FallLayer
 @onready var winter_layer = $WinterLayer
-@onready var date_label = $UI/DateLabel
+@onready var current_date_label = $UI/DateLabel
 @onready var toFarm             = $toFarm
 @onready var player             = $Farmer
 @onready var overlay            = $UI/DayNightOverlay
@@ -110,7 +110,7 @@ func change_season() -> void:
 			current_season_name = "Winter"; winter_layer.visible = true
 
 func update_date_label() -> void:
-	date_label.text = "%s %d" % [current_season_name, day]
+	current_date_label.text = "%s %d" % [current_season_name, day]
 
 func next_day() -> void:
 	day += 1
@@ -184,8 +184,8 @@ func transition_with_fade(_scene_path: String) -> void:
 # ─── AREA2D TRIGGER ────────────────────────────────────────────────────────────
 func _on_to_farm_body_entered(_body: Node2D) -> void:
 	if _body.is_in_group("Player"):
-		Global.spawn_from = "fromTown"
-		await transition_with_fade("res://farm.tscn")
+		Global.spawn_from = "fromFarm"
+		await transition_with_fade(destinations["toFarm"])
 		get_tree().change_scene_to_file("res://farm.tscn")
 		print("🌀 Player entered toFarm!")
 

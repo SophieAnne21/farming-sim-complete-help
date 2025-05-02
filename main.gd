@@ -7,12 +7,13 @@ extends Node2D
 @onready var enterPromptFarmhouse = $EnterPrompt/EnterPromptFarmhouse
 @onready var music                = $Music
 @onready var body                 = $Farmer
-@onready var overlay              = $CanvasLayer2/DayNightOverlay
-@onready var inventory            = $CanvasLayer2/UI
+@onready var overlay              = $UI/DayNightOverlay
+@onready var inventory            = $UI/UI
 
 # ─── CLOCK REFERENCES ──────────────────────────────────────────────────────────
-@onready var clock_label : Label = $CanvasLayer2/ClockContainer/ClockLabel
-@onready var clock_bg    : ColorRect = $CanvasLayer2/ClockContainer/ColorRect
+@onready var date_label : Label = $UI/DateLabel
+@onready var clock_label : Label = $UI/ClockLabel
+@onready var clock_bg    : ColorRect = $UI/ColorRect
 
 # ─── SPAWN MARKERS ─────────────────────────────────────────────────────────────
 @onready var spawn_from_town_marker : Marker2D = $SpawnPoints/SpawnFromTown
@@ -47,7 +48,7 @@ var destinations := {
 func _ready() -> void:
 	set_process(true)
 	print("🔍 DEBUG: Before load_game, Global position =", Global.player_position)
-	load_game()
+	Global.load_game()
 	print("🔍 DEBUG: After load_game, Global position =", Global.player_position)
 	
 	await get_tree().process_frame
@@ -56,21 +57,14 @@ func _ready() -> void:
 	fade.play("fade_to_normal")
 	fade.get_parent().get_node("ColorRect").color.a = 255
 
-
-	load_game()
-
-	await get_tree().process_frame
-	call_deferred("_position_player_at_spawn")
-
 	update_date_label()  # 🛠 ADD THIS LINE HERE!
 
 
 # ─── PROCESS ───────────────────────────────────────────────────────────────────
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed(TOGGLE_INV):
+	if Input.is_action_just_pressed(TOGGLE_INV) and inventory:
 		inventory.visible = not inventory.visible
-	if inventory.visible:
-		return
+
 	
 	Global.global_time_passed += delta
 	Global.global_display_in_game_time += (Global.CYCLE_HOURS / Global.SECONDS_PER_DAY) * delta
@@ -151,7 +145,8 @@ func fade_out_music() -> void:
 # ─── DOOR INTERACTIONS ────────────────────────────────────────────────────────
 func _on_to_town_body_entered(_body: Node2D) -> void:
 	if _body.is_in_group("Player"):
-		Global.spawn_from = "fromFarmhouse"
+		Global.spawn_from = "fromFarm"  # ✅ CORRECT value for arriving in town from the farm
+		print("✅ Setting spawn_from to 'fromFarm'")
 		await transition_with_fade(destinations["toTown"])
 
 func _on_to_farmhouse_body_entered(_body: Node2D) -> void:
@@ -237,6 +232,9 @@ func update_day_night_overlay() -> void:
 
 
 func update_clock() -> void:
+	if clock_label == null:
+		return  # No clock label available yet
+	
 	var hour = int(Global.global_display_in_game_time) % 24
 	var minutes_float = (Global.global_display_in_game_time - int(Global.global_display_in_game_time)) * 60.0
 
@@ -287,6 +285,4 @@ func change_season() -> void:
 	print("🌱 Season changed (placeholder)!")
 
 func update_date_label() -> void:
-	# Update the UI label for the current date
-	if has_node("CanvasLayer2/ClockContainer/DateLabel"):
-		$CanvasLayer2/ClockContainer/DateLabel.text = "%s %d" % [Global.current_season_name, day]
+	date_label.text = "%s %d" % [Global.current_season_name, day]
