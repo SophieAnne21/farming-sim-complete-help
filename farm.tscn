@@ -2061,7 +2061,6 @@ theme_override_font_sizes/font_size = 50
 metadata/_edit_use_anchors_ = true
 
 [node name="UI" parent="UI" instance=ExtResource("49_4rxkw")]
-visible = false
 offset_left = 13.0
 offset_top = 21.0
 offset_right = 13.0

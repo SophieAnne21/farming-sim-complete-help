@@ -16,39 +16,33 @@ size = Vector2(8, 4)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ivps1"]
 shader = ExtResource("3_nvl01")
-shader_parameter/tint_color = Color(1, 0.88, 0.79, 1)
+shader_parameter/tint_color = Vector4(0, 0, 0, 0)
 shader_parameter/brightness_boost = 1.5
-shader_parameter/desaturate_strength = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nvl01"]
 shader = ExtResource("3_nvl01")
-shader_parameter/tint_color = Color(1, 0.88, 0.79, 1)
+shader_parameter/tint_color = Vector4(0, 0, 0, 0)
 shader_parameter/brightness_boost = 1.5
-shader_parameter/desaturate_strength = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_urp6f"]
 shader = ExtResource("3_nvl01")
-shader_parameter/tint_color = Color(1, 0.88, 0.79, 1)
+shader_parameter/tint_color = Vector4(0, 0, 0, 0)
 shader_parameter/brightness_boost = 1.5
-shader_parameter/desaturate_strength = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bwjto"]
 shader = ExtResource("3_nvl01")
-shader_parameter/tint_color = Color(1, 0.88, 0.79, 1)
+shader_parameter/tint_color = Vector4(0, 0, 0, 0)
 shader_parameter/brightness_boost = 1.5
-shader_parameter/desaturate_strength = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_606se"]
 shader = ExtResource("3_nvl01")
-shader_parameter/tint_color = Color(1, 0.88, 0.79, 1)
+shader_parameter/tint_color = Vector4(0, 0, 0, 0)
 shader_parameter/brightness_boost = 1.5
-shader_parameter/desaturate_strength = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u1c27"]
 shader = ExtResource("3_nvl01")
-shader_parameter/tint_color = Color(1, 0.88, 0.79, 1)
+shader_parameter/tint_color = Vector4(0, 0, 0, 0)
 shader_parameter/brightness_boost = 1.5
-shader_parameter/desaturate_strength = 0.5
 
 [sub_resource type="Animation" id="Animation_b26j0"]
 length = 0.001

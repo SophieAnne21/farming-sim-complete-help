@@ -52,7 +52,7 @@ func _ready():
 	else:
 		global_position = Global.player_position
 		print("📍 Loaded saved player position:", global_position)
-
+		
 	initialize_player()
 	print("✅ Player final position:", global_position)
 
@@ -107,6 +107,16 @@ func _play_idle_animation() -> void:
 			visual_node.scale.x = 1
 
 func initialize_player() -> void:
+	print("shirt node:", shirt, "visible?", shirt.visible, "texture:", shirt.texture)
+	
+	body_sprite.z_index = 0
+	shirt.z_index       = 1
+	pants.z_index       = 2
+	shoes.z_index       = 3
+	accessories.z_index = 4
+	hair.z_index        = 5
+	eyes.z_index        = 6
+
 	body_sprite.visible = true
 	body_sprite.modulate.a = 1.0
 	body_sprite.scale = Vector2(1, 1)
@@ -119,14 +129,17 @@ func initialize_player() -> void:
 	shoes.texture        = Global.shoes_collection.get(Global.selected_shoes, Global.shoes_collection["shoes"])
 	accessories.texture  = Global.acc_collection.get(Global.selected_acc, null)
 
-	body_sprite.modulate = Global.selected_skin_color
-	hair.modulate        = Global.selected_hair_color
-	eyes.modulate        = Global.selected_eyes_color
-	shirt.modulate       = Global.selected_shirt_color
-	pants.modulate       = Global.selected_pants_color
-	shoes.modulate       = Global.selected_shoes_color
-	accessories.modulate = Global.selected_acc_color
+	#body_sprite.modulate = Color(1, 0, 0)
+	Global.apply_pastel_shader(body_sprite, Global.selected_skin_color)
+	Global.apply_pastel_shader(hair,        Global.selected_hair_color)
+	Global.apply_pastel_shader(eyes,        Global.selected_eyes_color)
+	Global.apply_pastel_shader(shirt,       Global.selected_shirt_color)
+	Global.apply_pastel_shader(pants,       Global.selected_pants_color)
+	Global.apply_pastel_shader(shoes,       Global.selected_shoes_color)
+	Global.apply_pastel_shader(accessories, Global.selected_acc_color)
 
+	# 3) Set the name label
+	
 	if name_label != null:
 		if Global.player_name != "":
 			name_label.text = Global.player_name

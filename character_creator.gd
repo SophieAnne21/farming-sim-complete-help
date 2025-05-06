@@ -65,10 +65,10 @@ func _ready() -> void:
 func _on_skin_collect() -> void:
 	skin_idx = (skin_idx + 1) % skin_keys.size()
 	_update_skin()
-
+	
 func _on_skin_color() -> void:
 	skin_color_idx = (skin_color_idx + 1) % Global.skin_color_options.size()
-	Global.set_skin_color(Global.skin_color_options[skin_color_idx])
+	Global.selected_skin_color = Global.skin_color_options[skin_color_idx]
 
 func _update_skin() -> void:
 	var key = skin_keys[skin_idx]
@@ -99,7 +99,7 @@ func _apply_eyes_color(color: Color) -> void:
 	
 # ─── HAIR HANDLERS & UPDATES ────────────────────────────────────────────────────
 
-func _on_confirm_button_pressed() -> void:
+func _on_confirm_button_pressed():
 	Global.player_name = name_input.text
 	print("🖋 Confirm clicked. Input name is:", name_input.text, "typeof:", typeof(name_input.text))
 

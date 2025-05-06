@@ -52,9 +52,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed(TOGGLE_INV) and inventory:
 		inventory.visible = not inventory.visible
-
-	
-	Global.global_time_passed += delta
+		
+	Global._process(delta)
 	Global.global_time_of_day = Global.global_time_passed / Global.SECONDS_PER_DAY
 
 	update_day_night_overlay()
@@ -72,25 +71,32 @@ func _process(delta: float) -> void:
 		next_day()
 
 # ─── CLOCK DISPLAY ─────────────────────────────────────────────────────────────
+# Example replacement in town_map.gd
+
 func update_clock() -> void:
 	if clock_label == null:
-		return  # No clock label available yet
-	
-	var hour = int(Global.global_display_in_game_time) % 24
-	var minutes_float = (Global.global_display_in_game_time - int(Global.global_display_in_game_time)) * 60.0
+		return
 
-	var minute = int(minutes_float / Global.MINUTE_STEP) * Global.MINUTE_STEP
+	var display_time = Global.global_display_in_game_time
+	if display_time >= 24.0:
+		display_time -= 24.0
 
-	var am_pm = "AM"
-	if hour >= 12:
-		am_pm = "PM"
-	if hour > 12:
-		hour -= 12
-	if hour == 0:
-		hour = 12
+	var hour_24 = int(display_time)
+	var minute  = int((display_time - hour_24) * 60.0)
+	minute = int(minute / Global.MINUTE_STEP) * Global.MINUTE_STEP
 
-	clock_label.text = str(hour).pad_zeros(2) + ":" + str(minute).pad_zeros(2) + " " + am_pm
+	# Explicit if/else instead of ternary
+	var am_pm: String
+	if hour_24 >= 12:
+		am_pm = "pm"
+	else:
+		am_pm = "am"
 
+	var hour_12 = hour_24 % 12
+	if hour_12 == 0:
+		hour_12 = 12
+
+	clock_label.text = "%02d:%02d %s" % [hour_12, minute, am_pm]
 
 # ─── SEASON HELPERS ────────────────────────────────────────────────────────────
 func change_season() -> void:
