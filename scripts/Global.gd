@@ -299,6 +299,10 @@ func load_game() -> bool:
 	global_display_in_game_time = config.get_value("Clock", "display_time", START_HOUR)
 	# Restore Scene
 	last_scene = config.get_value("State", "last_scene", last_scene)
+	print("🔄Loaded player_name:", player_name)
+	print("🔄Loaded selected_skin:", selected_skin, "color:", selected_skin_color)
+	print("🔄Loaded selected_hair:", selected_hair, "color:", selected_hair_color)
+	# (repeat for eyes, shirt, pants, shoes, acc)
 	return true
 
 func apply_pastel_shader(sprite: Node, color: Color) -> void:
