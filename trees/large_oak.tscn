@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://7h86p86ch8xv"]
+[gd_scene load_steps=4 format=3 uid="uid://7h86p86ch8xv"]
 
 [ext_resource type="Texture2D" uid="uid://oqcvii62u0j7" path="res://Cute_Fantasy/Trees/Big_Oak_Tree.png" id="1_7mbxj"]
 
@@ -6,11 +6,8 @@
 atlas = ExtResource("1_7mbxj")
 region = Rect2(72, 8, 48, 72)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_38js3"]
-size = Vector2(16, 14)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_7mbxj"]
-radius = 23.0
+radius = 15.0333
 
 [node name="Large_Oak" type="Sprite2D"]
 texture = SubResource("AtlasTexture_gwowr")
@@ -18,9 +15,6 @@ texture = SubResource("AtlasTexture_gwowr")
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(0, 21)
-shape = SubResource("RectangleShape2D_38js3")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-1, -6)
+position = Vector2(0, 17)
+scale = Vector2(0.88, 0.76)
 shape = SubResource("CircleShape2D_7mbxj")

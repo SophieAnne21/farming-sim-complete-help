@@ -1,0 +1,243 @@
+[gd_scene load_steps=34 format=3 uid="uid://cxa2xxfdtdfp2"]
+
+[ext_resource type="Script" uid="uid://bgosmyperx07e" path="res://scripts/inventory.gd" id="1_ivhg3"]
+[ext_resource type="Texture2D" uid="uid://bkje7nwkxgyyo" path="res://Cute_Fantasy/Inventory/Content/Background/0.png" id="1_ivl67"]
+[ext_resource type="Texture2D" uid="uid://bfdcp6mwnix63" path="res://Cute_Fantasy/Inventory/Content/Pixel Map Base/0.png" id="2_oee3c"]
+[ext_resource type="Texture2D" uid="uid://bhdryo08j45w3" path="res://Cute_Fantasy/Inventory/Page Flip/Next Page/0.png" id="3_1v6ah"]
+[ext_resource type="Texture2D" uid="uid://cnwqc7l0122l0" path="res://Cute_Fantasy/Inventory/Page Flip/Next Page/1.png" id="4_1e4nm"]
+[ext_resource type="Texture2D" uid="uid://3sttrd08v310" path="res://Cute_Fantasy/Inventory/Page Flip/Next Page/2.png" id="5_4d41x"]
+[ext_resource type="Texture2D" uid="uid://bmwgtuskh3e83" path="res://Cute_Fantasy/Inventory/Page Flip/Next Page/3.png" id="6_ivhg3"]
+[ext_resource type="Texture2D" uid="uid://vhf7eh4rg51x" path="res://Cute_Fantasy/Inventory/Page Flip/Next Page/4.png" id="7_xp0ck"]
+[ext_resource type="Texture2D" uid="uid://dsfeir0d3hh0m" path="res://Cute_Fantasy/Inventory/Page Flip/Next Page/5.png" id="8_4lgwj"]
+[ext_resource type="Texture2D" uid="uid://i0iivyroajkd" path="res://Cute_Fantasy/Inventory/Page Flip/Next Page/6.png" id="9_ywxdu"]
+[ext_resource type="Texture2D" uid="uid://b5imi1hyraa6c" path="res://Cute_Fantasy/Inventory/Page Flip/Next Page/7.png" id="10_tsh78"]
+[ext_resource type="Texture2D" uid="uid://c1clmdim5uxh4" path="res://Cute_Fantasy/Inventory/Page Flip/Next Page/8.png" id="11_7ytli"]
+[ext_resource type="Texture2D" uid="uid://bvxx3fk6y6cdb" path="res://Cute_Fantasy/Inventory/Page Flip/Next Page/9.png" id="12_thg7j"]
+[ext_resource type="Texture2D" uid="uid://c6vxump4vj4uq" path="res://Cute_Fantasy/Inventory/Page Flip/Next Page/10.png" id="13_8nm8x"]
+[ext_resource type="Texture2D" uid="uid://fc76i3hn1d5k" path="res://Cute_Fantasy/Inventory/Page Flip/Next Page/11.png" id="14_hqbwc"]
+[ext_resource type="Texture2D" uid="uid://dq4xaafj1ldus" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/0.png" id="15_lifoe"]
+[ext_resource type="Texture2D" uid="uid://cgj3sta05l0ti" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/1.png" id="16_80n07"]
+[ext_resource type="Texture2D" uid="uid://hhvswt65fk3b" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/2.png" id="17_rmken"]
+[ext_resource type="Texture2D" uid="uid://clemaabj0lwoc" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/3.png" id="18_e2vr7"]
+[ext_resource type="Texture2D" uid="uid://cmyoaxmydcene" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/4.png" id="19_xqo8o"]
+[ext_resource type="Texture2D" uid="uid://dmildl4yei2ji" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/5.png" id="20_b8fgi"]
+[ext_resource type="Texture2D" uid="uid://s11221c13ge5" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/6.png" id="21_bhrqf"]
+[ext_resource type="Texture2D" uid="uid://bxbo5bplgc13x" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/7.png" id="22_8inby"]
+[ext_resource type="Texture2D" uid="uid://ccrlptk2sotv" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/8.png" id="23_ibmu4"]
+[ext_resource type="Texture2D" uid="uid://b2mb7ijrcmfue" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/9.png" id="24_tvhsh"]
+[ext_resource type="Texture2D" uid="uid://b8lu8ayudmhbm" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/10.png" id="25_2me17"]
+[ext_resource type="Texture2D" uid="uid://ca1y4gvhwxt6i" path="res://Cute_Fantasy/Inventory/Page Flip/Previous Page/11.png" id="26_ejkxj"]
+[ext_resource type="Texture2D" uid="uid://3gng8smuouo0" path="res://Cute_Fantasy/Inventory/Content/Pixel Map Base/3.png" id="27_4d41x"]
+[ext_resource type="PackedScene" uid="uid://rcd1nxk0uqph" path="res://scenes/character_portrait.tscn" id="28_xp0ck"]
+[ext_resource type="FontFile" uid="uid://bducwj56iwht" path="res://Fonts/Cute_Font.ttf" id="29_ivhg3"]
+[ext_resource type="Texture2D" uid="uid://dctvc356wdp52" path="res://Cute_Fantasy/Inventory/Content/Side Tabs/4.png" id="29_xp0ck"]
+[ext_resource type="Texture2D" uid="uid://crqlvftli8qxa" path="res://Cute_Fantasy/Inventory/Content/Icons/8.png" id="30_4lgwj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6oiia"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_1v6ah")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1e4nm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_4d41x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ivhg3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_xp0ck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_4lgwj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ywxdu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_tsh78")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_7ytli")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_thg7j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_8nm8x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_hqbwc")
+}],
+"loop": false,
+"name": &"NextPage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_lifoe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_80n07")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_rmken")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_e2vr7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_xqo8o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_b8fgi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_bhrqf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_8inby")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ibmu4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_tvhsh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_2me17")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_ejkxj")
+}],
+"loop": false,
+"name": &"PreviousPage",
+"speed": 5.0
+}]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 19.0
+offset_top = 25.0
+offset_right = 19.0
+offset_bottom = 25.0
+scale = Vector2(0.256997, 0.256997)
+script = ExtResource("1_ivhg3")
+
+[node name="TextureRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -622.575
+offset_top = -684.833
+offset_right = -464.536
+offset_bottom = -536.991
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(35.4445, 24.5458)
+color = Color(0.716296, 0.716296, 0.716296, 0.337255)
+
+[node name="0" type="Sprite2D" parent="."]
+position = Vector2(2162.96, 1133.02)
+scale = Vector2(6.12861, 4.27952)
+texture = ExtResource("1_ivl67")
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(3046.24, 1129.13)
+scale = Vector2(5.77376, 5.88925)
+texture = ExtResource("2_oee3c")
+
+[node name="leftsheet" type="Sprite2D" parent="background"]
+position = Vector2(-302.303, 0.241298)
+scale = Vector2(0.996, 0.999769)
+texture = ExtResource("2_oee3c")
+
+[node name="PageTurn" type="AnimatedSprite2D" parent="."]
+position = Vector2(2793.31, 1187.5)
+scale = Vector2(5.53991, 5.96103)
+sprite_frames = SubResource("SpriteFrames_6oiia")
+animation = &"PreviousPage"
+
+[node name="portrait_bg" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_left = 599.225
+offset_top = 513.624
+offset_right = 639.225
+offset_bottom = 553.624
+scale = Vector2(14.6967, 12.362)
+color = Color(0.676415, 0.678936, 0.685826, 1)
+
+[node name="CharacterPortrait" parent="." instance=ExtResource("28_xp0ck")]
+position = Vector2(902.731, 680.941)
+scale = Vector2(18.001, 18.001)
+
+[node name="Portrait" type="Sprite2D" parent="."]
+position = Vector2(886.677, 763.368)
+scale = Vector2(1.41299, 1.56038)
+texture = ExtResource("27_4d41x")
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 0
+offset_left = 1431.92
+offset_top = 1599.24
+offset_right = 1624.92
+offset_bottom = 1695.24
+scale = Vector2(3.18166, 3.18166)
+alignment = 1
+vertical = true
+
+[node name="SaveButton" type="Button" parent="BoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("29_ivhg3")
+theme_override_font_sizes/font_size = 41
+text = "Save Game"
+icon = ExtResource("29_xp0ck")
+
+[node name="ExitButton" type="Button" parent="BoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("29_ivhg3")
+theme_override_font_sizes/font_size = 41
+text = "Quit Game"
+icon = ExtResource("30_4lgwj")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 1871.55
+offset_top = 934.489
+offset_right = 1911.55
+offset_bottom = 974.489
+scale = Vector2(3.18166, 3.18166)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+visible = false
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+offset_left = 607.999
+offset_top = 151.0
+offset_right = 647.999
+offset_bottom = 191.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_left = 13.0009
+offset_top = 15.0002
+offset_right = 53.0009
+offset_bottom = 38.0002
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 5
+
+[connection signal="pressed" from="BoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="BoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

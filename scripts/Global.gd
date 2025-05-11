@@ -1,16 +1,14 @@
+# Global.gd
 extends Node
 
-signal skin_color_changed(new_color: Color)
-signal eyes_color_changed(new_color: Color)
-
 # ─── CONSTANTS ────────────────────────────────────────────────────────────────
-const START_HOUR: int        = 6       # In‑game day starts at 6 AM
-const CYCLE_HOURS: float     = 20.0    # Total in‑game hours per day (6 AM–2 AM)
-const SECONDS_PER_DAY: float = 7200.0  # Real‑world seconds for a full day cycle
-const MINUTE_STEP: int       = 5       # If you later want to snap display to 5‑minute increments
+const START_HOUR: int        = 6       # In-game day starts at 6 AM
+const CYCLE_HOURS: float     = 20.0    # Total in-game hours per day (6 AM–2 AM)
+const SECONDS_PER_DAY: float = 10800.0 # Real-world seconds for a full day cycle
+const MINUTE_STEP: int       = 5       # If you later want to snap display to 5-minute increments
 
 # ─── TIME STATE (consolidated) ────────────────────────────────────────────────
-var global_time_passed: float          = 0.0  # Accumulated real‑world seconds
+var global_time_passed: float          = 0.0  # Accumulated real-world seconds
 var global_time_of_day: float          = 0.0  # Normalized (0.0–1.0) through the day
 var global_display_in_game_time: float = START_HOUR
 
@@ -25,11 +23,12 @@ var is_inventory_open:  bool = false
 var is_pause_menu_open: bool = false
 
 # ─── SAVE/LOAD KEYS & STATE ────────────────────────────────────────────────────
-var key:               String  = "SimpleSaveLoad"
-var player_position:   Vector2 = Vector2.ZERO
-var player_name:       String  = "Check the Mirror"
-var last_scene:        String  = "res://farm.tscn"
-var spawn_from:        String  = ""
+var key:               String   = "SimpleSaveLoad"
+var player_position:   Vector2  = Vector2.ZERO
+var player_name:       String   = ""            # ⬅ now blank by default
+var last_scene:        String   = "res://scenes/farm.tscn"
+var cc:                String   = "res://scenes/character_creator.tscn"
+var spawn_from:        String   = ""
 var current_season_name: String = "Spring"
 
 # ─── Selected Customization ────────────────────────────────────────────────────
@@ -53,8 +52,6 @@ var selected_shoes_color:    Color = Color(1, 1, 1)
 var selected_acc_color:      Color = Color(1, 1, 1)
 
 # ─── Pastel Color Options ─────────────────────────────────────────────────────
-# ─── Pastel Color Options ─────────────────────────────────────────────────────
-
 var skin_color_options = [
 	Color(1.00, 0.88, 0.79),  # light peach
 	Color(0.96, 0.80, 0.69),  # soft beige
@@ -167,7 +164,7 @@ var hair_collection = {
 	"spacebuns":      preload("res://Cute_Fantasy/Player/hair/spacebuns.png"),
 	"wavy":           preload("res://Cute_Fantasy/Player/hair/wavy.png")
 }
- 
+
 var full_body_collection = {
 	"none":     null,
 	"clown":    preload("res://Cute_Fantasy/Player/clothes/clown.png"),
@@ -207,7 +204,7 @@ var acc_collection = {
 }
 
 # ─── Shader Preload ───────────────────────────────────────────────────────────
-var pastel_shader := preload("res://scripts/item.gdshader")
+var pastel_shader := preload("res://shaders/item.gdshader")
 
 func _ready() -> void:
 	print("✅ Global.gd ready. Scene tree is active.")
@@ -215,31 +212,29 @@ func _ready() -> void:
 		print("🔍 Pastel shader loaded.")
 
 func _process(delta: float) -> void:
-	global_time_passed += delta
-	global_time_passed = fposmod(global_time_passed, SECONDS_PER_DAY)
-	# 3) Compute normalized time_of_day (0.0–1.0)
+	global_time_passed = fposmod(global_time_passed + delta, SECONDS_PER_DAY)
 	global_time_of_day = global_time_passed / SECONDS_PER_DAY
-	# 4) Map to in‑game hours
 	global_display_in_game_time = START_HOUR + global_time_of_day * CYCLE_HOURS
 
+# Resets name + customization to blank/defaults
 func set_defaults() -> void:
-	player_name               = "Check the Mirror"
-	selected_skin             = "white"
-	selected_hair             = "buzzcut"
-	selected_eyes             = "eyes"
-	selected_fullbody         = "none"
-	selected_shirt            = "basic"
-	selected_pants            = "pants"
-	selected_shoes            = "shoes"
-	selected_acc              = "none"
-	selected_skin_color       = Color(1,1,1)
-	selected_hair_color       = Color(1,1,1)
-	selected_eyes_color       = Color(1,1,1)
-	selected_fullbody_color   = Color(1,1,1)
-	selected_shirt_color      = Color(1,1,1)
-	selected_pants_color      = Color(1,1,1)
-	selected_shoes_color      = Color(1,1,1)
-	selected_acc_color        = Color(1,1,1)
+	player_name             = ""
+	selected_skin           = ""
+	selected_hair           = ""
+	selected_eyes           = ""
+	selected_fullbody       = "none"
+	selected_shirt          = ""
+	selected_pants          = ""
+	selected_shoes          = ""
+	selected_acc            = ""
+	selected_skin_color     = Color(1,1,1)
+	selected_hair_color     = Color(1,1,1)
+	selected_eyes_color     = Color(1,1,1)
+	selected_fullbody_color = Color(1,1,1)
+	selected_shirt_color    = Color(1,1,1)
+	selected_pants_color    = Color(1,1,1)
+	selected_shoes_color    = Color(1,1,1)
+	selected_acc_color      = Color(1,1,1)
 
 func save_game() -> void:
 	var config = ConfigFile.new()
@@ -280,8 +275,8 @@ func load_game() -> bool:
 		print("📭 No save file found.")
 		return false
 	# Restore Player Data
-	player_position = config.get_value("Player", "position", Vector2.ZERO)
-	player_name     = config.get_value("Player", "name", player_name)
+	player_position   = config.get_value("Player", "position", Vector2.ZERO)
+	player_name       = config.get_value("Player", "name", player_name)
 	selected_skin     = config.get_value("Player", "skin", selected_skin)
 	selected_hair     = config.get_value("Player", "hair", selected_hair)
 	selected_eyes     = config.get_value("Player", "eyes", selected_eyes)
@@ -291,14 +286,14 @@ func load_game() -> bool:
 	selected_shoes    = config.get_value("Player", "shoes", selected_shoes)
 	selected_acc      = config.get_value("Player", "accessory", selected_acc)
 	# Restore Colors
-	selected_skin_color       = Color(config.get_value("Colors", "skin", selected_skin_color.to_html()))
-	selected_hair_color       = Color(config.get_value("Colors", "hair", selected_hair_color.to_html()))
-	selected_eyes_color       = Color(config.get_value("Colors", "eyes", selected_eyes_color.to_html()))
-	selected_fullbody_color   = Color(config.get_value("Colors", "fullbody", selected_fullbody_color.to_html()))
-	selected_shirt_color      = Color(config.get_value("Colors", "shirt", selected_shirt_color.to_html()))
-	selected_pants_color      = Color(config.get_value("Colors", "pants", selected_pants_color.to_html()))
-	selected_shoes_color      = Color(config.get_value("Colors", "shoes", selected_shoes_color.to_html()))
-	selected_acc_color        = Color(config.get_value("Colors", "accessory", selected_acc_color.to_html()))
+	selected_skin_color     = Color(config.get_value("Colors", "skin", selected_skin_color.to_html()))
+	selected_hair_color     = Color(config.get_value("Colors", "hair", selected_hair_color.to_html()))
+	selected_eyes_color     = Color(config.get_value("Colors", "eyes", selected_eyes_color.to_html()))
+	selected_fullbody_color = Color(config.get_value("Colors", "fullbody", selected_fullbody_color.to_html()))
+	selected_shirt_color    = Color(config.get_value("Colors", "shirt", selected_shirt_color.to_html()))
+	selected_pants_color    = Color(config.get_value("Colors", "pants", selected_pants_color.to_html()))
+	selected_shoes_color    = Color(config.get_value("Colors", "shoes", selected_shoes_color.to_html()))
+	selected_acc_color      = Color(config.get_value("Colors", "accessory", selected_acc_color.to_html()))
 	# Restore Clock
 	global_time_passed          = config.get_value("Clock", "time_passed", 0.0)
 	global_display_in_game_time = config.get_value("Clock", "display_time", START_HOUR)
@@ -319,16 +314,17 @@ func apply_pastel_shader(sprite: Node, color: Color) -> void:
 func is_game_paused() -> bool:
 	return is_inventory_open or is_pause_menu_open
 
+# ─── START NEW GAME ────────────────────────────────────────────────────────────
 func start_new_game() -> void:
 	print("🆕 Starting new game…")
-	spawn_from = "newGame"
-	player_position = Vector2.ZERO
-	last_scene = "res://farm.tscn"
-	global_time_passed = 0.0
-	global_time_of_day = 0.0
+	spawn_from                  = "newGame"
+	player_position             = Vector2.ZERO
+	last_scene                  = "res://scenes/farm.tscn"
+	global_time_passed          = 0.0
+	global_time_of_day          = 0.0
 	global_display_in_game_time = START_HOUR
-	set_defaults()
-	save_game()
+	set_defaults()  # wipe name & all selected_* fields/colors
+	save_game()     # write that blank state immediately
 
 func go_to_scene(path: String) -> void:
 	last_scene = path

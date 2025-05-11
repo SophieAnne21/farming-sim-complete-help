@@ -17,9 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Fade="*res://fade.gd"
+Fade="*res://scripts/fade.gd"
 Global="*res://scripts/Global.gd"
-BrightnessOverlay="*res://BrightnessOverlay.tscn"
+BrightnessOverlay="*res://scenes/BrightnessOverlay.tscn"
 
 [display]
 
@@ -27,7 +27,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")
+enabled=PackedStringArray()
 
 [global_group]
 

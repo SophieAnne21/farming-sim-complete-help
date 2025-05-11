@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://lwhsei6gubbu"]
+[gd_scene load_steps=4 format=3 uid="uid://dy0eafdabbmem"]
 
 [ext_resource type="FontFile" uid="uid://bducwj56iwht" path="res://Fonts/Cute_Font.ttf" id="1_2qecn"]
+[ext_resource type="Script" uid="uid://b5y0t0y3m3ltp" path="res://scripts/ui_overlay.gd" id="1_f42by"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_f42by"]
 font = ExtResource("1_2qecn")
@@ -9,6 +10,7 @@ font_size = 40
 [node name="UI_Overlay" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_f42by")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0

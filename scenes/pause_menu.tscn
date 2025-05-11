@@ -1,0 +1,94 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj5l81ybmj24o"]
+
+[ext_resource type="Script" uid="uid://d17ihdv37kaed" path="res://scripts/pause_menu.gd" id="1_nwcfo"]
+[ext_resource type="Script" uid="uid://d3wq7a7rxvc01" path="res://scripts/save_button.gd" id="2_05uyy"]
+[ext_resource type="FontFile" uid="uid://dkvvtfd76ul2k" path="res://Fonts/Caballito.otf" id="2_p81d2"]
+[ext_resource type="FontFile" uid="uid://bducwj56iwht" path="res://Fonts/Cute_Font.ttf" id="3_2nc7s"]
+
+[node name="PauseMenuUI" type="CanvasLayer"]
+script = ExtResource("1_nwcfo")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -41.0
+offset_right = 53.0
+offset_bottom = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -548.0
+offset_top = -305.0
+offset_right = -548.0
+offset_bottom = -305.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(11.88, 6.84)
+color = Color(0.670588, 0.380392, 0.380392, 1)
+
+[node name="Label" type="Label" parent="Control/ColorRect"]
+layout_mode = 0
+offset_left = 13.5522
+offset_top = 8.04093
+offset_right = 437.552
+offset_bottom = 245.041
+scale = Vector2(0.16835, 0.16835)
+theme_override_fonts/font = ExtResource("2_p81d2")
+theme_override_font_sizes/font_size = 226
+text = "Paused!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SaveButton" type="Button" parent="Control/ColorRect"]
+layout_direction = 3
+layout_mode = 2
+offset_left = -81.4646
+offset_top = 51.0234
+offset_right = 78.5354
+offset_bottom = 151.023
+scale = Vector2(0.162172, 0.162172)
+theme_override_fonts/font = ExtResource("3_2nc7s")
+theme_override_font_sizes/font_size = 85
+text = "Save"
+flat = true
+script = ExtResource("2_05uyy")
+
+[node name="ExitButton" type="Button" parent="Control/ColorRect"]
+layout_mode = 2
+offset_left = 55.2189
+offset_top = 51.3158
+offset_right = 187.219
+offset_bottom = 151.316
+scale = Vector2(0.158249, 0.158249)
+theme_override_fonts/font = ExtResource("3_2nc7s")
+theme_override_font_sizes/font_size = 100
+text = "Exit"
+flat = true
+
+[node name="Resume" type="Button" parent="Control/ColorRect"]
+layout_direction = 3
+layout_mode = 2
+offset_left = -44.9663
+offset_top = 68.7134
+offset_right = 70.0337
+offset_bottom = 140.713
+scale = Vector2(0.374293, 0.374293)
+theme_override_fonts/font = ExtResource("3_2nc7s")
+theme_override_font_sizes/font_size = 35
+text = "Resume"
+flat = true
+script = ExtResource("2_05uyy")
+
+[connection signal="pressed" from="Control/ColorRect/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="Control/ColorRect/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Control/ColorRect/Resume" to="." method="_on_resume_pressed"]

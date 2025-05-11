@@ -1,0 +1,111 @@
+[gd_scene load_steps=7 format=3 uid="uid://7xvt13qykvck"]
+
+[ext_resource type="Texture2D" uid="uid://bioh2x7n0yi4u" path="res://Cute_Fantasy/Animals/Butterfly.png" id="1_l7i6p"]
+
+[sub_resource type="Animation" id="Animation_l7i6p"]
+resource_name = "blue"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("colors/blue:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fn0p1"]
+resource_name = "green"
+
+[sub_resource type="Animation" id="Animation_tstti"]
+resource_name = "yellow"
+
+[sub_resource type="Animation" id="Animation_hocdr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("colors/blue:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i02rf"]
+_data = {
+&"RESET": SubResource("Animation_hocdr"),
+&"blue": SubResource("Animation_l7i6p"),
+&"green": SubResource("Animation_fn0p1"),
+&"yellow": SubResource("Animation_tstti")
+}
+
+[node name="Node2D" type="Node2D"]
+
+[node name="colors" type="Node" parent="."]
+
+[node name="blue" type="Sprite2D" parent="colors"]
+texture = ExtResource("1_l7i6p")
+hframes = 2
+vframes = 8
+
+[node name="green" type="Sprite2D" parent="colors"]
+visible = false
+texture = ExtResource("1_l7i6p")
+hframes = 2
+vframes = 8
+frame = 2
+
+[node name="yellow" type="Sprite2D" parent="colors"]
+visible = false
+texture = ExtResource("1_l7i6p")
+hframes = 2
+vframes = 8
+frame = 4
+
+[node name="red" type="Sprite2D" parent="colors"]
+visible = false
+texture = ExtResource("1_l7i6p")
+hframes = 2
+vframes = 8
+frame = 6
+
+[node name="purple" type="Sprite2D" parent="colors"]
+visible = false
+texture = ExtResource("1_l7i6p")
+hframes = 2
+vframes = 8
+frame = 8
+
+[node name="sunset" type="Sprite2D" parent="colors"]
+visible = false
+texture = ExtResource("1_l7i6p")
+hframes = 2
+vframes = 8
+frame = 10
+
+[node name="orange" type="Sprite2D" parent="colors"]
+visible = false
+texture = ExtResource("1_l7i6p")
+hframes = 2
+vframes = 8
+frame = 12
+
+[node name="blue_green" type="Sprite2D" parent="colors"]
+visible = false
+texture = ExtResource("1_l7i6p")
+hframes = 2
+vframes = 8
+frame = 14
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_i02rf")
+}
