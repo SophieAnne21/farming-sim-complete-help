@@ -11,6 +11,7 @@ const MINUTE_STEP: int       = 5       # If you later want to snap display to 5-
 var global_time_passed: float          = 0.0  # Accumulated real-world seconds
 var global_time_of_day: float          = 0.0  # Normalized (0.0–1.0) through the day
 var global_display_in_game_time: float = START_HOUR
+var day_count: int = 1
 
 # ─── CAMERA LIMITS ────────────────────────────────────────────────────────────
 var camera_limit_left:  float = 0.0
@@ -212,9 +213,19 @@ func _ready() -> void:
 		print("🔍 Pastel shader loaded.")
 
 func _process(delta: float) -> void:
+	# remember previous time for wrap detection
+	var prev_time = global_time_passed
+
+	# advance & wrap
 	global_time_passed = fposmod(global_time_passed + delta, SECONDS_PER_DAY)
 	global_time_of_day = global_time_passed / SECONDS_PER_DAY
 	global_display_in_game_time = START_HOUR + global_time_of_day * CYCLE_HOURS
+
+	# if we wrapped back to zero, that means a new day!
+	if global_time_passed < prev_time:
+		day_count += 1
+		print("🌙 New in-game day:", day_count)
+
 
 # Resets name + customization to blank/defaults
 func set_defaults() -> void:
@@ -342,3 +353,31 @@ func _notification(what: int) -> void:
 			player_position = player.global_position
 			print("💾 Auto-saving player pos:", player_position)
 		save_game()
+
+# Jump the clock to an absolute hour (e.g. 14.5 for 2:30 PM)
+func set_time_of_day(hours: float) -> void:
+	# clamp so you don’t go outside START_HOUR…START_HOUR+CYCLE_HOURS
+	var clamped = clamp(hours, START_HOUR, START_HOUR + CYCLE_HOURS)
+	global_display_in_game_time = clamped
+	global_time_of_day = (clamped - START_HOUR) / CYCLE_HOURS
+	global_time_passed = global_time_of_day * SECONDS_PER_DAY
+
+# Advance the clock by a delta (in hours)
+func advance_time(hours_delta: float) -> void:
+	var new_hour = global_display_in_game_time + hours_delta
+	# wrap manually if you go past the cycle
+	if new_hour > START_HOUR + CYCLE_HOURS:
+		new_hour = START_HOUR + fposmod(new_hour - START_HOUR, CYCLE_HOURS)
+		day_count += 1  # if you want to count a day rollover
+	set_time_of_day(new_hour)
+
+func _unhandled_input(event):
+	if event.is_action_pressed("debug_time_forward_slow"):
+		advance_time(1.0)
+		print("⏩ Debug: advanced 1h to", global_display_in_game_time)
+	elif event.is_action_pressed("debug_time_forward"):
+			advance_time(5.0)
+	elif event.is_action_pressed("debug_day_forward"):
+		advance_time(20.0)
+			
+	

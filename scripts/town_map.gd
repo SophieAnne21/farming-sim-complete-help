@@ -32,6 +32,7 @@ var current_season_name : String = "Spring"
 var day                 : int    = 1
 var month               : int    = 1
 var days_in_month       = [28,28,28,28,28,28,28,28,28,28,28,28]
+var _prev_time_passed: float = 0.0
 
 # ─── READY ─────────────────────────────────────────────────────────────────────
 func _ready() -> void:
@@ -43,32 +44,46 @@ func _ready() -> void:
 	print("📍 Marker position:", spawn_from_farm_marker.global_position)
 	
 	call_deferred("_position_player_at_spawn")
-	change_season()
+	_prev_time_passed = Global.global_time_passed
 	update_date_label()
+	print("🗓 New day: Month %d, Day %d" % [month, day])
 	update_clock()
+	change_season()
 	fade.play("fade_to_normal")
 
 # ─── PROCESS ───────────────────────────────────────────────────────────────────
 func _process(delta: float) -> void:
+	# ── Inventory toggle ───────────────────────────────────────────────────────
 	if Input.is_action_just_pressed(TOGGLE_INV) and inventory:
 		inventory.visible = not inventory.visible
-		
-	Global._process(delta)
-	Global.global_time_of_day = Global.global_time_passed / Global.SECONDS_PER_DAY
 
+	# ── Advance Global’s clock ─────────────────────────────────────────────────
+	var prev = _prev_time_passed
+	Global._process(delta)  # updates global_time_passed
+	var curr = Global.global_time_passed
+	# keep display_of_day in sync
+	Global.global_time_of_day = curr / Global.SECONDS_PER_DAY
+
+	# ── Day/night overlay & clock UI ───────────────────────────────────────────
 	update_day_night_overlay()
 
 	Global.global_display_in_game_time += (Global.CYCLE_HOURS / Global.SECONDS_PER_DAY) * delta
-
 	update_clock()
 
-	# Reset day at 2:00 AM
-	var real_in_game = Global.START_HOUR + Global.global_time_of_day * Global.CYCLE_HOURS
-	if real_in_game >= 26.0:
-		Global.global_time_passed = 0.0
-		Global.global_time_of_day = 0.0
-		Global.global_display_in_game_time = Global.START_HOUR
-		next_day()
+	# ── Detect wrap (new day) ──────────────────────────────────────────────────
+	if curr < prev:
+		# we’ve just wrapped past the end of the cycle
+		day += 1
+		if day > days_in_month[month - 1]:
+			day = 1
+			month = month % 12 + 1
+		# always refresh season and date label
+		change_season()
+		update_date_label()
+		print("🗓 New day: Month %d, Day %d" % [month, day])
+
+	# store for next frame’s comparison
+	_prev_time_passed = curr
 
 # ─── CLOCK DISPLAY ─────────────────────────────────────────────────────────────
 # Example replacement in town_map.gd
@@ -114,9 +129,20 @@ func change_season() -> void:
 			current_season_name = "Fall"; fall_layer.visible = true
 		Season.WINTER:
 			current_season_name = "Winter"; winter_layer.visible = true
+			
+	match month:
+		10, 11, 12:
+			Global.current_season_name = "Winter"
+		1, 2, 3:
+			Global.current_season_name = "Spring"
+		4, 5, 6:
+			Global.current_season_name = "Summer"
+		7, 8, 9:
+			Global.current_season_name = "Fall"
+
 
 func update_date_label() -> void:
-	date_label.text = "%s %d" % [current_season_name, day]
+	date_label.text = "%s %d" % [Global.current_season_name, Global.day_count]
 
 func next_day() -> void:
 	day += 1

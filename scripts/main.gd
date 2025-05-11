@@ -49,6 +49,7 @@ func _ready() -> void:
 	overlay.color.a = 255
 
 	update_date_label()
+	print("🗓 New day: Month %d, Day %d" % [month, day])
 
 # ─── MAIN LOOP ─────────────────────────────────────────────────────────────────
 func _process(delta: float) -> void:
@@ -72,7 +73,7 @@ func _process(delta: float) -> void:
 			month = month % 12 + 1
 		change_season()
 		update_date_label()
-		print("🗓 New day: Month %d, Day %d" % [month, day])
+	
 
 	# Exit action
 	if Input.is_action_just_pressed("exit"):
@@ -266,4 +267,4 @@ func change_season() -> void:
 	print("🌱 Season changed (placeholder)!")
 
 func update_date_label() -> void:
-	date_label.text = "%s %d" % [Global.current_season_name, day]
+	date_label.text = "%s %d" % [Global.current_season_name, Global.day_count]
