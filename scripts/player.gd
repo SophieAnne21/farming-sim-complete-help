@@ -10,7 +10,19 @@ extends CharacterBody2D
 @onready var pants            : Sprite2D        = $Skeleton/pants
 @onready var shoes            : Sprite2D        = $Skeleton/shoes
 @onready var accessories      : Sprite2D        = $Skeleton/accessories
+
+@onready var tools            : Node2D          = $tool_skeleton
+@onready var pickaxe          : Sprite2D        = $tool_skeleton/body_pick
+@onready var fishing          : Sprite2D        = $tool_skeleton/body_fish
+@onready var axe              : Sprite2D        = $tool_skeleton/body_axe
+@onready var sword            : Sprite2D        = $tool_skeleton/body_sword
+@onready var watering         : Sprite2D        = $tool_skeleton/body_water
+@onready var block            : Sprite2D        = $tool_skeleton/body_block
+@onready var hoe              : Sprite2D        = $tool_skeleton/body_hoe
+
 @onready var name_label       : Label           = $NameLabel
+
+
 @onready var animated_sprite  : AnimationPlayer = $AnimationPlayer
 
 @export var speed              : float   = 100.0
@@ -20,11 +32,19 @@ extends CharacterBody2D
 var direction: String = "down"
 
 func _ready():
-	print("✅ Player.gd ready. Global position before:", Global.player_position)
-
+	print("Player.gd ready. Global position before:", Global.player_position)
+	tools.visible = false
+	pickaxe.visible = false
+	fishing.visible = false
+	axe.visible = false
+	sword.visible = false
+	watering.visible = false
+	block.visible = false
+	hoe.visible = false
+	
 	# Set player to loaded saved position
 	global_position = Global.player_position
-	print("✅ Player final position after loading:", global_position)
+	print("Player final position after loading:", global_position)
 	var root = get_tree().get_current_scene()
 
 
@@ -34,14 +54,24 @@ func _ready():
 	# ─── SPAWN LOGIC ────────────────────────────────────────────────────────────
 	var spawn_point: Marker2D = null
 	match Global.spawn_from:
+		# farm.tscn
 		"fromTown":
 			spawn_point = root.get_node_or_null("SpawnPoints/SpawnFromTown") as Marker2D
 		"fromFarmhouse":
 			spawn_point = root.get_node_or_null("SpawnPoints/SpawnFromFarmhouse") as Marker2D
 		"newGame":
 			spawn_point = root.get_node_or_null("SpawnPoints/NewSpawn") as Marker2D
+		#farmhouse_interior.tscn
+		"inFarmhouse":
+			spawn_point = root.get_node_or_null("SpawnMarker/SpawnInside") as Marker2D
+		"fromMirror":
+			spawn_point = root.get_node_or_null("SpawnMarker/SpawnFromMirror") as Marker2D
+		#town_map.tscn
+		"toTown":
+			spawn_point = root.get_node_or_null("SpawnPoints/SpawnFromFarm") as Marker2D
 		_:
 			spawn_point = null
+	print("🌀 loaded spawn:", Global.spawn_from)
 
 	if spawn_point != null and is_instance_valid(spawn_point):
 		var target = spawn_point.global_position
@@ -51,10 +81,10 @@ func _ready():
 		print("🌀 Spawned at marker:", spawn_point.name)
 	else:
 		global_position = Global.player_position
-		print("📍 Loaded saved player position:", global_position)
+		print("Loaded saved player position:", global_position)
 		
 	initialize_player()
-	print("✅ Player final position:", global_position)
+	print("Player final position:", global_position)
 
 
 func _physics_process(_delta: float) -> void:
@@ -77,8 +107,8 @@ func _physics_process(_delta: float) -> void:
 		else:
 			velocity = Vector2.ZERO
 			_play_idle_animation()
-
 	move_and_slide()
+
 
 func _update_run_animation(input_dir: Vector2) -> void:
 	if abs(input_dir.x) > abs(input_dir.y):
@@ -94,6 +124,15 @@ func _update_run_animation(input_dir: Vector2) -> void:
 			animated_sprite.play("run_front")
 
 func _play_idle_animation() -> void:
+	tools.visible = false
+	pickaxe.visible = false
+	fishing.visible = false
+	axe.visible = false
+	sword.visible = false
+	watering.visible = false
+	block.visible = false
+	hoe.visible = false
+	
 	match direction:
 		"up":
 			animated_sprite.play("idle_back")
@@ -105,6 +144,34 @@ func _play_idle_animation() -> void:
 		"right":
 			animated_sprite.play("idle_side")
 			visual_node.scale.x = 1
+			
+func _update_tool_animation() -> void:
+	tools.visible = false
+	if Input.is_action_just_pressed("pickaxe"):
+		match direction:
+			"up":
+				animated_sprite.play("pickaxe_back")
+				pickaxe.visible = true
+			"down":
+				animated_sprite.play("pickaxe_front")
+				pickaxe.visible = true
+			"left":
+				animated_sprite.play("pickaxe_left")
+				pickaxe.visible = true
+			"right":
+				animated_sprite.play("pickaxe_right")
+				pickaxe.visible = true
+	if Input.is_action_just_pressed("axe"):
+		match direction:
+			"up":
+				animated_sprite.play("axe_back")
+				tools.visible = true
+			"down":
+				animated_sprite.play("axe_front")
+			"left":
+				animated_sprite.play("axe_left")
+			"right":
+				animated_sprite.play("axe_right")
 
 func initialize_player() -> void:
 	print("shirt node:", shirt, "visible?", shirt.visible, "texture:", shirt.texture)

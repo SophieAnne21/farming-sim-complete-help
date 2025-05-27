@@ -2,22 +2,24 @@ extends Node2D
 
 # ─── NODE REFERENCES ──────────────────────────────────────────────────────────
 @onready var fade                   = $fade/AnimationPlayer
-@onready var spawn_from_farm_marker : Node2D = $SpawnMarker/SpawnFromFarm
+@onready var spawn_from_farm_marker = $SpawnMarker/SpawnInside
 @onready var mirror_label           = $toCC/Label
 
 # two separate “entered” flags so they don’t fight each other
 var entered_farm = false
 var entered_cc   = false
 
+var current_destination: String = ""
+
 func _ready():
 	fade.play("fade_to_normal")
 
-	if Global.spawn_from == "fromFarm":
+	if Global.spawn_from == "fromFarmhouse":
 		var player = get_tree().get_first_node_in_group("Player")
 		if player:
 			player.global_position = spawn_from_farm_marker.global_position
 	# clear the flag so it only applies once
-	Global.spawn_from = ""
+	Global.spawn_from = "inFarmhouse"
 
 func _on_to_farm_body_entered(_body):
 	if _body.is_in_group("Player"):
@@ -47,9 +49,10 @@ func _go_to_farmhouse():
 	var player = get_tree().get_first_node_in_group("Player")
 	if player:
 		Global.player_position = player.position
-	Global.spawn_from = "fromFarmhouse"
+	Global.spawn_from = "inFarmhouse"
 	Global.last_scene  = "res://scenes/farm.tscn"
 	Global.cc          = "res://scenes/character_creator.tscn"
+	print("landed at:", Global.last_scene)
 	Global.save_game()
 	get_tree().change_scene_to_file(Global.last_scene)
 
@@ -57,6 +60,6 @@ func _go_to_character_creator():
 	var player = get_tree().get_first_node_in_group("Player")
 	if player:
 		Global.player_position = player.global_position
-	Global.last_scene = "res://scenes/farmhouse_interior.tscn"
-	Global.spawn_from = "fromMirror"
+	Global.last_scene == "res://scenes/farmhouse_interior.tscn"
+	Global.spawn_from == "fromMirror"
 	get_tree().change_scene_to_file(Global.cc)

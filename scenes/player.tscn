@@ -1,7 +1,7 @@
-[gd_scene load_steps=47 format=3 uid="uid://d2hgba3bqgk2h"]
+[gd_scene load_steps=48 format=3 uid="uid://d2hgba3bqgk2h"]
 
 [ext_resource type="Script" uid="uid://cawqq007cpuxi" path="res://scripts/player.gd" id="1_ur7pv"]
-[ext_resource type="FontFile" uid="uid://bducwj56iwht" path="res://Fonts/Cute_Font.ttf" id="2_y4r1p"]
+[ext_resource type="FontFile" uid="uid://dkvvtfd76ul2k" path="res://Fonts/Caballito.otf" id="2_ur7pv"]
 [ext_resource type="Texture2D" uid="uid://ch11jofc07ash" path="res://Cute_Fantasy/Player/characters/char1.png" id="3_d2wvv"]
 [ext_resource type="Texture2D" uid="uid://bvch7pn21h4xm" path="res://Cute_Fantasy/Player/hair/bob .png" id="4_3v2ag"]
 [ext_resource type="Texture2D" uid="uid://b64utjx21cynb" path="res://Cute_Fantasy/Player/eyes/eyes.png" id="5_jej6c"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://2v4u4oj7lnl4" path="res://Cute_Fantasy/Player/clothes/pants.png" id="7_oprun"]
 [ext_resource type="Texture2D" uid="uid://br20gy2onycuy" path="res://Cute_Fantasy/Player/clothes/shoes.png" id="8_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://bevq0r4axa8lq" path="res://Cute_Fantasy/Player/acc/glasses.png" id="9_qfm1y"]
+[ext_resource type="PackedScene" uid="uid://cggqb75a8w8r" path="res://addons/debug_menu/debug_menu.tscn" id="10_y4r1p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
 size = Vector2(14, 15)
@@ -401,13 +402,13 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0.00157411),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [Vector2i(0, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Skeleton/eyes:frame_coords")
+tracks/2/path = NodePath("Skeleton/shirt:frame_coords")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -419,7 +420,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Skeleton/shirt:frame_coords")
+tracks/3/path = NodePath("Skeleton/pants:frame_coords")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -431,7 +432,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Skeleton/pants:frame_coords")
+tracks/4/path = NodePath("Skeleton/shoes:frame_coords")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -443,22 +444,10 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Skeleton/shoes:frame_coords")
+tracks/5/path = NodePath("Skeleton/accessories:frame_coords")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 1)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Skeleton/accessories:frame_coords")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -489,13 +478,13 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [Vector2i(0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Skeleton/eyes:frame_coords")
+tracks/2/path = NodePath("Skeleton/shirt:frame_coords")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -507,7 +496,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Skeleton/shirt:frame_coords")
+tracks/3/path = NodePath("Skeleton/pants:frame_coords")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -519,7 +508,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Skeleton/pants:frame_coords")
+tracks/4/path = NodePath("Skeleton/shoes:frame_coords")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -531,22 +520,10 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Skeleton/shoes:frame_coords")
+tracks/5/path = NodePath("Skeleton/accessories:frame_coords")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 0)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Skeleton/accessories:frame_coords")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -577,13 +554,13 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [Vector2i(0, 2)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Skeleton/eyes:frame_coords")
+tracks/2/path = NodePath("Skeleton/shirt:frame_coords")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -595,7 +572,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Skeleton/shirt:frame_coords")
+tracks/3/path = NodePath("Skeleton/pants:frame_coords")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -607,7 +584,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Skeleton/pants:frame_coords")
+tracks/4/path = NodePath("Skeleton/shoes:frame_coords")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -619,22 +596,10 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Skeleton/shoes:frame_coords")
+tracks/5/path = NodePath("Skeleton/accessories:frame_coords")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 2)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Skeleton/accessories:frame_coords")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -786,7 +751,7 @@ tracks/5/keys = {
 resource_name = "run_front"
 length = 0.7
 loop_mode = 1
-step = 0.8
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1182,23 +1147,78 @@ speed = 70.0
 
 [node name="NameLabel" type="Label" parent="."]
 z_index = 6
-offset_left = -12.0
-offset_top = -17.0
-offset_right = 55.0
-offset_bottom = 29.0
+offset_left = -8.0
+offset_top = 11.0
+offset_right = 59.0
+offset_bottom = 101.0
 scale = Vector2(0.24, 0.24)
-theme_override_fonts/font = ExtResource("2_y4r1p")
-theme_override_font_sizes/font_size = 50
+theme_override_fonts/font = ExtResource("2_ur7pv")
+theme_override_font_sizes/font_size = 85
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 texture_filter = 1
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_i3pqv")
 
+[node name="Skeleton" type="Node2D" parent="."]
+
+[node name="body" type="Sprite2D" parent="Skeleton"]
+texture = ExtResource("3_d2wvv")
+hframes = 64
+vframes = 49
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"layer_section": false,
+"pending_changes": {
+"Farmer": "",
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": ""
+},
+"slice_section": false
+}
+
+[node name="hair" type="Sprite2D" parent="Skeleton"]
+texture = ExtResource("4_3v2ag")
+hframes = 112
+vframes = 49
+
+[node name="eyes" type="Sprite2D" parent="Skeleton"]
+texture = ExtResource("5_jej6c")
+hframes = 112
+vframes = 49
+
+[node name="shirt" type="Sprite2D" parent="Skeleton"]
+texture = ExtResource("6_f1ej7")
+hframes = 80
+vframes = 49
+
+[node name="pants" type="Sprite2D" parent="Skeleton"]
+texture = ExtResource("7_oprun")
+hframes = 80
+vframes = 49
+
+[node name="shoes" type="Sprite2D" parent="Skeleton"]
+texture = ExtResource("8_a8ls1")
+hframes = 80
+vframes = 49
+
+[node name="accessories" type="Sprite2D" parent="Skeleton"]
+texture = ExtResource("9_qfm1y")
+hframes = 80
+vframes = 49
+
 [node name="tool_skeleton" type="Node2D" parent="."]
-visible = false
 
 [node name="body_pick" type="Sprite2D" parent="tool_skeleton"]
 visible = false
@@ -1251,6 +1271,7 @@ metadata/_aseprite_wizard_interface_config_ = {
 }
 
 [node name="body_axe" type="Sprite2D" parent="tool_skeleton"]
+visible = false
 texture = ExtResource("3_d2wvv")
 hframes = 8
 vframes = 49
@@ -1376,63 +1397,10 @@ metadata/_aseprite_wizard_interface_config_ = {
 "slice_section": false
 }
 
-[node name="Skeleton" type="Node2D" parent="."]
-
-[node name="body" type="Sprite2D" parent="Skeleton"]
-texture = ExtResource("3_d2wvv")
-hframes = 8
-vframes = 49
-metadata/_aseprite_wizard_interface_config_ = {
-"animation_section": false,
-"layer_section": false,
-"pending_changes": {
-"Farmer": "",
-"embed_tex": true,
-"i_mode": 0,
-"keep_anim_length": false,
-"layers": [],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"slice": "",
-"source": ""
-},
-"slice_section": false
-}
-
-[node name="hair" type="Sprite2D" parent="Skeleton"]
-texture = ExtResource("4_3v2ag")
-hframes = 112
-vframes = 49
-
-[node name="eyes" type="Sprite2D" parent="Skeleton"]
-texture = ExtResource("5_jej6c")
-hframes = 112
-vframes = 49
-
-[node name="shirt" type="Sprite2D" parent="Skeleton"]
-texture = ExtResource("6_f1ej7")
-hframes = 80
-vframes = 49
-
-[node name="pants" type="Sprite2D" parent="Skeleton"]
-texture = ExtResource("7_oprun")
-hframes = 80
-vframes = 49
-
-[node name="shoes" type="Sprite2D" parent="Skeleton"]
-texture = ExtResource("8_a8ls1")
-hframes = 80
-vframes = 49
-
-[node name="accessories" type="Sprite2D" parent="Skeleton"]
-texture = ExtResource("9_qfm1y")
-hframes = 80
-vframes = 49
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_ivps1")
 }
 autoplay = "idle_front"
+
+[node name="CanvasLayer" parent="." instance=ExtResource("10_y4r1p")]

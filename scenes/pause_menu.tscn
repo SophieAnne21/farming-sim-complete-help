@@ -1,12 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://cj5l81ybmj24o"]
+[gd_scene load_steps=6 format=3 uid="uid://cj5l81ybmj24o"]
 
+[ext_resource type="Script" uid="uid://dmr420wjnl7we" path="res://scripts/PauseUIController.gd" id="1_7l7mv"]
 [ext_resource type="Script" uid="uid://d17ihdv37kaed" path="res://scripts/pause_menu.gd" id="1_nwcfo"]
 [ext_resource type="Script" uid="uid://d3wq7a7rxvc01" path="res://scripts/save_button.gd" id="2_05uyy"]
 [ext_resource type="FontFile" uid="uid://dkvvtfd76ul2k" path="res://Fonts/Caballito.otf" id="2_p81d2"]
 [ext_resource type="FontFile" uid="uid://bducwj56iwht" path="res://Fonts/Cute_Font.ttf" id="3_2nc7s"]
 
 [node name="PauseMenuUI" type="CanvasLayer"]
-script = ExtResource("1_nwcfo")
+process_mode = 3
+script = ExtResource("1_7l7mv")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -21,6 +23,7 @@ offset_right = 53.0
 offset_bottom = 59.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_nwcfo")
 
 [node name="ColorRect" type="ColorRect" parent="Control"]
 layout_mode = 1
@@ -50,6 +53,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SaveButton" type="Button" parent="Control/ColorRect"]
+process_mode = 3
 layout_direction = 3
 layout_mode = 2
 offset_left = -81.4646
@@ -75,7 +79,8 @@ theme_override_font_sizes/font_size = 100
 text = "Exit"
 flat = true
 
-[node name="Resume" type="Button" parent="Control/ColorRect"]
+[node name="ResumeButton" type="Button" parent="Control/ColorRect"]
+process_mode = 3
 layout_direction = 3
 layout_mode = 2
 offset_left = -44.9663
@@ -87,8 +92,7 @@ theme_override_fonts/font = ExtResource("3_2nc7s")
 theme_override_font_sizes/font_size = 35
 text = "Resume"
 flat = true
-script = ExtResource("2_05uyy")
 
 [connection signal="pressed" from="Control/ColorRect/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Control/ColorRect/ExitButton" to="." method="_on_exit_button_pressed"]
-[connection signal="pressed" from="Control/ColorRect/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Control/ColorRect/ResumeButton" to="." method="_on_resume_button_pressed"]

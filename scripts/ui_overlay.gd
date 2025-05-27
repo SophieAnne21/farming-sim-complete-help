@@ -57,7 +57,6 @@ func next_day() -> void:
 		day = 1
 		month = month % 12 + 1
 	update_date_label()
-	print("🗓 New day:", current_season_name, day)
 
 func update_date_label() -> void:
 	current_date_label.text = "%s %d" % [current_season_name, day]

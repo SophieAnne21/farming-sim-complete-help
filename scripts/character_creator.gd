@@ -63,9 +63,9 @@ var _spawn_context : String = ""
 func _ready() -> void:
 	# ─── LOAD SAVED DATA ─────────────────────────────────────────────────────────
 	if Global.load_game():
-		print("🗂️ Loaded existing save")
+		print("Loaded existing save")
 	else:
-		print("🚀 No save file; starting fresh")
+		print("No save file; starting fresh")
 
 	# ─── CACHE HOW WE GOT HERE ────────────────────────────────────────────────────
 	_spawn_context = Global.spawn_from
@@ -99,21 +99,21 @@ func _ready() -> void:
 	print("Available shoes_keys:", shoes_keys)
 	print("Available acc_keys:   ", acc_keys)
 
-	print("🔍 Saved name:        ", Global.player_name)
-	print("🔍 Saved skin:        '", Global.selected_skin,    "'")
-	print("🔍 Saved skin col:    ", Global.selected_skin_color)
-	print("🔍 Saved hair:        '", Global.selected_hair,    "'")
-	print("🔍 Saved hair col:    ", Global.selected_hair_color)
-	print("🔍 Saved eyes:        '", Global.selected_eyes,    "'")
-	print("🔍 Saved eyes col:    ", Global.selected_eyes_color)
-	print("🔍 Saved shirt:       '", Global.selected_shirt,   "'")
-	print("🔍 Saved shirt col:   ", Global.selected_shirt_color)
-	print("🔍 Saved pants:       '", Global.selected_pants,   "'")
-	print("🔍 Saved pants col:   ", Global.selected_pants_color)
-	print("🔍 Saved shoes:       '", Global.selected_shoes,   "'")
-	print("🔍 Saved shoes col:   ", Global.selected_shoes_color)
-	print("🔍 Saved acc:         '", Global.selected_acc,     "'")
-	print("🔍 Saved acc col:     ", Global.selected_acc_color)
+	print("Saved name:        ", Global.player_name)
+	print("Saved skin:        '", Global.selected_skin,    "'")
+	print("Saved skin col:    ", Global.selected_skin_color)
+	print("Saved hair:        '", Global.selected_hair,    "'")
+	print("Saved hair col:    ", Global.selected_hair_color)
+	print("Saved eyes:        '", Global.selected_eyes,    "'")
+	print("Saved eyes col:    ", Global.selected_eyes_color)
+	print("Saved shirt:       '", Global.selected_shirt,   "'")
+	print("Saved shirt col:   ", Global.selected_shirt_color)
+	print("Saved pants:       '", Global.selected_pants,   "'")
+	print("Saved pants col:   ", Global.selected_pants_color)
+	print("Saved shoes:       '", Global.selected_shoes,   "'")
+	print("Saved shoes col:   ", Global.selected_shoes_color)
+	print("Saved acc:         '", Global.selected_acc,     "'")
+	print("Saved acc col:     ", Global.selected_acc_color)
 
 	# ─── COMPUTE INDICES BASED ON SAVED VALUES ───────────────────────────────────
 	skin_idx        = max(skin_keys.find(Global.selected_skin),               0)
@@ -159,8 +159,9 @@ func _update_skin() -> void:
 	_apply_skin_color()
 
 func _apply_skin_color() -> void:
+	# Use the pastel shader to tint the grayscale skin sprite
 	skin_sprite.modulate = Global.selected_skin_color
-
+	
 func _on_eyes_collect() -> void:
 	eyes_idx = (eyes_idx + 1) % eyes_keys.size()
 	_update_eyes()
@@ -269,16 +270,18 @@ func _update_acc() -> void:
 func _apply_acc_color() -> void:
 	acc_sprite.modulate = Global.selected_acc_color
 
+func _on_fullbody_collect() -> void:
+	pass # Replace with function body.
+
+func _on_fullbody_color() -> void:
+	pass # Replace with function body.
 # ─── CONFIRM & EXIT ─────────────────────────────────────────────────────────────
 func _on_confirm_button_pressed() -> void:
 	Global.player_name = name_input.text
 	Global.save_game()
-
-	# now branch based on how we entered
+	get_tree().change_scene_to_file("res://scenes/farm.tscn")
+	
 	if _spawn_context == "fromMirror":
 		var target = Global.last_scene
-		Global.spawn_from = ""
-		get_tree().change_scene_to_file(target)
-	else:
-		Global.spawn_from = ""
-		get_tree().change_scene_to_file("res://scenes/farmhouse_interior.tscn")
+		Global.spawn_from = "inFarmhouse"
+	

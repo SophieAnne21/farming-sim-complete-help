@@ -14,7 +14,7 @@ script = ExtResource("1_8uhg5")
 
 [node name="Body" type="Sprite2D" parent="."]
 texture = ExtResource("2_v1xtm")
-hframes = 8
+hframes = 64
 vframes = 49
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": false,

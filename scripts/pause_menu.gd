@@ -1,41 +1,22 @@
-extends CanvasLayer
+extends Control
 
+# This script is attached to the PauseMenu control node
 
-@onready var save_button = $Control/ColorRect/SaveButton
-@onready var exit_button = $Control/ColorRect/ExitButton
-@onready var main_script = get_tree().get_current_scene()  # adjust to point at your main.gd node
+func _ready():
+	# Ensure that the UI can still function when the game is paused
+	process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 
-func _ready() -> void:
-	hide()  # Start hidden
+# Optional animation for the pause menu
+func animate_in():
+	# Add animations as needed
+	# Example: scale from 0 to 1 with a bounce effect
+	scale = Vector2.ZERO
+	var tween = create_tween()
+	tween.tween_property(self, "scale", Vector2.ONE, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 
-func _on_save_button_pressed() -> void:
-	print("✅ Save button pressed!")
-	var player = get_tree().get_first_node_in_group("Player")
-
-	if player:
-		Global.player_position = player.position
-		Global.save_game()
-		print("📍 Player position saved at:", Global.player_position)
-	else:
-		print("❌ Player not found in 'Player' group — not saved")
-		
-	main_script.save_game()      # write user://save.cfg with time_passed
-	Global.save_game()           # write your other global data
-	print("⏱ Saved game at", main_script.clock_label.text)
-
-func _on_exit_button_pressed() -> void:
-	print("👋 Exit button pressed!")
-	get_tree().quit()
-
-
-func _on_resume_pressed() -> void:
-	hide()
-	print("↩️ Returning to game!")
-	
-func open_pause_menu():
-	visible = true
-	Global.is_pause_menu_open = true
-
-func close_pause_menu():
-	visible = false
-	Global.is_pause_menu_open = false
+# Optional fade out animation when unpausing
+func animate_out():
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.2)
+	await tween.finished
+	self.modulate = Color(1, 1, 1, 1)  # Reset modulate for next time

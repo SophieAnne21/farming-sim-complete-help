@@ -1,6 +1,6 @@
 extends Camera2D
 
-@onready var tilemap = $"../../SpringLayer/grass" # Change to your farm grass/dirt tilemap node
+@onready var tilemap = $"../../SeasonLayers/SpringLayer" # Change to your farm grass/dirt tilemap node
 
 func _ready() -> void:
 	make_current()
@@ -24,6 +24,6 @@ func _ready() -> void:
 		limit_right  = map_right
 		limit_bottom = map_bottom
 
-		print("✅ Farm Camera set limits:", limit_left, limit_top, limit_right, limit_bottom)
+		print("Farm Camera set limits:", limit_left, limit_top, limit_right, limit_bottom)
 	else:
-		print("❌ Farm Camera: No valid tilemap found!")
+		print("Farm Camera: No valid tilemap found!")

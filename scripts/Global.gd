@@ -1,4 +1,3 @@
-# Global.gd
 extends Node
 
 # ─── CONSTANTS ────────────────────────────────────────────────────────────────
@@ -23,11 +22,26 @@ var camera_limit_bottom: float = 0.0
 var is_inventory_open:  bool = false
 var is_pause_menu_open: bool = false
 
+signal pause
+signal unpause
+
+var paused: bool = false:
+	get:
+		return paused
+	set(value):
+		if paused == value:
+			return
+		paused = value
+		if paused:
+			pause.emit()
+		else:
+			unpause.emit()
+
 # ─── SAVE/LOAD KEYS & STATE ────────────────────────────────────────────────────
 var key:               String   = "SimpleSaveLoad"
 var player_position:   Vector2  = Vector2.ZERO
-var player_name:       String   = ""            # ⬅ now blank by default
-var last_scene:        String   = "res://scenes/farm.tscn"
+var player_name:       String   = ""
+var last_scene:        String   = ""
 var cc:                String   = "res://scenes/character_creator.tscn"
 var spawn_from:        String   = ""
 var current_season_name: String = "Spring"
@@ -54,12 +68,12 @@ var selected_acc_color:      Color = Color(1, 1, 1)
 
 # ─── Pastel Color Options ─────────────────────────────────────────────────────
 var skin_color_options = [
-	Color(1.00, 0.88, 0.79),  # light peach
-	Color(0.96, 0.80, 0.69),  # soft beige
-	Color(0.82, 0.65, 0.50),  # gentle tan
-	Color(0.60, 0.42, 0.33),  # muted brown
-	Color(0.42, 0.30, 0.22),  # warm brown
-	Color(0.30, 0.22, 0.17)   # deep brown
+	Color(0.98, 0.89, 0.82),  # creamy ivory
+	Color(0.91, 0.76, 0.64),  # light almond
+	Color(0.80, 0.62, 0.45),  # warm beige
+	Color(0.70, 0.52, 0.38),  # golden tan
+	Color(0.58, 0.40, 0.28),  # chestnut
+	Color(0.42, 0.26, 0.16)   # mahogany
 ]
 
 var hair_color_options = [
@@ -140,14 +154,7 @@ var acc_color_options = [
 
 # ─── Asset Collections ────────────────────────────────────────────────────────
 var skin_collection = {
-	"white":         preload("res://Cute_Fantasy/Player/characters/char1.png"),
-	"dark white":    preload("res://Cute_Fantasy/Player/characters/char2.png"),
-	"olive":         preload("res://Cute_Fantasy/Player/characters/char3.png"),
-	"dark olive":    preload("res://Cute_Fantasy/Player/characters/char4.png"),
-	"light brown":   preload("res://Cute_Fantasy/Player/characters/char5.png"),
-	"medium brown":  preload("res://Cute_Fantasy/Player/characters/char6.png"),
-	"darkest brown": preload("res://Cute_Fantasy/Player/characters/char7.png"),
-	"black":         preload("res://Cute_Fantasy/Player/characters/char8.png")
+	"white":         preload("res://Cute_Fantasy/Player/characters/char_all.png")
 }
 
 var hair_collection = {
@@ -208,9 +215,9 @@ var acc_collection = {
 var pastel_shader := preload("res://shaders/item.gdshader")
 
 func _ready() -> void:
-	print("✅ Global.gd ready. Scene tree is active.")
+	print("Global.gd ready. Scene tree is active.")
 	if pastel_shader:
-		print("🔍 Pastel shader loaded.")
+		print("Pastel shader loaded.")
 
 func _process(delta: float) -> void:
 	# remember previous time for wrap detection
@@ -224,9 +231,14 @@ func _process(delta: float) -> void:
 	# if we wrapped back to zero, that means a new day!
 	if global_time_passed < prev_time:
 		day_count += 1
-		print("🌙 New in-game day:", day_count)
-
-
+		print("New in-game day:", day_count)
+	
+	if !paused:
+		# Only advance time when the game is not paused
+		global_time_passed += delta
+		if global_time_passed >= SECONDS_PER_DAY:
+			global_time_passed -= SECONDS_PER_DAY
+		
 # Resets name + customization to blank/defaults
 func set_defaults() -> void:
 	player_name             = ""
@@ -249,6 +261,7 @@ func set_defaults() -> void:
 
 func save_game() -> void:
 	var config = ConfigFile.new()
+	last_scene = get_tree().current_scene.scene_file_path
 	# Player Data
 	config.set_value("Player", "position", player_position)
 	config.set_value("Player", "name", player_name)
@@ -276,14 +289,15 @@ func save_game() -> void:
 	config.set_value("State", "last_scene", last_scene)
 	var result = config.save_encrypted_pass("user://settings.cfg", key)
 	if result == OK:
-		print("💾 Game saved successfully!")
+		print("Game saved successfully!")
+		print("saved:", last_scene)
 	else:
 		push_error("Save failed: %s" % result)
 
 func load_game() -> bool:
 	var config = ConfigFile.new()
 	if config.load_encrypted_pass("user://settings.cfg", key) != OK:
-		print("📭 No save file found.")
+		print("No save file found.")
 		return false
 	# Restore Player Data
 	player_position   = config.get_value("Player", "position", Vector2.ZERO)
@@ -310,9 +324,9 @@ func load_game() -> bool:
 	global_display_in_game_time = config.get_value("Clock", "display_time", START_HOUR)
 	# Restore Scene
 	last_scene = config.get_value("State", "last_scene", last_scene)
-	print("🔄Loaded player_name:", player_name)
-	print("🔄Loaded selected_skin:", selected_skin, "color:", selected_skin_color)
-	print("🔄Loaded selected_hair:", selected_hair, "color:", selected_hair_color)
+	print("Loaded player_name:", player_name)
+	print("Loaded selected_skin:", selected_skin, "color:", selected_skin_color)
+	print("Loaded selected_hair:", selected_hair, "color:", selected_hair_color)
 	# (repeat for eyes, shirt, pants, shoes, acc)
 	return true
 
@@ -328,10 +342,13 @@ func apply_pastel_shader(sprite: Node, color: Color) -> void:
 
 func is_game_paused() -> bool:
 	return is_inventory_open or is_pause_menu_open
+	
+
+
 
 # ─── START NEW GAME ────────────────────────────────────────────────────────────
 func start_new_game() -> void:
-	print("🆕 Starting new game…")
+	print("Starting new game…")
 	spawn_from                  = "newGame"
 	player_position             = Vector2.ZERO
 	last_scene                  = "res://scenes/farm.tscn"
@@ -351,7 +368,7 @@ func _notification(what: int) -> void:
 		var player = get_tree().get_first_node_in_group("Player") as CharacterBody2D
 		if player:
 			player_position = player.global_position
-			print("💾 Auto-saving player pos:", player_position)
+			print("Auto-saving player pos:", player_position)
 		save_game()
 
 # Jump the clock to an absolute hour (e.g. 14.5 for 2:30 PM)
@@ -374,10 +391,8 @@ func advance_time(hours_delta: float) -> void:
 func _unhandled_input(event):
 	if event.is_action_pressed("debug_time_forward_slow"):
 		advance_time(1.0)
-		print("⏩ Debug: advanced 1h to", global_display_in_game_time)
+		print("Debug: advanced 1h to", global_display_in_game_time)
 	elif event.is_action_pressed("debug_time_forward"):
 			advance_time(5.0)
 	elif event.is_action_pressed("debug_day_forward"):
 		advance_time(20.0)
-			
-	

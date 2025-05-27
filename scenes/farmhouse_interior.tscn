@@ -52938,7 +52938,7 @@ sources/1 = SubResource("TileSetAtlasSource_vc2tc")
 sources/2 = SubResource("TileSetAtlasSource_l1rgq")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k1gce"]
-size = Vector2(20, 81)
+size = Vector2(145, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2bywn"]
 size = Vector2(17, 37)
@@ -52996,18 +52996,21 @@ tile_set = SubResource("TileSet_o2lhs")
 script = ExtResource("10_8yrok")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ToFarm"]
-position = Vector2(-136, 122.5)
+position = Vector2(-143.5, 146)
 shape = SubResource("RectangleShape2D_k1gce")
 
 [node name="fade" parent="." instance=ExtResource("11_k1gce")]
 
 [node name="SpawnMarker" type="Node" parent="."]
 
-[node name="SpawnFromFarm" type="Marker2D" parent="SpawnMarker" groups=["SpawnMarker"]]
+[node name="SpawnInside" type="Marker2D" parent="SpawnMarker" groups=["SpawnMarker"]]
 position = Vector2(-6, -9)
 
+[node name="SpawnFromMirror" type="Marker2D" parent="SpawnMarker" groups=["SpawnMarker"]]
+position = Vector2(91, -81)
+
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-64, 27)
+position = Vector2(-65, 25)
 offset = Vector2(23.295, 0)
 zoom = Vector2(4, 3.9)
 limit_top = -136
