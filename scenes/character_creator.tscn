@@ -236,7 +236,7 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("14_ke6tr")
 theme_override_font_sizes/font_size = 25
-text = "Not working"
+text = "Not Working"
 metadata/_edit_use_anchors_ = true
 
 [node name="Eyes" type="ColorRect" parent="CreatorScreen/ColorRect"]
@@ -266,15 +266,16 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.025
-anchor_top = -0.025
+anchor_top = -0.125
 anchor_right = -0.025
-anchor_bottom = -0.025
+anchor_bottom = 0.125
 offset_left = 123.0
 offset_right = 323.0
 offset_bottom = 50.0
 theme_override_fonts/font = ExtResource("14_ke6tr")
 theme_override_font_sizes/font_size = 25
-text = "Working"
+text = "Working
+Not Showing"
 metadata/_edit_use_anchors_ = true
 
 [node name="Hair" type="ColorRect" parent="CreatorScreen/ColorRect"]
@@ -386,7 +387,7 @@ offset_left = -200.0
 offset_bottom = 50.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 25
-text = "Working"
+text = "Not Working"
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorButton" type="Button" parent="CreatorScreen/ColorRect/Fullbody"]

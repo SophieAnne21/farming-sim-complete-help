@@ -261,7 +261,7 @@ func set_defaults() -> void:
 
 func save_game() -> void:
 	var config = ConfigFile.new()
-	last_scene = get_tree().current_scene.scene_file_path
+	Global.last_scene = get_tree().current_scene.scene_file_path
 	# Player Data
 	config.set_value("Player", "position", player_position)
 	config.set_value("Player", "name", player_name)

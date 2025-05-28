@@ -3282,7 +3282,7 @@ tile_set = SubResource("TileSet_edibg")
 position = Vector2(-887, 189)
 
 [node name="SpawnFromFarmhouse" type="Marker2D" parent="SpawnPoints" groups=["SpawnMarker"]]
-position = Vector2(-4, 8)
+position = Vector2(-4, 9)
 
 [node name="NewSpawn" type="Marker2D" parent="SpawnPoints" groups=["SpawnMarker"]]
 position = Vector2(-553, 198)

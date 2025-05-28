@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=4 uid="uid://bdhrl444fyuf6"]
+[gd_scene load_steps=121 format=4 uid="uid://bdhrl444fyuf6"]
 
 [ext_resource type="Script" uid="uid://b4ucdcey0v725" path="res://scripts/farmhouse_interior.gd" id="1_6i1lr"]
 [ext_resource type="Texture2D" uid="uid://c7cujwxvgfltw" path="res://Cute_Fantasy/House/Buildings/Houses_Interiors/Brick_Wall_Fillers.png" id="1_as8e3"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://d2hgba3bqgk2h" path="res://scenes/player.tscn" id="7_btb1v"]
 [ext_resource type="Texture2D" uid="uid://cjrjp2bd6lufk" path="res://Cute_Fantasy/House/Buildings/Doors.png" id="8_yw67w"]
 [ext_resource type="Texture2D" uid="uid://daw2a07nu4dak" path="res://Cute_Fantasy/House/Objects/furniture/beds.png" id="9_hj78g"]
-[ext_resource type="Script" uid="uid://5jlfen1pudhp" path="res://scripts/to_farm.gd" id="10_8yrok"]
 [ext_resource type="Texture2D" uid="uid://dkinc06k5ry6f" path="res://Cute_Fantasy/House/Objects/furniture/beds_shadow.png" id="10_s3eio"]
 [ext_resource type="PackedScene" uid="uid://bsj4qeqmw6knp" path="res://scenes/fade.tscn" id="11_k1gce"]
 [ext_resource type="Texture2D" uid="uid://dy1nidobv3aww" path="res://Cute_Fantasy/House/Objects/furniture/boxes.png" id="11_na5bk"]
@@ -52941,14 +52940,14 @@ sources/2 = SubResource("TileSetAtlasSource_l1rgq")
 size = Vector2(27, 45)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2bywn"]
-size = Vector2(17, 33.5)
+size = Vector2(17, 40.5)
 
 [sub_resource type="LabelSettings" id="LabelSettings_jhc3q"]
 font = ExtResource("34_rll1s")
 font_size = 56
 
 [node name="Node2D" type="Node2D"]
-position = Vector2(101, -84)
+position = Vector2(99, -83)
 script = ExtResource("1_6i1lr")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -52993,10 +52992,9 @@ tile_map_data = PackedByteArray("AAD2/wYAAAABAAAAAAD2/wcAAAABAAEAAAD3/wYAAgAAAAE
 tile_set = SubResource("TileSet_o2lhs")
 
 [node name="ToFarm" type="Area2D" parent="."]
-script = ExtResource("10_8yrok")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ToFarm"]
-position = Vector2(-135.5, 101.5)
+position = Vector2(-135, 101)
 shape = SubResource("RectangleShape2D_k1gce")
 
 [node name="fade" parent="." instance=ExtResource("11_k1gce")]
@@ -53022,7 +53020,7 @@ position = Vector2(-8, -19)
 script = ExtResource("34_2bywn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="toCC"]
-position = Vector2(1, 2.25)
+position = Vector2(1, 5.75)
 shape = SubResource("RectangleShape2D_2bywn")
 
 [node name="Label" type="Label" parent="toCC"]

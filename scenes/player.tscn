@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://d2hgba3bqgk2h"]
+[gd_scene load_steps=47 format=3 uid="uid://d2hgba3bqgk2h"]
 
 [ext_resource type="Script" uid="uid://cawqq007cpuxi" path="res://scripts/player.gd" id="1_ur7pv"]
 [ext_resource type="FontFile" uid="uid://dkvvtfd76ul2k" path="res://Fonts/Caballito.otf" id="2_ur7pv"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://2v4u4oj7lnl4" path="res://Cute_Fantasy/Player/clothes/pants.png" id="7_oprun"]
 [ext_resource type="Texture2D" uid="uid://br20gy2onycuy" path="res://Cute_Fantasy/Player/clothes/shoes.png" id="8_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://bevq0r4axa8lq" path="res://Cute_Fantasy/Player/acc/glasses.png" id="9_qfm1y"]
-[ext_resource type="PackedScene" uid="uid://cggqb75a8w8r" path="res://addons/debug_menu/debug_menu.tscn" id="10_y4r1p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
 size = Vector2(14, 15)
@@ -1163,6 +1162,178 @@ texture_filter = 1
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_i3pqv")
 
+[node name="tool_skeleton" type="Node2D" parent="."]
+
+[node name="body_pick" type="Sprite2D" parent="tool_skeleton"]
+texture = ExtResource("3_d2wvv")
+hframes = 8
+vframes = 49
+frame = 224
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"layer_section": false,
+"pending_changes": {
+"Farmer": "",
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": ""
+},
+"slice_section": false
+}
+
+[node name="body_fish" type="Sprite2D" parent="tool_skeleton"]
+texture = ExtResource("3_d2wvv")
+hframes = 8
+vframes = 49
+frame = 240
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"layer_section": false,
+"pending_changes": {
+"Farmer": "",
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": ""
+},
+"slice_section": false
+}
+
+[node name="body_axe" type="Sprite2D" parent="tool_skeleton"]
+texture = ExtResource("3_d2wvv")
+hframes = 8
+vframes = 49
+frame = 264
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"layer_section": false,
+"pending_changes": {
+"Farmer": "",
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": ""
+},
+"slice_section": false
+}
+
+[node name="body_sword" type="Sprite2D" parent="tool_skeleton"]
+texture = ExtResource("3_d2wvv")
+hframes = 8
+vframes = 49
+frame = 128
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"layer_section": false,
+"pending_changes": {
+"Farmer": "",
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": ""
+},
+"slice_section": false
+}
+
+[node name="body_water" type="Sprite2D" parent="tool_skeleton"]
+position = Vector2(0, 8)
+texture = ExtResource("3_d2wvv")
+hframes = 8
+vframes = 49
+frame = 296
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"layer_section": false,
+"pending_changes": {
+"Farmer": "",
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": ""
+},
+"slice_section": false
+}
+
+[node name="body_block" type="Sprite2D" parent="tool_skeleton"]
+texture = ExtResource("3_d2wvv")
+hframes = 8
+vframes = 49
+frame = 168
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"layer_section": false,
+"pending_changes": {
+"Farmer": "",
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": ""
+},
+"slice_section": false
+}
+
+[node name="body_hoe" type="Sprite2D" parent="tool_skeleton"]
+position = Vector2(0, 1)
+texture = ExtResource("3_d2wvv")
+hframes = 8
+vframes = 49
+frame = 328
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"layer_section": false,
+"pending_changes": {
+"Farmer": "",
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": ""
+},
+"slice_section": false
+}
+
 [node name="Skeleton" type="Node2D" parent="."]
 
 [node name="body" type="Sprite2D" parent="Skeleton"]
@@ -1218,189 +1389,8 @@ texture = ExtResource("9_qfm1y")
 hframes = 80
 vframes = 49
 
-[node name="tool_skeleton" type="Node2D" parent="."]
-
-[node name="body_pick" type="Sprite2D" parent="tool_skeleton"]
-visible = false
-texture = ExtResource("3_d2wvv")
-hframes = 8
-vframes = 49
-frame = 224
-metadata/_aseprite_wizard_interface_config_ = {
-"animation_section": false,
-"layer_section": false,
-"pending_changes": {
-"Farmer": "",
-"embed_tex": true,
-"i_mode": 0,
-"keep_anim_length": false,
-"layers": [],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"slice": "",
-"source": ""
-},
-"slice_section": false
-}
-
-[node name="body_fish" type="Sprite2D" parent="tool_skeleton"]
-visible = false
-texture = ExtResource("3_d2wvv")
-hframes = 8
-vframes = 49
-frame = 240
-metadata/_aseprite_wizard_interface_config_ = {
-"animation_section": false,
-"layer_section": false,
-"pending_changes": {
-"Farmer": "",
-"embed_tex": true,
-"i_mode": 0,
-"keep_anim_length": false,
-"layers": [],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"slice": "",
-"source": ""
-},
-"slice_section": false
-}
-
-[node name="body_axe" type="Sprite2D" parent="tool_skeleton"]
-visible = false
-texture = ExtResource("3_d2wvv")
-hframes = 8
-vframes = 49
-frame = 264
-metadata/_aseprite_wizard_interface_config_ = {
-"animation_section": false,
-"layer_section": false,
-"pending_changes": {
-"Farmer": "",
-"embed_tex": true,
-"i_mode": 0,
-"keep_anim_length": false,
-"layers": [],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"slice": "",
-"source": ""
-},
-"slice_section": false
-}
-
-[node name="body_sword" type="Sprite2D" parent="tool_skeleton"]
-visible = false
-texture = ExtResource("3_d2wvv")
-hframes = 8
-vframes = 49
-frame = 128
-metadata/_aseprite_wizard_interface_config_ = {
-"animation_section": false,
-"layer_section": false,
-"pending_changes": {
-"Farmer": "",
-"embed_tex": true,
-"i_mode": 0,
-"keep_anim_length": false,
-"layers": [],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"slice": "",
-"source": ""
-},
-"slice_section": false
-}
-
-[node name="body_water" type="Sprite2D" parent="tool_skeleton"]
-visible = false
-position = Vector2(0, 8)
-texture = ExtResource("3_d2wvv")
-hframes = 8
-vframes = 49
-frame = 296
-metadata/_aseprite_wizard_interface_config_ = {
-"animation_section": false,
-"layer_section": false,
-"pending_changes": {
-"Farmer": "",
-"embed_tex": true,
-"i_mode": 0,
-"keep_anim_length": false,
-"layers": [],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"slice": "",
-"source": ""
-},
-"slice_section": false
-}
-
-[node name="body_block" type="Sprite2D" parent="tool_skeleton"]
-visible = false
-texture = ExtResource("3_d2wvv")
-hframes = 8
-vframes = 49
-frame = 168
-metadata/_aseprite_wizard_interface_config_ = {
-"animation_section": false,
-"layer_section": false,
-"pending_changes": {
-"Farmer": "",
-"embed_tex": true,
-"i_mode": 0,
-"keep_anim_length": false,
-"layers": [],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"slice": "",
-"source": ""
-},
-"slice_section": false
-}
-
-[node name="body_hoe" type="Sprite2D" parent="tool_skeleton"]
-visible = false
-position = Vector2(0, 1)
-texture = ExtResource("3_d2wvv")
-hframes = 8
-vframes = 49
-frame = 328
-metadata/_aseprite_wizard_interface_config_ = {
-"animation_section": false,
-"layer_section": false,
-"pending_changes": {
-"Farmer": "",
-"embed_tex": true,
-"i_mode": 0,
-"keep_anim_length": false,
-"layers": [],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"slice": "",
-"source": ""
-},
-"slice_section": false
-}
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_ivps1")
 }
 autoplay = "idle_front"
-
-[node name="CanvasLayer" parent="." instance=ExtResource("10_y4r1p")]

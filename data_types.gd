@@ -7,9 +7,11 @@ enum Tools {
 	None,
 	Axe,
 	Pickaxe,
-	Rod,
+	Fishing,
 	Watering,
 	Tilling,
 	Block,
 	Sword
 }
+
+var tool: Tools = Tools.None
