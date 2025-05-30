@@ -21,7 +21,6 @@ Fade="*res://scripts/fade.gd"
 Global="*res://scripts/Global.gd"
 BrightnessOverlay="*res://scenes/BrightnessOverlay.tscn"
 PauseManager="*res://scripts/pause_manager.gd"
-Plugin="*res://addons/finite_state_machine/plugin.gd"
 
 [display]
 

@@ -1218,6 +1218,22 @@ _data = {
 
 [node name="Farmer" type="CharacterBody2D"]
 script = ExtResource("1_ur7pv")
+speed = 70.0
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_y4r1p")
+initial_state = NodePath("EntityFSM/Idle")
+
+[node name="EntityFSM" type="Node" parent="StateMachine"]
+
+[node name="Idle" type="Node" parent="StateMachine/EntityFSM"]
+script = ExtResource("3_3v2ag")
+
+[node name="Run" type="Node" parent="StateMachine/EntityFSM"]
+script = ExtResource("4_jej6c")
+
+[node name="Pickaxe" type="Node" parent="StateMachine/EntityFSM"]
+script = ExtResource("5_f1ej7")
 
 [node name="NameLabel" type="Label" parent="."]
 z_index = 6
@@ -1470,29 +1486,9 @@ texture = ExtResource("9_qfm1y")
 hframes = 80
 vframes = 49
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("start_node")]
-script = ExtResource("2_y4r1p")
-start_node = NodePath("Idle")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="StateMachine"]
-root_node = NodePath("../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_ivps1")
 }
 autoplay = "idle_front"
 next/pickaxe_front = &"idle_back"
-
-[node name="Idle" type="Node" parent="StateMachine"]
-script = ExtResource("3_3v2ag")
-metadata/_custom_type_script = "uid://bilch70ygb8d3"
-
-[node name="Run" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state")]
-script = ExtResource("4_jej6c")
-idle_state = NodePath("../Idle")
-
-[node name="Pickaxe" type="Node" parent="StateMachine"]
-script = ExtResource("5_f1ej7")
-
-[connection signal="entered" from="StateMachine/Idle" to="StateMachine/Idle" method="_on_entered"]
-[connection signal="entered" from="StateMachine/Run" to="StateMachine/Run" method="_on_entered"]
-[connection signal="entered" from="StateMachine/Pickaxe" to="StateMachine/Pickaxe" method="_on_entered"]

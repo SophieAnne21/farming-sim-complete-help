@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 # UI control nodes (popups)
 # Visual nodes
@@ -23,7 +24,7 @@ extends CharacterBody2D
 @onready var name_label       : Label           = $NameLabel
 
 
-@onready var animated_sprite  : AnimationPlayer = $AnimationPlayer
+@onready var animated_sprite  : AnimationPlayer = $StateMachine/AnimationPlayer
 
 @export var current_tool : DataTypes.Tools = DataTypes.Tools.None
 
@@ -40,7 +41,7 @@ enum Tools {
 
 var tool: Tools = Tools.None
 
-@export var speed              : float   = 100.0
+@export var speed              : float   = 70.0
 @export var bridge_tilemap     : TileMap
 @export var bridge_y_threshold : float   = 100.0
 
@@ -102,58 +103,10 @@ func _ready():
 
 
 func _physics_process(_delta: float) -> void:
-	if Global.is_game_paused():
-		velocity = Vector2.ZERO
-	else:
-		var input_dir = Vector2(
-			Input.get_action_strength("right") - Input.get_action_strength("left"),
-			Input.get_action_strength("down")  - Input.get_action_strength("up")
-		)
-		if input_dir != Vector2.ZERO:
-			input_dir = input_dir.normalized()
-			velocity = input_dir * speed
-			_update_run_animation(input_dir)
-			if abs(input_dir.x) > abs(input_dir.y):
-				direction = "right" if input_dir.x > 0 else "left"
-			else:
-				direction = "down" if input_dir.y > 0 else "up"
-		else:
-			velocity = Vector2.ZERO
-			_play_idle_animation()
-			_update_tool_animation()
-	move_and_slide()
-	
+	pass
 
-func _update_run_animation(input_dir: Vector2) -> void:
-	_update_visual_node()
-	if abs(input_dir.x) > abs(input_dir.y):
-		animated_sprite.play("run_side")
-		if input_dir.x < 0:
-			visual_node.scale.x = -1
-		else:
-			visual_node.scale.x = 1
-	else:
-		if input_dir.y < 0:
-			animated_sprite.play("run_back")
-				
-		else:
-			animated_sprite.play("run_front")
-				
-
-func _play_idle_animation() -> void:
-	match direction:
-		"up":
-			animated_sprite.play("idle_back")
-		"down":
-			animated_sprite.play("idle_front")
-		"left":
-			animated_sprite.play("idle_side")
-			visual_node.scale.x = -1
-		"right":
-			animated_sprite.play("idle_side")
-			visual_node.scale.x = 1
 			
-func _update_tool_animation() -> void:
+func _play_tool_animation():
 	if Input.is_action_just_pressed("pickaxe"):
 		match direction:
 			"up":
@@ -161,27 +114,69 @@ func _update_tool_animation() -> void:
 				visual_node.visible = false
 				pickaxe.visible = true
 				print("swung pickaxe")
+				_update_visual_node()
 				
 			"down":
 				animated_sprite.play("pickaxe_front")
 				visual_node.visible = false
 				pickaxe.visible = true
 				print("swung pickaxe")
+				_update_visual_node()
 				
 			"left":
 				animated_sprite.play("pickaxe_left")
 				visual_node.visible = false
 				pickaxe.visible = true
 				print("swung pickaxe")
+				_update_visual_node()
 				
 			"right":
 				animated_sprite.play("pickaxe_right")
 				visual_node.visible = false
 				pickaxe.visible = true
 				print("swung pickaxe")
+				_update_visual_node()
+				
+		
+	if Input.is_action_just_pressed("axe"):
+		match direction:
+			"up":
+				animated_sprite.play("axe_back")
+				visual_node.visible = false
+				axe.visible = true
+				print("swung axe")
+				_update_visual_node()
+				
+			"down":
+				animated_sprite.play("axe_front")
+				visual_node.visible = false
+				axe.visible = true
+				print("swung axe")
+				_update_visual_node()
+				
+			"left":
+				animated_sprite.play("axe_left")
+				visual_node.visible = false
+				axe.visible = true
+				print("swung axe")
+				_update_visual_node()
+				
+			"right":
+				animated_sprite.play("axe_right")
+				visual_node.visible = false
+				axe.visible = true
+				print("swung axe")
+				_update_visual_node()
 				
 func _update_visual_node():
-	tools.visible = false
+	await get_tree().create_timer(1).timeout
+	pickaxe.visible = false
+	fishing.visible = false
+	axe.visible = false
+	sword.visible = false
+	watering.visible = false
+	block.visible = false
+	hoe.visible = false
 	visual_node.visible = true
 
 func initialize_player() -> void:
