@@ -29,6 +29,10 @@ func get_fsm() -> UPGFSM:
 	return get_parent() as UPGFSM
 
 func switch_to(new_state: UPGState) -> void:
+	if new_state:
+		print(get_path(), " is transitioning to ", new_state.get_path())
+	else:
+		print(get_path(), " is entering a null state! Behavior will cease.")
 	if get_fsm():
 		get_fsm().switch_to(new_state)
 

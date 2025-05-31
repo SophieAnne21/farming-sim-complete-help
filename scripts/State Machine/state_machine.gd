@@ -28,11 +28,13 @@ var current_state: UPGState:
 		
 		if current_state:
 			## Enable this statement if you want to see when this machine is entering a new state
-			# print(get_path(), " entering ", current_state.name)
+			print(get_path(), " entering ", current_state.name)
 			current_state.enter()
 			state_entered.emit(current_state)
 
 func _ready() -> void:
+	
+	await get_tree().create_timer(0.1).timeout
 	
 	if not start_node:
 		push_warning(get_path(), " has no start node!")

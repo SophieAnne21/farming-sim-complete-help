@@ -1,8 +1,12 @@
 extends CharacterBody2D
 class_name Player
 
-# UI control nodes (popups)
-# Visual nodes
+#region Misc properties
+@export var speed              : float   = 70.0
+@export var bridge_y_threshold : float   = 100.0
+#endregion
+
+#region Node References
 @onready var visual_node      : Node2D          = $Skeleton
 @onready var body_sprite      : Sprite2D        = $Skeleton/body
 @onready var hair             : Sprite2D        = $Skeleton/hair
@@ -22,13 +26,13 @@ class_name Player
 @onready var hoe              : Sprite2D        = $tool_skeleton/body_hoe
 
 @onready var name_label       : Label           = $NameLabel
+@onready var animator         : AnimationPlayer = $AnimationPlayer
 
+@export var bridge_tilemap     : TileMap
+#endregion
 
-@onready var animated_sprite  : AnimationPlayer = $StateMachine/AnimationPlayer
-
-@export var current_tool : DataTypes.Tools = DataTypes.Tools.None
-
-enum Tools {
+#region Tools
+enum Tool {
 	None,
 	Axe,
 	Pickaxe,
@@ -39,14 +43,22 @@ enum Tools {
 	Sword
 }
 
-var tool: Tools = Tools.None
+signal on_tool_used
+signal on_tool_changed(new_tool: Tool)
 
-@export var speed              : float   = 70.0
-@export var bridge_tilemap     : TileMap
-@export var bridge_y_threshold : float   = 100.0
+@export var tool: Tool = Tool.None:
+	get:
+		return tool
+	set(value):
+		if tool == value:
+			return
+		
+		tool = value
+		
+		on_tool_changed.emit(tool)
+#endregion
 
-var direction: String = "down"
-
+#region Default & Misc Methods
 func _ready():
 	print("Player.gd ready. Global position before:", Global.player_position)
 	
@@ -101,37 +113,39 @@ func _ready():
 	initialize_player()
 	print("Player final position:", global_position)
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and not event.is_echo():
+		match event.button_index:
+			MOUSE_BUTTON_LEFT:
+				if event.is_pressed():
+					on_tool_used.emit()
 
-func _physics_process(_delta: float) -> void:
-	pass
-
-			
 func _play_tool_animation():
 	if Input.is_action_just_pressed("pickaxe"):
 		match direction:
 			"up":
-				animated_sprite.play("pickaxe_back")
+				visual_node.play("pickaxe_back")
 				visual_node.visible = false
 				pickaxe.visible = true
 				print("swung pickaxe")
 				_update_visual_node()
 				
 			"down":
-				animated_sprite.play("pickaxe_front")
+				visual_node.play("pickaxe_front")
 				visual_node.visible = false
 				pickaxe.visible = true
 				print("swung pickaxe")
 				_update_visual_node()
 				
 			"left":
-				animated_sprite.play("pickaxe_left")
+				visual_node.play("pickaxe_left")
 				visual_node.visible = false
 				pickaxe.visible = true
 				print("swung pickaxe")
 				_update_visual_node()
 				
 			"right":
-				animated_sprite.play("pickaxe_right")
+				visual_node.play("pickaxe_right")
 				visual_node.visible = false
 				pickaxe.visible = true
 				print("swung pickaxe")
@@ -141,33 +155,33 @@ func _play_tool_animation():
 	if Input.is_action_just_pressed("axe"):
 		match direction:
 			"up":
-				animated_sprite.play("axe_back")
+				visual_node.play("axe_back")
 				visual_node.visible = false
 				axe.visible = true
 				print("swung axe")
 				_update_visual_node()
 				
 			"down":
-				animated_sprite.play("axe_front")
+				visual_node.play("axe_front")
 				visual_node.visible = false
 				axe.visible = true
 				print("swung axe")
 				_update_visual_node()
 				
 			"left":
-				animated_sprite.play("axe_left")
+				visual_node.play("axe_left")
 				visual_node.visible = false
 				axe.visible = true
 				print("swung axe")
 				_update_visual_node()
 				
 			"right":
-				animated_sprite.play("axe_right")
+				visual_node.play("axe_right")
 				visual_node.visible = false
 				axe.visible = true
 				print("swung axe")
 				_update_visual_node()
-				
+
 func _update_visual_node():
 	await get_tree().create_timer(1).timeout
 	pickaxe.visible = false
@@ -218,3 +232,32 @@ func initialize_player() -> void:
 			name_label.text = Global.player_name
 		else:
 			name_label.text = "Check the mirror"
+#endregion
+
+#region Direction
+enum Direction {
+	Up,
+	Down,
+	Left,
+	Right
+}
+
+signal on_direction_changed(new_direction: Direction)
+
+var direction: Direction = Direction.Down:
+	get:
+		return direction
+	set(value):
+		if direction == value:
+			return
+		
+		direction = value
+		
+		on_direction_changed.emit(direction)
+
+func get_current_input_direction() -> Vector2:
+	return Vector2(
+		Input.get_action_strength("right") - Input.get_action_strength("left"),
+		Input.get_action_strength("down")  - Input.get_action_strength("up")
+	)
+#endregion
